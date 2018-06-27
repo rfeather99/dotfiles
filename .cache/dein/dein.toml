@@ -1,0 +1,41 @@
+# :e sudo:%
+[[plugins]]
+repo = 'vim-scripts/sudo.vim'
+
+# gitの変更箇所を左にマーク表示する
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+# gitをvimから便利に使えるらしい
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+# 依存関係を指定したいとき
+[[plugins]]
+repo    = 'vim-airline/vim-airline'
+depends = ['vim-airline-themes', 'vim-fugitive']
+
+# 依存関係を指定したからと言って、自動でインストールはされない（ここは NeoBundle と違う）
+[[plugins]]
+repo = 'vim-airline/vim-airline-themes'
+
+# rubyとかvimscriptのifとかの終了を補完してくれる
+[[plugins]]
+repo = 'tpope/vim-endwise'
+
+# linterの非同期実行する
+[[plugins]]
+repo = 'w0rp/ale'
+hook_add = '''
+  let g:ale_fixers = {
+    \'ruby': ['rubocop'],
+  \}
+'''
+
+# 効果がわからなかったので、コメントアウト
+#[[plugins]]
+#repo = 'osyo-manga/vim-precious'
+#depends = ['context_filetype.vim']
+#
+#[[plugins]]
+#repo = 'shougo/context_filetype.vim'
+

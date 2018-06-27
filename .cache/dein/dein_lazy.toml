@@ -1,0 +1,4 @@
+[[plugin]]
+repo = 'vim-ruby/vim-ruby'
+on_ft = ['ruby']
+

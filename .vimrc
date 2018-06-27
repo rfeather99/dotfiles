@@ -26,6 +26,7 @@ set backspace=indent,eol,start " Backspaceキーの影響範囲に制限を設�
 set whichwrap=b,s,h,l,<,>,[,]  " 行頭行末の左右移動で行をまたぐ
 
 " ファイル設定
+filetype plugin on
 set nobackup
 set noundofile
 
@@ -100,7 +101,7 @@ function! s:my_tabline() "{{{
   return l:s
 endfunction "}}}
 let &tabline = '%!' . s:SID_PREFIX() . 'my_tabline()'
-" set showtabline = 2 " タブラインを常に表示
+set showtabline=2 " タブラインを常に表示
 
 " The prefix key.
 nnoremap    [Tag]   <Nop>
