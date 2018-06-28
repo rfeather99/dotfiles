@@ -1,3 +1,44 @@
+# colorschemeの設定
+[[plugins]]
+repo = 'NLKNguyen/papercolor-theme'
+hook_add = '''
+  set background=light
+  " colorscheme 設定は source 後に行う必要があるので確実に読まれている VimEnter のタイミングで行う。
+  " 但し Colorscheme イベントの発生が抑制されないよう nented を付ける。
+  au MyAutoCmd VimEnter * nested colorscheme PaperColor
+'''
+
+# インデントを可視化
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+
+# 無駄な空白をハイライト
+[[plugins]]
+repo = 'bronson/vim-trailing-whitespace'
+
+# j, k移動高速化
+[[plugins]]
+repo = 'rhysd/accelerated-jk'
+hook_add = '''
+  nmap j <Plug>(accelerated_jk_gj)
+  nmap k <Plug>(accelerated_jk_gk)
+'''
+
+# /検索強化
+#[[plugins]]
+#repo = 'osyo-manga/vim-anzu'
+#hook_add = '''
+#  nmap n nzz<Plug>(anzu-update-search-status)
+#  nmap N Nzz<Plug>(anzu-update-search-status)
+#  nmap * <Plug>(anzu-star)
+#  nmap # <Plug>(anzu-sharp)
+#  nmap <silent> <ESC><ESC> :<C-u>nohlsearch<CR><Plug>(anzu-clear-search-status)
+#'''
+
+# f検索強化
+#[[plugins]]
+#repo = 'rhysd/clever-f.vim'
+
 # :e sudo:%
 [[plugins]]
 repo = 'vim-scripts/sudo.vim'
@@ -30,6 +71,36 @@ hook_add = '''
     \'ruby': ['rubocop'],
   \}
 '''
+
+# deoplete
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+depends = ['nvim-yarp','vim-hug-neovim-rpc']
+hook_add = '''
+  let g:deoplete#enable_at_startup = 1
+'''
+hook_post_source = '''
+  " 一つ目の候補を選択状態にする
+  set completeopt+=noinsert
+'''
+
+[[plugins]]
+repo = 'roxma/nvim-yarp'
+
+[[plugins]]
+repo = 'roxma/vim-hug-neovim-rpc'
+
+[[plugins]]
+repo = 'Shougo/neco-vim'
+depends = ['deoplete.nvim']
+
+[[plugins]]
+repo = 'Shougo/neco-syntax'
+depends = ['deoplete.nvim']
+
+[[plugins]]
+repo = 'ujihisa/neco-look'
+depends = ['deoplete.nvim']
 
 # 効果がわからなかったので、コメントアウト
 #[[plugins]]

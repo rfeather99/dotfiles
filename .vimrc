@@ -3,6 +3,11 @@
 "set background=light
 "colorscheme morning
 
+" reset augroup
+augroup MyAutoCmd
+  autocmd!
+augroup END
+
 " 文字設定
 set encoding=utf-8
 set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
@@ -118,6 +123,9 @@ map <silent> [Tag]x :tabclose<CR>             " tx タブを閉じる
 map <silent> [Tag]n :tabnext<CR>              " tn 次のタブ
 map <silent> [Tag]p :tabprevious<CR>          " tp 前のタブ
 
+" defaultファイラーを起動するショートカット
+nnoremap <C-n> :e .<CR>
+inoremap <C-n> <ESC>:e .<CR>
 
 syntax enable "シンタックスカラーリングを設定する
-
+"colorscheme solarized
