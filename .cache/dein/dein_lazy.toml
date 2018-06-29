@@ -1,9 +1,9 @@
-[[plugin]]
+[[plugins]]
 repo = 'vim-ruby/vim-ruby'
 on_ft = ['ruby']
 
 [[plugins]]
-repo = 'hougo/deoplete-rct'
+repo = 'shougo/deoplete-rct'
 depends = ['deoplete.nvim']
 on_ft = ['ruby']
 
