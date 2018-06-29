@@ -49,6 +49,14 @@ repo = 'airblade/vim-gitgutter'
 # gitをvimから便利に使えるらしい
 [[plugins]]
 repo = 'tpope/vim-fugitive'
+hook_add = '''
+  :command Gs Gstatus
+  :command Ga Gwrite
+  :command Gc Gcommit-v
+  :command Gd Gdiff
+  :command Gm Gmerge
+  :command Gb Gblame
+'''
 
 # 依存関係を指定したいとき
 [[plugins]]
