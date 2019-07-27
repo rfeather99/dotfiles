@@ -1,6 +1,3 @@
-export PATH=$HOME/.nodebrew/current/bin:$PATH
-export PATH="/usr/local/bin:$PATH"
-
 autoload -U compinit
 compinit
 
@@ -33,8 +30,8 @@ setopt hist_ignore_space
 # ヒストリを呼び出してから実行する間に一旦編集可能
 setopt hist_verify
 # 余分な空白は詰めて記録
-setopt hist_reduce_blanks  
-# 古いコマンドと同じものは無視 
+setopt hist_reduce_blanks
+# 古いコマンドと同じものは無視
 setopt hist_save_no_dups
 # historyコマンドは履歴に登録しない
 setopt hist_no_store
@@ -44,3 +41,18 @@ setopt hist_expand
 setopt inc_append_history
 # インクリメンタルからの検索
 bindkey "^R" history-incremental-search-backward
+
+alias vim='nvim'
+
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+export PATH="$HOME/.rbenv/shims:$PATH"
+eval "$(rbenv init -)"
+
+if which nodenv > /dev/null; then eval "$(nodenv init -)"; fi
+export PATH="$HOME/.nodenv/shims:$PATH"
+eval "$(nodenv init -)"
+
+export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
+export PKG_CONFIG_PATH="/usr/local/opt/imagemagick@6/lib/pkgconfig"
+

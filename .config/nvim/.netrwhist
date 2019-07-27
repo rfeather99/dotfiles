@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/Users/yuusaku/.config/nvim'
+let g:netrw_dirhist_2='/Users/yuusaku'
+let g:netrw_dirhist_3='/Users/yuusaku/work'
+let g:netrw_dirhist_4='/Users/yuusaku/work/todo-stimulus'
+let g:netrw_dirhist_5='/home'
+let g:netrw_dirhist_6='/'
+let g:netrw_dirhist_7='/home'
