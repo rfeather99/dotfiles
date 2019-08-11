@@ -1,18 +1,43 @@
 [[plugins]]
+repo = 'ryanoasis/vim-devicons'
+
+[[plugins]]
 repo     = 'Shougo/denite.nvim'
-#depends  = ['defx-icons']
+depends  = ['neoyank', 'vim-devicons']
 on_cmd   = ['Denite', 'DeniteBufferDir', 'DeniteCursorWord']
 hook_add = '''
   nnoremap <silent> zb :Denite buffer<CR>
-  nnoremap <silent> zc :Denite changes<CR>
   nnoremap <silent> zf :Denite file/rec<CR>
   nnoremap <silent> zg :Denite grep<CR>
-  nnoremap <silent> zh :Denite help<CR>
   nnoremap <silent> zh :Denite help<CR>
   nnoremap <silent> zl :Denite line<CR>
   nnoremap <silent> zt :Denite tag<CR>
   nnoremap <silent> zm :Denite file_mru<CR>
   nnoremap <silent> zu :Denite menu<CR>
+  nnoremap <silent> zy :Denite neoyank<CR>
+
+  " Define mappings
+	autocmd FileType denite call s:denite_my_settings()
+	function! s:denite_my_settings() abort
+	  nnoremap <silent><buffer><expr> <CR>
+	  \ denite#do_map('do_action')
+	  nnoremap <silent><buffer><expr> d
+	  \ denite#do_map('do_action', 'delete')
+	  nnoremap <silent><buffer><expr> p
+	  \ denite#do_map('do_action', 'preview')
+	  nnoremap <silent><buffer><expr> q
+	  \ denite#do_map('quit')
+	  nnoremap <silent><buffer><expr> i
+	  \ denite#do_map('open_filter_buffer')
+	  nnoremap <silent><buffer><expr> <Space>
+	  \ denite#do_map('toggle_select').'j'
+	endfunction
+
+	autocmd FileType denite-filter call s:denite_filter_my_settings()
+	function! s:denite_filter_my_settings() abort
+	  imap <silent><buffer> <C-o> <Plug>(denite_filter_quit)
+	endfunction
+
 '''
 hook_source = '''
   " Add custom menus
@@ -88,5 +113,27 @@ hook_source = '''
         \ '<denite:enter_mode:normal>',
         \ 'noremap'
         \)
+
+  let s:ignore_globs = ['.git', '.svn', 'node_modules']
+
+  " そもそも ag のレベルで検索対象からはずす
+  call denite#custom#var('file/rec', 'command', [
+        \ 'ag',
+        \ '--follow',
+        \ ] + map(deepcopy(s:ignore_globs), { k, v -> '--ignore=' . v }) + [
+        \ '--nocolor',
+        \ '--nogroup',
+        \ '-g',
+        \ ''
+        \ ])
+  
+  " matcher/ignore_globs 以外のお好みの matcher を指定する
+  call denite#custom#source('file/rec', 'matchers', ['matcher/substring'])
+  
+  " 他のソース向けに ignore_globs 自体は初期化
+  call denite#custom#filter('matcher/ignore_globs', 'ignore_globs', s:ignore_globs)
 '''
+
+[[plugins]]
+repo = 'shougo/neoyank.vim'
 
