@@ -7,7 +7,11 @@ zsh,vimは元々入っているけど、最新取得
 * tmux
 * neovim
 * cicaフォント
-  ホスト側に入れて、defxとかでアイコン表示できるようにする
+
+    ホスト側に入れて、defxとかでアイコン表示できるようにする
+* ag
+
+    deniteでの絞り込み用
 
 # nvim
 deocompeteのために以下をインストール
@@ -75,5 +79,23 @@ n | Ctrl + n | ファイラーを開く
   --- | ---
   ~ | `home`に移動
   h | 1つ上のフォルダに移動
+
+### Denite関連
+
+キー | 内容
+--- | ---
+zf | `:Denite file/rec`起動
+zb | `:Denite buffer`起動
+zl | `:Denite line`起動
+zy | `:Denite neoyank`起動
+  
+- 起動中のコマンド
+
+  キー | 内容
+  --- | ---
+  i | フィルタ起動
+  q | `:Denite`終了
+  p | プレビュー表示
+
 
 
