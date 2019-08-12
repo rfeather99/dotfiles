@@ -5,7 +5,7 @@ repo ='Shougo/defx.nvim'
 on_cmd = 'Defx'
 depends = ['defx-icons', 'defx-git']
 hook_add = '''
-	nnoremap <C-n> :<C-u>Defx -listed -resume -buffer-name=tab`tabpagenr()`<CR>
+	nnoremap <silent> <C-n> :<C-u>Defx -listed -resume -buffer-name=tab`tabpagenr()`<CR>
 '''
 hook_source = '''
  	function! Root(path) abort

@@ -14,20 +14,25 @@ set fileformats=unix,dos,mac
 set number          "行番号を表示する
 set cursorline      " カーソル行の背景色を変える
 "set cursorcolumn   " カーソル位置のカラムの背景色を変える
-
 set title     "編集中のファイル名を表示する
 set showcmd   "入力中のコマンドを表示する
 set ruler     "座標を表示する
 set showmatch "閉じ括弧の入力時に対応する括弧を表示する
+set list           " 不可視文字を表示
+" 不可視文字の表示記号指定
+set listchars=tab:▸\ ,eol:↲,extends:❯,precedes:❮
 
 " カーソル移動関連の設定
 set backspace=indent,eol,start " Backspaceキーの影響範囲に制限を設けない
 set whichwrap=b,s,h,l,<,>,[,]  " 行頭行末の左右移動で行をまたぐ
 
-" ファイル設定
+" ファイル処理関連の設定
 filetype plugin on
-set nobackup
-set noundofile
+set confirm    " 保存されていないファイルがあるときは終了前に保存確認
+set hidden     " 保存されていないファイルがあるときでも別のファイルを開くことが出来る
+set autoread   "外部でファイルに変更がされた場合は読みなおす
+set nobackup   " ファイル保存時にバックアップファイルを作らない
+set noswapfile " ファイル編集中にスワップファイルを作らない
 
 " タブインデント設定
 set expandtab     "タブ入力を複数の空白入力に置き換える
@@ -43,6 +48,16 @@ set smartindent   "改行時に入力された行の末尾に合わせて次の�
 
 "---------------------------------------------------------------
 " キーマップ変更
+
+" leaderを<Space>に設定
+let mapleader = "\<Space>"
+
+" <Space>oを押して新しいファイルを開く
+nnoremap <Leader>o :CtrlP<CR>
+" <Space>wを押してファイルを保存する
+nnoremap <Leader>w :w<CR>
+" <Space><Space>でビジュアルラインモードに切り替える
+nmap <Leader><Leader> V
 
 "x時にyankされないようにする
 nnoremap x "_x

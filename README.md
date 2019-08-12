@@ -14,19 +14,36 @@ zsh,vimは元々入っているけど、最新取得
     deniteでの絞り込み用
 
 # nvim
-deocompeteのために以下をインストール
+## 初回だけ実行
+- 色々なプラグインのために以下をインストール
 
-## neovim
-`pip3 instal --upgrade neovim`
+  `pip3 instal --upgrade neovim`
+
+- Cocのインストール
+
+  1. プラグインインストールようのディレクトリを作成しておく
+
+    `mkdir -p ~/.config/coc/extensions`
+
+  2. vim起動後に実行
+    
+    `:call coc#util#install()`
 
 ## 主要なプラグイン
 - fugitive
 - dein
 - defx
+- denite
+- coc
 
 ## よく使うキー
 
 ### デフォルト
+
+モード | キー | 内容
+--- | --- | ---
+n | ctrl+o | カーソル移動履歴を戻る
+n | ctrl+i | カーソル移動履歴を進む
 
 ### カスタム
 
@@ -79,6 +96,7 @@ n | Ctrl + n | ファイラーを開く
   --- | ---
   ~ | `home`に移動
   h | 1つ上のフォルダに移動
+  N | 新規ファイル作成
 
 ### Denite関連
 
@@ -97,5 +115,13 @@ zy | `:Denite neoyank`起動
   q | `:Denite`終了
   p | プレビュー表示
 
+### Coc関連
 
+キー | 内容
+--- | ---
+gd | `coc-definition`を起動
+gi | `coc-implementation`を起動
+gr | `coc-references`を起動
+gy | `coc-type-definition`を起動
+ 
 
