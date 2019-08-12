@@ -83,37 +83,37 @@ repo = 'tpope/vim-endwise'
 # '''
 
 # deoplete
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
-depends = ['nvim-yarp','vim-hug-neovim-rpc']
-hook_add = '''
-  let g:deoplete#enable_at_startup = 1
-'''
-hook_post_source = '''
-  " 一つ目の候補を選択状態にする
-  set completeopt+=noinsert
-'''
-
-[[plugins]]
-repo = 'roxma/nvim-yarp'
-
-[[plugins]]
-repo = 'roxma/vim-hug-neovim-rpc'
-
-# vimスクリプトの補完
-[[plugins]]
-repo = 'Shougo/neco-vim'
-depends = ['deoplete.nvim']
-
-# filetypeのsyntax補完
-[[plugins]]
-repo = 'Shougo/neco-syntax'
-depends = ['deoplete.nvim']
-
-# lookコマンドの結果を候補
-[[plugins]]
-repo = 'ujihisa/neco-look'
-depends = ['deoplete.nvim']
+# [[plugins]]
+# repo = 'Shougo/deoplete.nvim'
+# depends = ['nvim-yarp','vim-hug-neovim-rpc']
+# hook_add = '''
+#   let g:deoplete#enable_at_startup = 1
+# '''
+# hook_post_source = '''
+#   " 一つ目の候補を選択状態にする
+#   set completeopt+=noinsert
+# '''
+# 
+# [[plugins]]
+# repo = 'roxma/nvim-yarp'
+# 
+# [[plugins]]
+# repo = 'roxma/vim-hug-neovim-rpc'
+# 
+# # vimスクリプトの補完
+# [[plugins]]
+# repo = 'Shougo/neco-vim'
+# depends = ['deoplete.nvim']
+# 
+# # filetypeのsyntax補完
+# [[plugins]]
+# repo = 'Shougo/neco-syntax'
+# depends = ['deoplete.nvim']
+# 
+# # lookコマンドの結果を候補
+# [[plugins]]
+# repo = 'ujihisa/neco-look'
+# depends = ['deoplete.nvim']
 
 # 効果がわからなかったので、コメントアウト
 #[[plugins]]
