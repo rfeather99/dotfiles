@@ -3,7 +3,7 @@ repo = 'ryanoasis/vim-devicons'
 
 [[plugins]]
 repo     = 'Shougo/denite.nvim'
-depends  = ['neoyank', 'vim-devicons']
+depends  = ['neoyank.vim', 'vim-devicons']
 on_cmd   = ['Denite', 'DeniteBufferDir', 'DeniteCursorWord']
 hook_add = '''
   nnoremap <silent> zb :Denite buffer<CR>
