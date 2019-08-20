@@ -24,6 +24,10 @@ hook_add = '''
   nmap k <Plug>(accelerated_jk_gk)
 '''
 
+# マルチカーソル
+# [[plugins]]
+# repo = 'terryma/vim-multiple-cursors'
+
 # /検索強化
 #[[plugins]]
 #repo = 'osyo-manga/vim-anzu'
@@ -40,8 +44,8 @@ hook_add = '''
 #repo = 'rhysd/clever-f.vim'
 
 # :e sudo:%
-[[plugins]]
-repo = 'vim-scripts/sudo.vim'
+# [[plugins]]
+# repo = 'vim-scripts/sudo.vim'
 
 # gitの変更箇所を左にマーク表示する
 [[plugins]]
@@ -116,10 +120,10 @@ repo = 'tpope/vim-endwise'
 # depends = ['deoplete.nvim']
 
 # 効果がわからなかったので、コメントアウト
-#[[plugins]]
-#repo = 'osyo-manga/vim-precious'
-#depends = ['context_filetype.vim']
-#
-#[[plugins]]
-#repo = 'shougo/context_filetype.vim'
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+
+[[plugins]]
+repo = 'shougo/context_filetype.vim'
 
