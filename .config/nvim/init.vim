@@ -44,7 +44,7 @@ set smartindent   "改行時に入力された行の末尾に合わせて次の�
 
 "clipboad連携設定
 "set clipboard=unnamed,autoselect
-"set clipboard+=unnamed
+set clipboard+=unnamed
 
 "---------------------------------------------------------------
 " キーマップ変更

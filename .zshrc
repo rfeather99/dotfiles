@@ -43,6 +43,7 @@ setopt inc_append_history
 bindkey "^R" history-incremental-search-backward
 
 alias vim='nvim'
+alias ls='ls -G'
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 export PATH="$HOME/.rbenv/shims:$PATH"

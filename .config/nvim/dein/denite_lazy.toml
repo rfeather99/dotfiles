@@ -114,9 +114,9 @@ hook_source = '''
         \ 'noremap'
         \)
 
+  " file_recの絞り込みをagにする
   let s:ignore_globs = ['.git', '.svn', 'node_modules']
-
-  " そもそも ag のレベルで検索対象からはずす
+  "" そもそも ag のレベルで検索対象からはずす
   call denite#custom#var('file/rec', 'command', [
         \ 'ag',
         \ '--follow',
@@ -126,12 +126,16 @@ hook_source = '''
         \ '-g',
         \ ''
         \ ])
-  
-  " matcher/ignore_globs 以外のお好みの matcher を指定する
+  "" matcher/ignore_globs 以外のお好みの matcher を指定する
   call denite#custom#source('file/rec', 'matchers', ['matcher/substring'])
-  
-  " 他のソース向けに ignore_globs 自体は初期化
+  "" 他のソース向けに ignore_globs 自体は初期化
   call denite#custom#filter('matcher/ignore_globs', 'ignore_globs', s:ignore_globs)
+
+  " grepの絞り込みをagにする
+  call denite#custom#var('grep', 'command', ['ag'])
+  call denite#custom#var('grep', 'recursive_opts', [])
+  call denite#custom#var('grep', 'pattern_opt', [])
+  call denite#custom#var('grep', 'default_opts', ['--follow', '--no-group', '--no-color'])
 '''
 
 [[plugins]]

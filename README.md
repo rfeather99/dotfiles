@@ -13,6 +13,33 @@ zsh,vimは元々入っているけど、最新取得
 
     deniteでの絞り込み用
 
+# tmux
+
+## プレフィックスキー
+ - ctrl + j
+
+## よくつかうキー
+
+キー | 内容
+--- | ---
+h,j,k,l | ペインを移動
+H,J,K,L | ペインをリサイズ
+Ctrl + h | 左のウィンドウに移動
+Ctrl + l | 右のウィンドウに移動
+{ | 左のペインと位置を入れ替え
+} | 右のペインと位置を入れ替え
+z | ペインを最大表示
+option + 1 | horizontal to verticalレイアウト
+option + 2 | vertical to horizontalレイアウト
+
+## よくつかうキー(プレフィックスキー不要 -n)
+
+キー | 内容
+--- | ---
+shift + LeftKey | ペインを左のウィンドウに移動する
+shift + RightKey | ペインを右のウィンドウに移動する
+shift + DownKey | ペインを新しいウィンドウに移動する
+
 # nvim
 ## 初回だけ実行
 - 色々なプラグインのために以下をインストール
@@ -82,6 +109,7 @@ tc | 前のTABに移動
   --- | ---
   D | diffを表示
   `-` | stageとworkの切り替え
+  X | revert change
 
 ### Defx関連
 
@@ -105,6 +133,7 @@ n | Ctrl + n | ファイラーを開く
 zf | `:Denite file/rec`起動
 zb | `:Denite buffer`起動
 zl | `:Denite line`起動
+zg | `:Denite grep`起動
 zy | `:Denite neoyank`起動
   
 - 起動中のコマンド
