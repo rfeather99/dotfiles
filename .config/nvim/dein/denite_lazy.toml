@@ -123,6 +123,7 @@ hook_source = '''
         \ ] + map(deepcopy(s:ignore_globs), { k, v -> '--ignore=' . v }) + [
         \ '--nocolor',
         \ '--nogroup',
+        \ '--hidden',
         \ '-g',
         \ ''
         \ ])
