@@ -41,8 +41,13 @@ hook_add = '''
 #'''
 
 # f検索強化
-#[[plugins]]
-#repo = 'rhysd/clever-f.vim'
+[[plugins]]
+repo = 'rhysd/clever-f.vim'
+hook_source = '''
+ let g:clever_f_ignore_case = 1
+ let g:clever_f_smart_case = 1
+ let g:clever__f_fix_key_direction = 1
+'''
 
 # :e sudo:%
 # [[plugins]]
