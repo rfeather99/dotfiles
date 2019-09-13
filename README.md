@@ -77,7 +77,7 @@ n | ctrl+i | カーソル移動履歴を進む
 モード | キー | 内容
 --- | --- | ---
 i | jj | ESCと同じ
-
+n | <Space>w | :wと同じ
 
 ### TAB関連
 
@@ -153,4 +153,11 @@ gi | `coc-implementation`を起動
 gr | `coc-references`を起動
 gy | `coc-type-definition`を起動
  
+### clever_f関連
+f{char}検索後
+
+キー | 内容
+--- | ---
+f | 次の一致に移動
+F | 前の一致に移動
 

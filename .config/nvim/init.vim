@@ -56,6 +56,7 @@ let mapleader = "\<Space>"
 nnoremap <Leader>o :CtrlP<CR>
 " <Space>wを押してファイルを保存する
 nnoremap <Leader>w :w<CR>
+nnoremap <Leader>q :q<CR>
 " <Space><Space>でビジュアルラインモードに切り替える
 nmap <Leader><Leader> V
 
