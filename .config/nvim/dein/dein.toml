@@ -81,7 +81,7 @@ repo = 'vim-airline/vim-airline-themes'
 
 # rubyとかvimscriptのifとかの終了を補完してくれる
 [[plugins]]
-repo = 'tpope/vim-endwise'
+repo = 'cohama/lexima.vim'
 
 # linterの非同期実行する
 # [[plugins]]
