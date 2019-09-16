@@ -16,6 +16,8 @@ set cursorline      " カーソル行の背景色を変える
 "set cursorcolumn   " カーソル位置のカラムの背景色を変える
 set title     "編集中のファイル名を表示する
 set showcmd   "入力中のコマンドを表示する
+set cmdheight=2 "コマンド入力欄の行数を2行にする
+set shortmess+=c
 set ruler     "座標を表示する
 set showmatch "閉じ括弧の入力時に対応する括弧を表示する
 set list           " 不可視文字を表示
