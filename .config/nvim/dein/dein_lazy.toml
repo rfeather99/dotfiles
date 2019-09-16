@@ -35,3 +35,10 @@ on_ft = ['csv']
 repo = 'leafgarland/typescript-vim'
 on_ft = ['typescript']
 
+[[plugins]]
+repo = 'posva/vim-vue'
+on_ft = ['vue']
+hook_add = '''
+  autocmd FileType vue syntax sync fromstart
+'''
+
