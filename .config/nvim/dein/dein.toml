@@ -43,10 +43,17 @@ hook_add = '''
 # f検索強化
 [[plugins]]
 repo = 'rhysd/clever-f.vim'
-hook_source = '''
- let g:clever_f_ignore_case = 1
- let g:clever_f_smart_case = 1
- let g:clever__f_fix_key_direction = 1
+hook_add = '''
+  let g:clever_f_ignore_case = 1        " 小文字を入力した場合、大文字小文字区別しない
+  let g:clever_f_smart_case = 1         " 大文字を入力したら大文字のみ
+  let g:clever__f_fix_key_direction = 1 " fで右、Fで左検索
+  let g:clever_f_not_overwrites_standard_mappings = 1 " tはtabに使いたいので標準マッピングにしない
+  nmap f <Plug>(clever-f-f)
+  xmap f <Plug>(clever-f-f)
+  omap f <Plug>(clever-f-f)
+  nmap F <Plug>(clever-f-F)
+  xmap F <Plug>(clever-f-F)
+  omap F <Plug>(clever-f-F)
 '''
 
 # :e sudo:%
