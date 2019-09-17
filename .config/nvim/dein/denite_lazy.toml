@@ -114,6 +114,18 @@ hook_source = '''
         \ 'noremap'
         \)
 
+  let s:denite_options = {
+      \ 'prompt' : '>',
+      \ 'split': 'floating',
+      \ 'start_filter': 1,
+      \ 'auto_resize': 1,
+      \ 'source_names': 'short',
+      \ 'direction': 'botright',
+      \ 'highlight_filter_background': 'CursorLine',
+      \ 'highlight_matched_char': 'Type',
+      \ }
+  call denite#custom#option('default', s:denite_options)
+
   " file_recの絞り込みをagにする
   let s:ignore_globs = ['.git', '.svn', 'node_modules']
   "" そもそも ag のレベルで検索対象からはずす
