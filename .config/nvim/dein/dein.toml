@@ -67,6 +67,7 @@ repo = 'airblade/vim-gitgutter'
 [[plugins]]
 repo = 'tpope/vim-fugitive'
 hook_add = '''
+  set diffopt+=vertical
   :command Gs Gstatus
   :command Ga Gwrite
   :command Gc Gcommit-v
