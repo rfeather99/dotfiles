@@ -1,31 +1,6 @@
-# [[plugins]]
-# repo = 'vim-ruby/vim-ruby'
-# on_ft = ['ruby']
-# 
-# [[plugins]]
-# repo = 'shougo/deoplete-rct'
-# depends = ['deoplete.nvim']
-# on_ft = ['ruby']
-
 [[plugins]]
 repo = 'cespare/vim-toml'
 on_ft = ['toml']
-
-# [[plugins]]
-# repo = 'inkarkat/vim-SyntaxRange'
-# on_ft = ['toml']
-# hook_add = ```
-#   autocmd MyAutoCmd BufNewFile,BufRead *.toml call s:syntax_range_dein()
-#   
-#   function! s:syntax_range_dein() abort
-#     let start = '^\s*hook_\%('.
-#     \           'add\|source\|post_source\|post_update'.
-#     \           '\)\s*=\s*%s'
-#   
-#     call SyntaxRange#Include(printf(start, "'''"), "'''", 'vim', '')
-#     call SyntaxRange#Include(printf(start, '"""'), '"""', 'vim', '')
-#   endfunction
-# ```
 
 [[plugins]]
 repo = 'mechatroner/rainbow_csv'

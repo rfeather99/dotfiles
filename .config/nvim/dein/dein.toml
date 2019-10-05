@@ -125,3 +125,11 @@ hook_add = '''
 [[plugins]]
 repo = 'shougo/context_filetype.vim'
 
+# SQLの整形
+[[plugins]]
+repo = 'vim-scripts/SQLUtilities'
+depends = ['vim-scripts/Align']
+
+[[plugins]]
+repo = 'vim-scripts/Align'
+
