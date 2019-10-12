@@ -133,3 +133,7 @@ depends = ['vim-scripts/Align']
 [[plugins]]
 repo = 'vim-scripts/Align'
 
+# いろんなもののハイライト
+[[plugins]]
+repo = 'sheerun/vim-polyglot'
+
