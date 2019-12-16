@@ -48,6 +48,10 @@ set smartindent   "改行時に入力された行の末尾に合わせて次の�
 "set clipboard=unnamed,autoselect
 set clipboard+=unnamed
 
+" 検索関連
+set ignorecase  "大文字小文字の区別をしない
+set smartcase   "大文字は小文字と区別する(ignorecaseとセット)
+
 "---------------------------------------------------------------
 " キーマップ変更
 
@@ -55,7 +59,7 @@ set clipboard+=unnamed
 let mapleader = "\<Space>"
 
 " <Space>oを押して新しいファイルを開く
-nnoremap <Leader>o :CtrlP<CR>
+nnoremap <Leader>o :enew<CR>
 " <Space>wを押してファイルを保存する
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :q<CR>
@@ -72,6 +76,13 @@ inoremap <silent> jj <ESC>
 " defaultファイラーを起動するショートカット
 " nnoremap <C-n> :e .<CR>
 " inoremap <C-n> <ESC>:e .<CR>
+
+" Visualモードで選択からインデントの上げ下げを連続でできるようにする
+vnoremap < <gv
+vnoremap > >gv
+
+" 検索時にデフォルトでvery magicを有効にする
+nnoremap /  /\v
 
 "---------------------------------------------------------------
 " 設定ファイルの読み込み
