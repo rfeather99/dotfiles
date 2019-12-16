@@ -84,6 +84,7 @@ repo = 'airblade/vim-gitgutter'
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
+depends = ['vim-rhubarb']
 hook_add = '''
   set diffopt+=vertical
   :command Gs Gstatus
@@ -92,7 +93,11 @@ hook_add = '''
   :command Gd Gdiff
   :command Gm Gmerge
   :command Gb Gblame
+  :command Gh Gbrowse
 '''
+
+[[plugins]]
+repo    = 'tpope/vim-rhubarb'
 
 [[plugins]]
 repo    = 'vim-airline/vim-airline'
