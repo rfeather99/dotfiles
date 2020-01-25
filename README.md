@@ -2,7 +2,7 @@
 my dotfiles
 
 # 前提のプログラム
-zsh,vimは元々入っているけど、最新取得  
+zsh,vimは元々入っているけど、最新取得
 * zsh zsh-completionsa
 * tmux
 * neovim
@@ -53,7 +53,7 @@ shift + DownKey | ペインを新しいウィンドウに移動する
     `mkdir -p ~/.config/coc/extensions`
 
   2. vim起動後に実行
-    
+
     `:call coc#util#install()`
 
 ## 主要なプラグイン
@@ -88,6 +88,7 @@ n | \<Space\>o | 新規バッファ表示
 n | \<Space\>w | :wと同じ
 n | \<Space\>q | :qと同じ
 n | \<Space\>\<Space\> | ヴィジュアルラインモード起動
+n | # | /検索した結果を置換
 
 ### TAB関連
 
@@ -159,7 +160,7 @@ zb | `:Denite buffer`起動
 zl | `:Denite line`起動
 zg | `:Denite grep`起動
 zy | `:Denite neoyank`起動
-  
+
 - 起動中のコマンド
 
   キー | 内容
