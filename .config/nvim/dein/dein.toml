@@ -101,9 +101,12 @@ repo    = 'tpope/vim-rhubarb'
 
 [[plugins]]
 repo    = 'vim-airline/vim-airline'
-depends = ['vim-airline-themes', 'vim-fugitive']
+depends = ['vim-airline-themes', 'vim-fugitive', 'ale']
 hook_add = '''
   let g:airline_powerline_fonts = 1
+  let g:airline#extensions#ale#enabled = 1
+  let g:airline#extensions#ale#error_symbol = '❌'
+  let g:airline#extensions#ale#warning_symbol = '⚠️ '
   set laststatus=2
 '''
 
@@ -144,4 +147,7 @@ repo = 'sheerun/vim-polyglot'
 hook_add = '''
   let g:polyglot_disabled = ['csv']
 '''
+
+[[plugins]]
+repo = 'w0rp/ale'
 
