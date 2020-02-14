@@ -150,4 +150,12 @@ hook_add = '''
 
 [[plugins]]
 repo = 'w0rp/ale'
+hook_add = '''
+  let g:ale_fixers = {
+        \ 'javascript': ['eslint'],
+        \ 'typescript': ['eslint'],
+        \ 'ruby': ['rubocop']
+        \ }
+  let g:ale_fix_on_save = 1
+'''
 
