@@ -83,8 +83,8 @@ inoremap <silent> jj <ESC>
 " inoremap <C-n> <ESC>:e .<CR>
 
 " Visualモードで選択からインデントの上げ下げを連続でできるようにする
-vnoremap < <gv
-vnoremap > >gv
+" noremap < <gv
+" noremap > >gv
 
 " 検索時にデフォルトでvery magicを有効にする
 nnoremap /  /\v

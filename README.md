@@ -31,6 +31,7 @@ Ctrl + l | 右のウィンドウに移動
 z | ペインを最大表示
 option + 1 | horizontal to verticalレイアウト
 option + 2 | vertical to horizontalレイアウト
+:set-window-option synchronize-panes on | 全pane一斉入力
 
 ## よくつかうキー(プレフィックスキー不要 -n)
 
@@ -73,11 +74,12 @@ n | ctrl+o | カーソル移動履歴を戻る
 n | ctrl+i | カーソル移動履歴を進む
 n | * | カーソル一にある単語を検索
 n | ~ | 大文字小文字変換
-v | = | インデント整形
-n | < | インデント上げ
-n | > | インデント下げ
-v | < | 複数行インデント上げ
-v | > | 複数行インデント下げ
+n | \< | インデント上げ
+n | \> | インデント下げ
+v | \< | 複数行インデント上げ
+v | \> | 複数行インデント下げ
+v | gv | 直前の選択範囲を選択する
+i | \<C-o\> | 挿入ノーマルモード起動
 
 ### カスタム
 
@@ -177,7 +179,14 @@ gd | `coc-definition`を起動
 gi | `coc-implementation`を起動
 gr | `coc-references`を起動
 gy | `coc-type-definition`を起動
- 
+
+### commentary関連
+
+モード | キー | 内容
+--- | --- | ---
+n | gcc | 行をコメントのオンオフ
+v | gc | 選択行をコメントのオンオフ
+
 ### clever_f関連
 f{char}検索後
 
