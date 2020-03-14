@@ -69,6 +69,9 @@ nmap <Leader><Leader> V
 nnoremap x "_x
 nnoremap X "_X
 
+"選択領域にはりつけるときに、貼り付け先をyankしないようにする
+xnoremap p pgvygv<esc>
+
 " INSERTモードから抜けるときにESCの代わりにjjをつかう
 inoremap <silent> jj <ESC>
 
