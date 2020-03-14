@@ -163,3 +163,7 @@ hook_add = '''
 [[plugins]]
 repo = 'tpope/vim-commentary'
 
+# 選択文字をSで囲んだり、囲み文字切り替えできるようになる
+[[plugins]]
+repo = 'tpope/vim-surround'
+
