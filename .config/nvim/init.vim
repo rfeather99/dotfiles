@@ -78,6 +78,10 @@ nnoremap /  /\v
 " 検索中の文字を置換する
 nnoremap # :%s///gc<left><left><left>
 
+" コマンドモードでemacsバインディングが使えるようにする
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+
 "---------------------------------------------------------------
 " 設定ファイルの読み込み
 let s:source_rc = 'source ' . $HOME . '/.config/nvim/'
