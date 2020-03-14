@@ -13,7 +13,6 @@ set fileformats=unix,dos,mac
 " エディタ設定
 set number          "行番号を表示する
 set cursorline      "カーソル行の背景色を変える
-"set cursorcolumn   "カーソル位置のカラムの背景色を変える
 set title           "編集中のファイル名を表示する
 set showcmd         "入力中のコマンドを表示する
 set cmdheight=2     "コマンド入力欄の行数を2行にする
@@ -46,16 +45,11 @@ set autoindent    "改行時に前の行のインデントを継続する
 set smartindent   "改行時に入力された行の末尾に合わせて次の行のインデントを増減す
 
 "clipboad連携設定
-"set clipboard=unnamed,autoselect
 set clipboard+=unnamed
 
 " 検索関連
 set ignorecase  "大文字小文字の区別をしない
 set smartcase   "大文字は小文字と区別する(ignorecaseとセット)
-
-" neovimのfloating window関連
-" set pumblend=20 "popup windowが半透明になる
-" set winblend=10 "floating windowが半透明になる
 
 "---------------------------------------------------------------
 " キーマップ変更
@@ -78,14 +72,6 @@ nnoremap X "_X
 " INSERTモードから抜けるときにESCの代わりにjjをつかう
 inoremap <silent> jj <ESC>
 
-" defaultファイラーを起動するショートカット
-" nnoremap <C-n> :e .<CR>
-" inoremap <C-n> <ESC>:e .<CR>
-
-" Visualモードで選択からインデントの上げ下げを連続でできるようにする
-" noremap < <gv
-" noremap > >gv
-
 " 検索時にデフォルトでvery magicを有効にする
 nnoremap /  /\v
 
@@ -98,7 +84,6 @@ let s:source_rc = 'source ' . $HOME . '/.config/nvim/'
 let s:load_rc   = {file -> execute(s:source_rc . file . '.vim')}
 call s:load_rc('dein')                " プラグインの読み込み
 call s:load_rc('tab')                 " TAB設定
-call s:load_rc('utility')             " TAB設定
 
 "---------------------------------------------------------------
 " set background=light

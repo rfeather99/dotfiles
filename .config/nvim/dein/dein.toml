@@ -1,6 +1,5 @@
 # colorschemeの設定
 [[plugins]]
-#repo = 'NLKNguyen/papercolor-theme'
 repo = 'morhetz/gruvbox'
 hook_add = '''
   "set background=light
@@ -12,10 +11,6 @@ hook_add = '''
 # インデントを可視化
 [[plugins]]
 repo = 'Yggdroot/indentLine'
-
-# 無駄な空白をハイライト
-# [[plugins]]
-# repo = 'bronson/vim-trailing-whitespace'
 
 # j, k移動高速化
 [[plugins]]
@@ -42,41 +37,6 @@ hook_add = '''
   xmap g/ <Plug>(easymotion-sn)
   omap g/ <Plug>(easymotion-tn)
 '''
-
-# マルチカーソル
-# [[plugins]]
-# repo = 'terryma/vim-multiple-cursors'
-
-# /検索強化
-# [[plugins]]
-# repo = 'osyo-manga/vim-anzu'
-# hook_add = '''
-#   nmap n nzz<Plug>(anzu-update-search-status)
-#   nmap N Nzz<Plug>(anzu-update-search-status)
-#   nmap * <Plug>(anzu-star)
-#   nmap # <Plug>(anzu-sharp)
-#   nmap <silent> <ESC><ESC> :<C-u>nohlsearch<CR><Plug>(anzu-clear-search-status)
-# '''
-
-# f検索強化
-[[plugins]]
-repo = 'rhysd/clever-f.vim'
-hook_add = '''
-  let g:clever_f_ignore_case = 1        " 小文字を入力した場合、大文字小文字区別しない
-  let g:clever_f_smart_case = 1         " 大文字を入力したら大文字のみ
-  let g:clever__f_fix_key_direction = 1 " fで右、Fで左検索
-  let g:clever_f_not_overwrites_standard_mappings = 1 " tはtabに使いたいので標準マッピングにしない
-  nmap f <Plug>(clever-f-f)
-  xmap f <Plug>(clever-f-f)
-  omap f <Plug>(clever-f-f)
-  nmap F <Plug>(clever-f-F)
-  xmap F <Plug>(clever-f-F)
-  omap F <Plug>(clever-f-F)
-'''
-
-# :e sudo:%
-# [[plugins]]
-# repo = 'vim-scripts/sudo.vim'
 
 # gitの変更箇所を左にマーク表示する
 [[plugins]]
@@ -132,14 +92,6 @@ hook_add = '''
 
 [[plugins]]
 repo = 'shougo/context_filetype.vim'
-
-# SQLの整形
-[[plugins]]
-repo = 'vim-scripts/SQLUtilities'
-depends = ['vim-scripts/Align']
-
-[[plugins]]
-repo = 'vim-scripts/Align'
 
 # いろんなもののハイライト
 [[plugins]]
