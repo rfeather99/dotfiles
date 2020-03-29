@@ -10,7 +10,6 @@ hook_add = '''
   let g:asyncomplete_popup_delay = 200
 '''
 hook_source = '''
-  set completeopt=menuone,noinsert,preview
   inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
   inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
