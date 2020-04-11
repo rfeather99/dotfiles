@@ -26,9 +26,8 @@ hook_add = '''
  let g:lsp_diagnostics_enabled = 0
  let g:lsp_diagnostics_echo_cursor = 0
  let g:lsp_text_edit_enabled = 0
-'''
-hook_source = '''
-  function! s:on_lsp_buffer_enabled() abort
+
+ function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete
     setlocal signcolumn=yes
     nmap <buffer> gd <plug>(lsp-definition)
