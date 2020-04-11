@@ -23,7 +23,7 @@ set list            "不可視文字を表示
 set listchars=tab:▸\ ,eol:↲,extends:❯,precedes:❮ " 不可視文字の表示記号指定
 set foldmethod=indent "折りたたみ範囲の判断基準（デフォルト: manual）
 set foldlevel=100     "ファイルを開いたときにデフォルトで折りたたむレベル
-set completeopt=menuone,noinsert,preview "completionの設定
+set completeopt=menuone,noinsert "completionの設定
 
 " カーソル移動関連の設定
 set backspace=indent,eol,start " Backspaceキーの影響範囲に制限を設けない
