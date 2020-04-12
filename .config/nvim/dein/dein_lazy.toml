@@ -13,3 +13,7 @@ hook_add = '''
 repo = 'leafgarland/typescript-vim'
 on_ft = ['typescript']
 
+[[plugins]]
+repo = 'mattn/emmet-vim'
+on_ft = ['html', 'css', 'scss', 'vue']
+

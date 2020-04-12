@@ -62,7 +62,7 @@ shift + DownKey | ペインを新しいウィンドウに移動する
 - dein
 - defx
 - denite
-- coc
+- vim-lsp, coc
 
 ## よく使うキー
 
@@ -169,14 +169,14 @@ zy | `:Denite neoyank`起動
   q | `:Denite`終了
   p | プレビュー表示
 
-### Coc関連
+### vim-lsp, Coc関連
 
 キー | 内容
 --- | ---
-gd | `coc-definition`を起動
-gi | `coc-implementation`を起動
-gr | `coc-references`を起動
-gy | `coc-type-definition`を起動
+gd | `lsp-definition`を起動
+gi | `lsp-implementation`を起動
+gr | `lsp-references`を起動
+gh | `lsp-hover`を起動
 
 ### commentary関連
 
@@ -192,6 +192,12 @@ v | gc | 選択行をコメントのオンオフ
 v | S{囲み文字} | 囲み文字で選択範囲を囲む
 n | cs{囲み文字}{新しい囲み文字} | 囲み文字を替える
 n | ds{囲み文字} | 囲み文字を削除する
+
+### emmet関連
+
+モード | キー | 内容
+--- | --- | ---
+n | \<crtl-y\>, | emmetを展開する
 
 ### RainbowCSV関連
 
