@@ -85,6 +85,12 @@ nnoremap # :%s///gc<left><left><left>
 " コマンドモードでemacsバインディングが使えるようにする
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+" 前の単語へ移動
+cnoremap <M-b> <S-Left>
+" 次の単語へ移動
+cnoremap <M-f> <S-Right>
 
 "---------------------------------------------------------------
 " 設定ファイルの読み込み
