@@ -21,7 +21,7 @@ if dein#load_state(s:dein_dir)
         \ {'name': 'dein_lazy',   'lazy': 1},
         \ {'name': 'defx_lazy',   'lazy': 1},
         \ {'name': 'denite_lazy', 'lazy': 1},
-        \ {'name': 'coc_lazy',    'lazy': 1},
+        \ {'name': 'lsp_lazy'},
         \ ]
   let s:path      = {name -> $HOME . '/.config/nvim/dein/' . name . '.toml'}
   let s:load_toml = {name, lazy -> dein#load_toml(s:path(name), {'lazy': lazy})}

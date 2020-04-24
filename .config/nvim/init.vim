@@ -23,6 +23,7 @@ set list            "不可視文字を表示
 set listchars=tab:▸\ ,eol:↲,extends:❯,precedes:❮ " 不可視文字の表示記号指定
 set foldmethod=indent "折りたたみ範囲の判断基準（デフォルト: manual）
 set foldlevel=100     "ファイルを開いたときにデフォルトで折りたたむレベル
+set completeopt=menuone,noinsert "completionの設定
 
 " カーソル移動関連の設定
 set backspace=indent,eol,start " Backspaceキーの影響範囲に制限を設けない
@@ -84,6 +85,12 @@ nnoremap # :%s///gc<left><left><left>
 " コマンドモードでemacsバインディングが使えるようにする
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+" 前の単語へ移動
+cnoremap <M-b> <S-Left>
+" 次の単語へ移動
+cnoremap <M-f> <S-Right>
 
 "---------------------------------------------------------------
 " 設定ファイルの読み込み

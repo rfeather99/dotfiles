@@ -77,22 +77,6 @@ repo = 'vim-airline/vim-airline-themes'
 [[plugins]]
 repo = 'cohama/lexima.vim'
 
-# cursorの位置でfiletypeを切り替える
-[[plugins]]
-repo = 'osyo-manga/vim-precious'
-depends = ['context_filetype.vim']
-hook_add = '''
-  " コンテキストの外側をコメントカラーにしない
-  let g:precious_enable_switchers = {
-    \   "*" : {
-    \       "outer_region" : 0
-    \   }
-    \}
-'''
-
-[[plugins]]
-repo = 'shougo/context_filetype.vim'
-
 # いろんなもののハイライト
 [[plugins]]
 repo = 'sheerun/vim-polyglot'
@@ -106,6 +90,7 @@ hook_add = '''
   let g:ale_fixers = {
         \ 'javascript': ['eslint'],
         \ 'typescript': ['eslint'],
+        \ 'vue': ['eslint'],
         \ 'ruby': ['rubocop']
         \ }
   let g:ale_fix_on_save = 1
