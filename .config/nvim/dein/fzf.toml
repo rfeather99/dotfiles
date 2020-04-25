@@ -1,0 +1,22 @@
+[[plugins]]
+repo = 'junegunn/fzf'
+build = './install --bin'
+merged = '0'
+
+[[plugins]]
+repo = 'junegunn/fzf.vim'
+depends = 'fzf'
+hook_add = '''
+  let $FZF_DEFAULT_COMMAND='ag --hidden --ignore .git --ignore node_modules -g ""'
+
+  command! -bang -nargs=* Ag
+  \ call fzf#vim#grep(
+  \   'ag --noheading --hidden --ignore .git --ignore node_modules --color '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+
+  nnoremap <silent> zb :Buffers<CR>
+  nnoremap <silent> zf :Files<CR>
+  nnoremap zg :Ag<Space>
+  nnoremap <silent> zl :BLines<CR>
+  nnoremap <silent> zh :History<CR>
+'''
