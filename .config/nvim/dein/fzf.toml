@@ -8,6 +8,7 @@ repo = 'junegunn/fzf.vim'
 depends = 'fzf'
 hook_add = '''
   let $FZF_DEFAULT_COMMAND='ag --hidden --ignore .git --ignore node_modules -g ""'
+  let $FZF_DEFAULT_OPTS="--border --reverse"
 
   command! -bang -nargs=* Ag
   \ call fzf#vim#grep(
