@@ -45,24 +45,14 @@ shift + DownKey | ペインを新しいウィンドウに移動する
 ## 初回だけ実行
 - 色々なプラグインのために以下をインストール
 
-  `pip3 instal --upgrade neovim`
-
-- Cocのインストール
-
-  1. プラグインインストールようのディレクトリを作成しておく
-
-    `mkdir -p ~/.config/coc/extensions`
-
-  2. vim起動後に実行
-
-    `:call coc#util#install()`
+  `pip3 install --upgrade neovim`
 
 ## 主要なプラグイン
 - fugitive
 - dein
 - defx
-- denite
-- vim-lsp, coc
+- fzf
+- vim-lsp
 
 ## よく使うキー
 
@@ -70,6 +60,9 @@ shift + DownKey | ペインを新しいウィンドウに移動する
 
 モード | キー | 内容
 --- | --- | ---
+i | ctrl+c | insertモード終了(ESCと同じ)
+v | ctrl+c | visualモード終了(ESCと同じ)
+c | ctrl+c | commandモード終了(ESCと同じ)
 n | ctrl+o | カーソル移動履歴を戻る
 n | ctrl+i | カーソル移動履歴を進む
 n | * | カーソル一にある単語を検索
@@ -152,25 +145,24 @@ n | Ctrl + e | ファイラーを開く
   c | ファイルのコピー
   p | ファイルの貼り付け
 
-### Denite関連
+### fzf関連
 
 キー | 内容
 --- | ---
-zf | `:Denite file/rec`起動
-zb | `:Denite buffer`起動
-zl | `:Denite line`起動
-zg | `:Denite grep`起動
-zy | `:Denite neoyank`起動
+zf | ファイル検索
+zb | バッファー検索
+zl | 表示しているバッファー内の行検索
+zg | grep
 
 - 起動中のコマンド
 
   キー | 内容
   --- | ---
-  i | フィルタ起動
-  q | `:Denite`終了
-  p | プレビュー表示
+  ctrl+n | 次の候補に移動
+  ctrl+p | 前の候補に移動
+  ctrl+c | fzf終了
 
-### vim-lsp, Coc関連
+### vim-lsp関連
 
 キー | 内容
 --- | ---
