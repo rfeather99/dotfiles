@@ -23,7 +23,7 @@ hook_source = '''
       \ 'selected_icon': '✓',
       \ })
   call defx#custom#option('_', {
-      \ 'columns': 'git:icons:indent:filename:type',
+      \ 'columns': 'git:indent:icons:filename',
       \ 'show_ignored_files': 1,
       \ })
 '''

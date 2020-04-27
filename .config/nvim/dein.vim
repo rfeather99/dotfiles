@@ -19,8 +19,8 @@ if dein#load_state(s:dein_dir)
   let s:toml = [
         \ {'name': 'dein'},
         \ {'name': 'dein_lazy',   'lazy': 1},
-        \ {'name': 'defx_lazy',   'lazy': 1},
-        \ {'name': 'lsp_lazy'},
+        \ {'name': 'defx'},
+        \ {'name': 'lsp'},
         \ {'name': 'fzf'},
         \ ]
   let s:path      = {name -> $HOME . '/.config/nvim/dein/' . name . '.toml'}
