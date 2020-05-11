@@ -12,6 +12,8 @@ hook_add = '''
   inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
   inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
+  " You can use other key to expand snippet.
+  imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
 '''
 
 [[plugins]]
@@ -25,6 +27,11 @@ hook_add = '''
  let g:lsp_diagnostics_enabled = 1
  let g:lsp_diagnostics_echo_cursor = 1
  let g:lsp_text_edit_enabled = 0
+
+ highlight link LspErrorHighlight         CocErrorHighlight
+ highlight link LspWarningHighlight       CocWarningHighlight
+ highlight link LspInformationHighlight   CocInfoHighlight
+ highlight link LspHingHighlight          CocHintHighlight
 
  function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete
@@ -45,15 +52,17 @@ hook_add = '''
   command! LspDebug let lsp_log_verbose=1 | let lsp_log_file = expand('~/lsp.log')
 '''
  
- [[plugins]]
- repo = 'mattn/vim-lsp-settings'
- depends = ['vim-lsp']
+[[plugins]]
+repo = 'mattn/vim-lsp-settings'
+depends = ['vim-lsp']
+
+[[plugins]]
+repo = 'hrsh7th/vim-vsnip'
+depends = ['vim-lsp']
+hook_add = '''
+'''
  
- [[plugins]]
- repo = 'hrsh7th/vim-vsnip'
- depends = ['vim-lsp']
- 
- [[plugins]]
- repo = 'hrsh7th/vim-vsnip-integ'
- depends = ['vim-lsp']
+[[plugins]]
+repo = 'hrsh7th/vim-vsnip-integ'
+depends = ['vim-lsp']
  
