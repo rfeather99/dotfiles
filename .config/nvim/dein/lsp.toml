@@ -28,6 +28,11 @@ hook_add = '''
  let g:lsp_diagnostics_echo_cursor = 1
  let g:lsp_text_edit_enabled = 0
 
+ highlight link LspErrorHighlight         CocErrorHighlight
+ highlight link LspWarningHighlight       CocWarningHighlight
+ highlight link LspInformationHighlight   CocInfoHighlight
+ highlight link LspHingHighlight          CocHintHighlight
+
  function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete
     setlocal signcolumn=yes
