@@ -1,9 +1,5 @@
 [[plugins]]
-repo = 'prabirshrestha/async.vim'
-
-[[plugins]]
 repo = 'prabirshrestha/asyncomplete.vim'
-depends = ['async.vim']
 hook_add = '''
   let g:asyncomplete_auto_popup = 1
   let g:asyncomplete_auto_completeopt = 0
