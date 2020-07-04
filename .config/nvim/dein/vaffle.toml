@@ -1,13 +1,40 @@
 [[plugins]]
 repo ='ryanoasis/vim-devicons'
+hook_add = '''
+'''
 
 [[plugins]]
 repo ='cocopon/vaffle.vim'
 depends = ['vim-devicons']
 hook_add = '''
   function! RenderMyFavoriteIcon(item)
-    return printf('%s ',
+    return printf('%s%s ',
+        \ GitStatus(a:item),
         \ WebDevIconsGetFileTypeSymbol(a:item.basename, a:item.is_dir))
+  endfunction
+
+  function! GitStatus(item)
+    let git_status = system('git status -s ' . a:item.path)[0:1]
+
+    if git_status == ' M' " modified
+      return '+'
+    elseif git_status =~ '\v(M|A|C).' " staged
+      return '●'
+    elseif git_status == 'R.' " renamed
+      return '➜'
+    elseif git_status =~ '\v(UU|AA|DD)' " unmarged
+      return '═'
+    elseif git_status == ' D' " deleted
+      return 'x'
+    elseif git_status == '??' " untracked
+      return '?'
+    elseif git_status == '!!' " ignore
+      return ' '
+    elseif git_status == 'X ' " unknown
+      return '?'
+    else
+      return ' '
+    endif
   endfunction
 
   let g:vaffle_auto_cd = 1
