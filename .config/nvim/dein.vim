@@ -19,7 +19,7 @@ if dein#load_state(s:dein_dir)
   let s:toml = [
         \ {'name': 'dein'},
         \ {'name': 'ftype',  'lazy': 1},
-        \ {'name': 'defx',   'lazy': 1},
+        \ {'name': 'vaffle'},
         \ {'name': 'fzf'},
         \ {'name': 'lsp'},
         \ ]
