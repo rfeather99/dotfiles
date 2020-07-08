@@ -63,6 +63,8 @@ let g:vaffle_show_hidden_files = 1
 let g:vaffle_use_default_mappings = 0
 let g:vaffle_render_custom_icon = 'RenderMyFavoriteIcon'
 let g:vaffle_current = ''
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vue'] = ''
 
 nnoremap <silent> <C-e> :<C-u>execute 'Vaffle '.g:vaffle_current<CR>
 
