@@ -2,17 +2,38 @@ if empty(globpath(&rtp, 'autoload/vaffle'))
   finish
 endif
 
+function! s:get_git_status(path) abort
+  let pwd = getcwd()
+  execute 'lcd' . a:path
+  let lines = system('git status -s --ignored '. a:path)
+  let hash = {}
+
+  for line in split(lines, '\n')
+    let file_name = split(line[3:], '/')[0]
+    if !has_key(hash, file_name)
+      let hash[file_name] = line[0:1]
+    endif
+  endfor
+  execute 'lcd' . pwd
+  return hash
+endfunction
+
+let s:git_status = s:get_git_status(getcwd())
+
 " Gitステータスと、アイコンを表示する
 function! RenderMyFavoriteIcon(item)
   return printf('%s%s ',
-      \ vaffle#git_statusses(a:item),
+      \ vaffle#git_statusses(a:item.basename),
       \ WebDevIconsGetFileTypeSymbol(a:item.basename, a:item.is_dir))
 endfunction
 
 " Gitステータスによって表示するマークを設定
-function! vaffle#git_statusses(item) abort
-  let git_status = system('git status -s ' . a:item.path)[0:1]
-  return vaffle#git_mark(git_status)
+function! vaffle#git_statusses(name) abort
+  if has_key(s:git_status, a:name)
+    return vaffle#git_mark(s:git_status[a:name][0:1])
+  endif
+
+  return ' '
 endfunction
 
 function! vaffle#git_mark(mark_text) abort
@@ -49,12 +70,16 @@ function! MyOpenSelected() abort
   let filer = vaffle#buffer#get_filer()
   let item = filer.items[line('.') - 1]
   let g:vaffle_current = item.path
+  if item.is_dir
+    let s:git_status = s:get_git_status(g:vaffle_current)
+  endif
   call vaffle#open_selected('')
 endfunction
 
 function! MyOpenParent() abort
   let filer = vaffle#buffer#get_filer()
   let g:vaffle_current = fnameescape(fnamemodify(filer.dir, ':h'))
+  let s:git_status = s:get_git_status(g:vaffle_current)
   call vaffle#open_parent()
 endfunction
 
