@@ -61,6 +61,7 @@ call plug#end()
 let s:plug_rc = 'source ' . $HOME . '/.config/nvim/plug/'
 let s:load_rc   = {file -> execute(s:plug_rc . file . '.vim')}
 call s:load_rc('plug')                " プラグインの読み込み
+call s:load_rc('fugitive')            " fugitiveの設定読み込み
 call s:load_rc('vaffle')              " ファイラーの設定読み込み
 call s:load_rc('fzf')                 " fzfの設定読み込み
 call s:load_rc('lsp')                 " lspの設定読み込み

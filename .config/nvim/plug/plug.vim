@@ -29,18 +29,6 @@ if !empty(globpath(&rtp, 'autoload/easymotion'))
   omap g/ <Plug>(easymotion-tn)
 endif
 
-" vim-fugitive
-if !empty(globpath(&rtp, 'autoload/fugitive.vim'))
-  set diffopt+=vertical
-  :command Gs Gstatus
-  :command Ga Gwrite
-  :command Gc Gcommit-v
-  :command Gd Gdiff
-  :command Gm Gmerge
-  :command Gb Gblame
-  :command Gh Gbrowse
-endif
-
 " vim-airline
 if !empty(globpath(&rtp, 'autoload/airline'))
   let g:airline_powerline_fonts = 1
