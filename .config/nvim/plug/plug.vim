@@ -52,8 +52,12 @@ endif
 
 " vim-polyglot
 if !empty(globpath(&rtp, 'autoload/csv.vim'))
+  " csvは別のプラグインを使う
   let g:polyglot_disabled = ['csv']
   autocmd BufRead,BufNewFile *.csv setfiletype csv
+
+  " vim-markdownのcode blockのconealを無効にする
+  let g:vim_markdown_conceal_code_blocks = 0
 endif
 
 " ale
