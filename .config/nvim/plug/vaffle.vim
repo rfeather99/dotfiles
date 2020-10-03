@@ -20,6 +20,7 @@ endfunction
 
 " let s:git_status = s:get_git_status(getcwd())
 let s:git_status = {}
+let s:vaffle_current = './'
 
 " Gitステータスと、アイコンを表示する
 function! RenderMyFavoriteIcon(item)
@@ -63,31 +64,30 @@ let g:vaffle_auto_cd = 0
 let g:vaffle_show_hidden_files = 1
 let g:vaffle_use_default_mappings = 0
 let g:vaffle_render_custom_icon = 'RenderMyFavoriteIcon'
-let g:vaffle_current = './'
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vue'] = ''
 
 nnoremap <silent> <C-e> :<C-u>call MyVaffle()<CR>
 
 function! MyVaffle() abort
-  let s:git_status = s:get_git_status(g:vaffle_current)
-  execute 'Vaffle '.g:vaffle_current
+  let s:git_status = s:get_git_status(s:vaffle_current)
+  execute 'Vaffle '.s:vaffle_current
 endfunction
 
 function! MyOpenSelected() abort
   let filer = vaffle#buffer#get_filer()
   let item = filer.items[line('.') - 1]
-  let g:vaffle_current = item.path
   if item.is_dir
-    let s:git_status = s:get_git_status(g:vaffle_current)
+    let s:vaffle_current = item.path
+    let s:git_status = s:get_git_status(s:vaffle_current)
   endif
   call vaffle#open_selected('')
 endfunction
 
 function! MyOpenParent() abort
   let filer = vaffle#buffer#get_filer()
-  let g:vaffle_current = fnameescape(fnamemodify(filer.dir, ':h'))
-  let s:git_status = s:get_git_status(g:vaffle_current)
+  let s:vaffle_current = fnameescape(fnamemodify(filer.dir, ':h'))
+  let s:git_status = s:get_git_status(s:vaffle_current)
   call vaffle#open_parent()
 endfunction
 
