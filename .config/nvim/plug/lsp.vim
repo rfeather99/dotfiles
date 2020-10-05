@@ -25,7 +25,7 @@ let g:lsp_text_edit_enabled = 0
 highlight link LspErrorHighlight         CocErrorHighlight
 highlight link LspWarningHighlight       CocWarningHighlight
 highlight link LspInformationHighlight   CocInfoHighlight
-highlight link LspHingHighlight          CocHintHighlight
+highlight link LspHintHighlight          CocHintHighlight
 
 function! s:on_lsp_buffer_enabled() abort
   setlocal omnifunc=lsp#complete

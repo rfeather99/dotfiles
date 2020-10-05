@@ -92,6 +92,10 @@ cnoremap <M-b> <S-Left>
 " 次の単語へ移動
 cnoremap <M-f> <S-Right>
 
+" バッファーを移動しやすくする
+nnoremap <silent> <C-p> :bp<CR>
+nnoremap <silent> <C-n> :bn<CR>
+
 "---------------------------------------------------------------
 " 設定ファイルの読み込み
 let s:source_rc = 'source ' . $HOME . '/.config/nvim/'
