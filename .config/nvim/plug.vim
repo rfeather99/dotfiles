@@ -42,8 +42,11 @@ call plug#begin(s:plug_dir)
   Plug 'leafgarland/typescript-vim',  { 'for': 'typescript' }
   Plug 'mattn/emmet-vim',             { 'for': ['html', 'css', 'scss', 'vue'] }
 
+  Plug 'lambdalisue/fern.vim'
+  Plug 'lambdalisue/fern-git-status.vim'
   Plug 'ryanoasis/vim-devicons'         " ファイラーのアイコン表示
-  Plug 'cocopon/vaffle.vim'             " ファイラー
+  Plug 'lambdalisue/fern-renderer-devicons.vim'
+  Plug 'lambdalisue/glyph-palette.vim'  " アイコンカラー設定
 
   Plug 'junegunn/fzf',                { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
@@ -62,7 +65,7 @@ let s:plug_rc = 'source ' . $HOME . '/.config/nvim/plug/'
 let s:load_rc   = {file -> execute(s:plug_rc . file . '.vim')}
 call s:load_rc('plug')                " プラグインの読み込み
 call s:load_rc('fugitive')            " fugitiveの設定読み込み
-call s:load_rc('vaffle')              " ファイラーの設定読み込み
+call s:load_rc('fern')                " ファイラーの設定読み込み
 call s:load_rc('fzf')                 " fzfの設定読み込み
 call s:load_rc('lsp')                 " lspの設定読み込み
 
