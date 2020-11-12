@@ -4,6 +4,7 @@ endif
 
 let $FZF_DEFAULT_COMMAND='ag --hidden --ignore .git --ignore node_modules -g ""'
 let $FZF_DEFAULT_OPTS="--border --reverse --bind ctrl-f:page-down,ctrl-b:page-up"
+let g:fzf_layout = { 'down': '40%' }
 
 command! -bang -nargs=* Pattern
 \ call fzf#vim#grep(
