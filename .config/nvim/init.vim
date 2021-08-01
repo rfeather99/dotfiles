@@ -96,6 +96,10 @@ cnoremap <M-f> <S-Right>
 nnoremap <silent> <C-p> :bp<CR>
 nnoremap <silent> <C-n> :bn<CR>
 
+" quickfixを移動しやすくする
+nnoremap <silent> <C-[> :cp<CR>
+nnoremap <silent> <C-]> :cn<CR>
+
 "---------------------------------------------------------------
 " 設定ファイルの読み込み
 let s:source_rc = 'source ' . $HOME . '/.config/nvim/'

@@ -49,7 +49,7 @@ shift + DownKey | ペインを新しいウィンドウに移動する
 
 ## 主要なプラグイン
 - fugitive
-- dein
+- vim-plug
 - vim-lsp
 - fzf
 - fern
@@ -72,6 +72,10 @@ n | \> | インデント下げ
 v | \< | 複数行インデント上げ
 v | \> | 複数行インデント下げ
 c/i | ctrl+r 0 | 貼り付け
+c | noh | ハイライトを消す
+c | diffthis | バッファー同士のdiffをとる
+c | diffoff | diff解除
+c | diffupdate | 差分表示がおかしくなったときに更新
 
 ### カスタム
 

@@ -40,10 +40,10 @@ call plug#begin(s:plug_dir)
 
   Plug 'mechatroner/rainbow_csv',     { 'for': 'csv' }
   Plug 'leafgarland/typescript-vim',  { 'for': 'typescript' }
-  Plug 'mattn/emmet-vim',             { 'for': ['html', 'css', 'scss', 'vue'] }
+  Plug 'mattn/emmet-vim',             { 'for': ['html', 'css', 'scss', 'vue', 'eruby'] }
 
   Plug 'lambdalisue/fern.vim'
-  Plug 'lambdalisue/fern-git-status.vim'
+  "Plug 'lambdalisue/fern-git-status.vim'
   Plug 'ryanoasis/vim-devicons'         " ファイラーのアイコン表示
   Plug 'lambdalisue/fern-renderer-devicons.vim'
   Plug 'lambdalisue/glyph-palette.vim'  " アイコンカラー設定
@@ -55,6 +55,7 @@ call plug#begin(s:plug_dir)
   Plug 'prabirshrestha/asyncomplete-lsp.vim'
   Plug 'prabirshrestha/vim-lsp'
   Plug 'mattn/vim-lsp-settings'
+  Plug 'mattn/vim-lsp-icons'
   Plug 'hrsh7th/vim-vsnip'
   Plug 'hrsh7th/vim-vsnip-integ'
 call plug#end()

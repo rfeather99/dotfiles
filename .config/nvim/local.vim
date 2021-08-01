@@ -1,9 +1,8 @@
-" .vmirc.logl
+" .vmirc.local
 " サンプル
 "
 " let g:ale_fix_on_save = 0
-" let g:lsp_diagnostics_enabled = 0
-" let g:lsp_diagnostics_echo_cursor = 0
+" let g:lsp_diagnostics_virtual_text_enabled = 0
 "
 " Load settings for each location.
 augroup vimrc-local
