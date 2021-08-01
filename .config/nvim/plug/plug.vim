@@ -44,6 +44,8 @@ if !empty(globpath(&rtp, 'autoload/csv.vim'))
   let g:polyglot_disabled = ['csv']
   autocmd BufRead,BufNewFile *.csv setfiletype csv
 
+  " 構文隠蔽を無効
+  let g:vim_markdown_conceal = 0
   " vim-markdownのcode blockのconealを無効にする
   let g:vim_markdown_conceal_code_blocks = 0
 endif
@@ -54,7 +56,8 @@ if !empty(globpath(&rtp, 'autoload/ale'))
         \ 'javascript': ['eslint'],
         \ 'typescript': ['eslint'],
         \ 'vue': ['eslint'],
-        \ 'ruby': ['rubocop']
+        \ 'ruby': ['rubocop'],
+        \ 'docker': ['hadolint'],
         \ }
   let g:ale_fix_on_save = 1
 endif
