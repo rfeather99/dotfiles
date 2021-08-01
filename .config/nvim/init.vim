@@ -109,6 +109,12 @@ call s:load_rc('tab')                 " TAB設定
 call s:load_rc('local')               " LOCAL設定の読み込み
 
 "---------------------------------------------------------------
-" set background=light
+" agの結果をquickfixに流せるようにする
+function! s:ag(word) abort
+  cexpr system(printf('ag --nogroup --nocolor --column --hidden --ignore .git --ignore node_modules --vimgrep "%s"', a:word)) | cw
+endfunction
+
+command! -nargs=1 Ag call <SID>ag(<q-args>)
+
 syntax enable "シンタックスカラーリングを設定する
 
