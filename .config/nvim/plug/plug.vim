@@ -38,18 +38,6 @@ if !empty(globpath(&rtp, 'autoload/airline'))
   set laststatus=2
 endif
 
-" vim-polyglot
-if !empty(globpath(&rtp, 'autoload/csv.vim'))
-  " csvは別のプラグインを使う
-  let g:polyglot_disabled = ['csv']
-  autocmd BufRead,BufNewFile *.csv setfiletype csv
-
-  " 構文隠蔽を無効
-  let g:vim_markdown_conceal = 0
-  " vim-markdownのcode blockのconealを無効にする
-  let g:vim_markdown_conceal_code_blocks = 0
-endif
-
 " ale
 if !empty(globpath(&rtp, 'autoload/ale'))
   let g:ale_fixers = {
@@ -61,5 +49,4 @@ if !empty(globpath(&rtp, 'autoload/ale'))
         \ }
   let g:ale_fix_on_save = 1
 endif
-
 
