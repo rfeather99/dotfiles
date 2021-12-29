@@ -69,4 +69,5 @@ call s:load_rc('fugitive')            " fugitiveの設定読み込み
 call s:load_rc('fern')                " ファイラーの設定読み込み
 call s:load_rc('fzf')                 " fzfの設定読み込み
 call s:load_rc('lsp')                 " lspの設定読み込み
+call s:load_rc('treesitter')          " treesitterの設定読み込み
 
