@@ -1,16 +1,6 @@
 autoload -U compinit
 compinit
 
-# promptinitを使う場合はこちらを読み込む
-# 利用可能なpromptの設定を見る
-# $ prompt -l
-# promptを設定する
-# $ prompt [prompt名]
-autoload -U promptinit
-promptinit
-# promptを独自で変更
-PROMPT='%m:%F{green}%c%f %n%# '
-
 # 履歴ファイルの保存先
 export HISTFILE=${HOME}/.zhistory
 # メモリに保存される履歴の件数
@@ -44,18 +34,18 @@ bindkey "^R" history-incremental-search-backward
 
 alias vim='nvim'
 alias ls='ls -G'
+alias tmux='tmux -u'
 
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 export PATH="$HOME/.rbenv/shims:$PATH"
-eval "$(rbenv init -)"
+eval "$(rbenv init --no-rehash -)"
 
-if which nodenv > /dev/null; then eval "$(nodenv init -)"; fi
 export PATH="$HOME/.nodenv/shims:$PATH"
-eval "$(nodenv init -)"
+eval "$(nodenv init --no-rehash -)"
 
-export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
-export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
-export PKG_CONFIG_PATH="/usr/local/opt/imagemagick@6/lib/pkgconfig"
+export PATH="$HOME/.pyenv/shims:$PATH"
+eval "$(pyenv init --no-rehash -)"
+
+export PATH="/usr/local/bin:$PATH"
 
 agent="$HOME/.ssh/agent"
 if [ -S "$SSH_AUTH_SOCK" ]; then
@@ -69,3 +59,22 @@ else
     echo "no ssh-agent"
 fi
 
+# promptinitを使う場合はこちらを読み込む
+# 利用可能なpromptの設定を見る
+# $ prompt -l
+# promptを設定する
+# $ prompt [prompt名]
+autoload -U promptinit
+promptinit
+# promptを独自で変更
+PROMPT='%m:%F{green}%c%f %n%# '
+
+# FZF settings
+export FZF_DEFAULT_OPTS='--reverse --border'
+function select-history() {
+  BUFFER=$(history -n -r 1 | fzf +m --query "$LBUFFER" --prompt="History > ")
+  CURSOR=$#BUFFER
+  zle reset-prompt
+}
+zle -N select-history
+bindkey '^R' select-history

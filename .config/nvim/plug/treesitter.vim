@@ -15,3 +15,7 @@ require'nvim-treesitter.configs'.setup {
 }
 EOF
 
+" thorはrubyのシンタックス
+au BufRead,BufNewFile *.thor set filetype=ruby
+au BufRead,BufNewFile Thorfile set filetype=ruby
+

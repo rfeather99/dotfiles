@@ -17,6 +17,6 @@ set diffopt+=vertical
 :command Gc Git commit
 :command Gd Gdiff
 :command Gm Gmerge
-:command Gb Gblame
+:command Gb Git blame
 :command Gh Gbrowse
 

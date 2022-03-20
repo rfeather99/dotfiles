@@ -7,7 +7,7 @@ augroup END
 
 " 文字設定
 set encoding=utf-8
-set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
+set fileencodings=utf-8,iso-2022-jp,euc-jp,cp932,sjis
 set fileformats=unix,dos,mac
 
 " エディタ設定
@@ -44,9 +44,10 @@ set shiftwidth=2  "自動インデントでずれる幅
 set softtabstop=2 "連続した空白に対してタブキーやバックスペースキーでカーソルが
 set autoindent    "改行時に前の行のインデントを継続する
 set smartindent   "改行時に入力された行の末尾に合わせて次の行のインデントを増減す
+set breakindent   "行の折り返し時に、インデントを維持する
 
 "clipboad連携設定
-set clipboard+=unnamed
+set clipboard+=unnamedplus
 
 " 検索関連
 set ignorecase  "大文字小文字の区別をしない
@@ -99,6 +100,14 @@ nnoremap <silent> <C-n> :bn<CR>
 " quickfixを移動しやすくする
 nnoremap <silent> <C-[> :cp<CR>
 nnoremap <silent> <C-]> :cn<CR>
+
+:tnoremap <Esc> <C-\><C-n>
+
+" terminalモードを使いやすくする
+nnoremap <silent> <C-t> :term<CR>
+:tnoremap <Esc> <C-\><C-n>
+command! -nargs=* T split | wincmd j | resize 20 | terminal <args>
+autocmd TermOpen * startinsert
 
 "---------------------------------------------------------------
 " 設定ファイルの読み込み

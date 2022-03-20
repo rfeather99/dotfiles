@@ -3,7 +3,7 @@ my dotfiles
 
 # 前提のプログラム
 zsh,vimは元々入っているけど、最新取得
-* zsh zsh-completionsa
+* zsh zsh-completions
 * tmux
 * neovim
 * cicaフォント
@@ -32,20 +32,9 @@ z | ペインを最大表示
 option + 1 | horizontal to verticalレイアウト
 option + 2 | vertical to horizontalレイアウト
 :set-window-option synchronize-panes on | 全pane一斉入力
-
-## よくつかうキー(プレフィックスキー不要 -n)
-
-キー | 内容
---- | ---
-shift + LeftKey | ペインを左のウィンドウに移動する
-shift + RightKey | ペインを右のウィンドウに移動する
-shift + DownKey | ペインを新しいウィンドウに移動する
+a | 全pane一斉入力のon/off
 
 # nvim
-## 初回だけ実行
-- 色々なプラグインのために以下をインストール
-
-  `pip3 instal --upgrade neovim`
 
 ## 主要なプラグイン
 - fugitive
@@ -89,6 +78,7 @@ n | \<Space\>w | :wと同じ
 n | \<Space\>q | :qと同じ
 n | \<Space\>\<Space\> | ヴィジュアルラインモード起動
 n | # | /検索した結果を置換
+tj | CTRL + [ | terminal-jobもーどからterminal-normalモードに移行
 
 ### TAB関連
 
