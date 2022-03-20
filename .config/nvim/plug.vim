@@ -33,13 +33,11 @@ call plug#begin(s:plug_dir)
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'cohama/lexima.vim'              " rubyとかvimscriptのifとかの終了を補完してくれる
-  Plug 'sheerun/vim-polyglot'           " いろんなもののハイライト
   Plug 'w0rp/ale'                       " いろんなLinterを実行
   Plug 'tpope/vim-commentary'           " コメントの切り替えをgccでできるようになる
   Plug 'tpope/vim-surround'             " 選択文字をSで囲んだり、囲み文字切り替えできるようになる
 
   Plug 'mechatroner/rainbow_csv',     { 'for': 'csv' }
-  Plug 'leafgarland/typescript-vim',  { 'for': 'typescript' }
   Plug 'mattn/emmet-vim',             { 'for': ['html', 'css', 'scss', 'vue', 'eruby'] }
 
   Plug 'lambdalisue/fern.vim'
@@ -58,6 +56,8 @@ call plug#begin(s:plug_dir)
   Plug 'mattn/vim-lsp-icons'
   Plug 'hrsh7th/vim-vsnip'
   Plug 'hrsh7th/vim-vsnip-integ'
+
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
 
 "---------------------------------------------------------------
@@ -69,4 +69,5 @@ call s:load_rc('fugitive')            " fugitiveの設定読み込み
 call s:load_rc('fern')                " ファイラーの設定読み込み
 call s:load_rc('fzf')                 " fzfの設定読み込み
 call s:load_rc('lsp')                 " lspの設定読み込み
+call s:load_rc('treesitter')          " treesitterの設定読み込み
 
