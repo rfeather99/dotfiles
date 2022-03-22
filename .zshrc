@@ -36,16 +36,10 @@ alias vim='nvim'
 alias ls='ls -G'
 alias tmux='tmux -u'
 
-export PATH="$HOME/.rbenv/shims:$PATH"
-eval "$(rbenv init --no-rehash -)"
+[ -f /opt/homebrew/bin/brew ] && eval $(/opt/homebrew/bin/brew shellenv)
 
-export PATH="$HOME/.nodenv/shims:$PATH"
-eval "$(nodenv init --no-rehash -)"
-
-export PATH="$HOME/.pyenv/shims:$PATH"
-eval "$(pyenv init --no-rehash -)"
-
-export PATH="/usr/local/bin:$PATH"
+command -v rbenv >/dev/null 2>&1 && eval "$(rbenv init --no-rehash -)"
+command -v nodenv >/dev/null 2>&1 && eval "$(nodenv init --no-rehash -)"
 
 agent="$HOME/.ssh/agent"
 if [ -S "$SSH_AUTH_SOCK" ]; then
