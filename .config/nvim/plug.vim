@@ -42,8 +42,8 @@ call plug#begin(s:plug_dir)
 
   Plug 'lambdalisue/fern.vim'
   "Plug 'lambdalisue/fern-git-status.vim'
-  Plug 'ryanoasis/vim-devicons'         " ファイラーのアイコン表示
-  Plug 'lambdalisue/fern-renderer-devicons.vim'
+  Plug 'lambdalisue/nerdfont.vim'       " ファイラーのアイコン表示
+  Plug 'lambdalisue/fern-renderer-nerdfont.vim'
   Plug 'lambdalisue/glyph-palette.vim'  " アイコンカラー設定
 
   Plug 'junegunn/fzf',                { 'do': { -> fzf#install() } }

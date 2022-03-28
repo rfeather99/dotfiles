@@ -4,7 +4,7 @@ endif
 
 let g:fern#default_hidden = 1
 let g:fern#disable_default_mappings = 1
-let g:fern#renderer = "devicons"
+let g:fern#renderer = "nerdfont"
 
 nnoremap <silent> <C-e> :<C-u>Fern . -reveal=%<CR>
 
