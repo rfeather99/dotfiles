@@ -18,8 +18,8 @@ imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l
 " ====================================
 " vim-lspまわりの設定
 " ====================================
-let g:lsp_diagnostics_enabled = 0
-let g:lsp_diagnostics_echo_cursor = 0
+let g:lsp_diagnostics_enabled = 1
+let g:lsp_diagnostics_echo_cursor = 1
 let g:lsp_text_edit_enabled = 0
 
 highlight link LspErrorHighlight         CocErrorHighlight

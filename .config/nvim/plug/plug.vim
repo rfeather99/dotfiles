@@ -44,9 +44,10 @@ if !empty(globpath(&rtp, 'autoload/ale'))
         \ 'javascript': ['eslint'],
         \ 'typescript': ['eslint'],
         \ 'vue': ['eslint'],
-        \ 'ruby': ['rubocop'],
         \ 'docker': ['hadolint'],
         \ }
+  let g:ale_linters = {
+        \   }
   let g:ale_fix_on_save = 1
   " Only run linters named in ale_linters settings.
   let g:ale_linters_explicit = 1
