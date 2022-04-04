@@ -113,6 +113,7 @@ let s:source_rc = 'source ' . $HOME . '/.config/nvim/'
 let s:load_rc   = {file -> execute(s:source_rc . file . '.vim')}
 call s:load_rc('plug')                " プラグインの読み込み
 call s:load_rc('tab')                 " TAB設定
+call s:load_rc('osc52')               " OSC52設定
 call s:load_rc('local')               " LOCAL設定の読み込み
 
 "---------------------------------------------------------------
