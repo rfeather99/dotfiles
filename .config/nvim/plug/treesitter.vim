@@ -4,13 +4,13 @@ endif
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained",
+  ensure_installed = {},
   highlight = {
     enable = true,
     disable = {},
   },
   indent = {
-    enable = true, -- これを設定することでtree-sitterによるインデントを有効にできます
+    enable = false, -- これを設定することでtree-sitterによるインデントを有効にできます
   },
 }
 EOF

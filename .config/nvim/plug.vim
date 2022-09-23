@@ -23,19 +23,19 @@ endif
 " :PlugInstall
 " :PlugStatus
 call plug#begin(s:plug_dir)
-  Plug 'morhetz/gruvbox'                " color schema
-  Plug 'Yggdroot/indentLine'            " インデントを可視化
-  Plug 'rhysd/accelerated-jk'           " j, k移動高速化
-  Plug 'easymotion/vim-easymotion'      " カーソル移動高速化
-  Plug 'airblade/vim-gitgutter'         " gitの変更箇所を左にマーク表示する
-  Plug 'tpope/vim-rhubarb'              " fugitiveのGbrowseでブラウザGitHub開く用に
-  Plug 'tpope/vim-fugitive'             " Git関連使いやすいように
+  Plug 'morhetz/gruvbox'                      " color schema
+  Plug 'lukas-reineke/indent-blankline.nvim'  " インデントを可視化
+  Plug 'rhysd/accelerated-jk'                 " j, k移動高速化
+  Plug 'easymotion/vim-easymotion'            " カーソル移動高速化
+  Plug 'airblade/vim-gitgutter'               " gitの変更箇所を左にマーク表示する
+  Plug 'tpope/vim-rhubarb'                    " fugitiveのGbrowseでブラウザGitHub開く用に
+  Plug 'tpope/vim-fugitive'                   " Git関連使いやすいように
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
-  Plug 'cohama/lexima.vim'              " rubyとかvimscriptのifとかの終了を補完してくれる
-  Plug 'w0rp/ale'                       " いろんなLinterを実行
-  Plug 'tpope/vim-commentary'           " コメントの切り替えをgccでできるようになる
-  Plug 'tpope/vim-surround'             " 選択文字をSで囲んだり、囲み文字切り替えできるようになる
+  Plug 'cohama/lexima.vim'                    " rubyとかvimscriptのifとかの終了を補完してくれる
+  Plug 'w0rp/ale'                             " いろんなLinterを実行
+  Plug 'tpope/vim-commentary'                 " コメントの切り替えをgccでできるようになる
+  Plug 'tpope/vim-surround'                   " 選択文字をSで囲んだり、囲み文字切り替えできるようになる
 
   Plug 'mechatroner/rainbow_csv',     { 'for': 'csv' }
   Plug 'mattn/emmet-vim',             { 'for': ['html', 'css', 'scss', 'vue', 'eruby'] }

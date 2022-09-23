@@ -2,7 +2,7 @@ if empty(globpath(&rtp, 'autoload/fzf'))
   finish
 endif
 
-let $FZF_DEFAULT_COMMAND='ag --hidden --ignore .git --ignore node_modules -g ""'
+let $FZF_DEFAULT_COMMAND='ag --hidden --ignore node_modules -U -l'
 let $FZF_DEFAULT_OPTS="--border --reverse --bind ctrl-f:page-down,ctrl-b:page-up,up:preview-up,down:preview-down,alt-up:preview-page-up,alt-down:preview-page-down"
 let g:fzf_layout = { 'down': '40%' }
 
@@ -30,7 +30,8 @@ command! BD call fzf#run(fzf#wrap({
 
 nnoremap <silent> zb :Buffers<CR>
 nnoremap <silent> zd :BD<CR>
-nnoremap <silent> zf :Files<CR>
+nnoremap <silent> zf :GFiles<CR>
+nnoremap <silent> zF :FZF<CR>
 nnoremap zg :Pattern<Space>
 nnoremap <silent> zl :BLines<CR>
 nnoremap <silent> zh :History<CR>

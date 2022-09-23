@@ -104,6 +104,7 @@ nnoremap <silent> <C-]> :cn<CR>
 " terminalモードを使いやすくする
 nnoremap <silent> <C-t> :term<CR>
 tnoremap <Esc> <C-\><C-n>
+tnoremap <C-]> <C-\><C-n>
 command! -nargs=* T split | wincmd j | resize 20 | terminal <args>
 autocmd TermOpen * startinsert
 
