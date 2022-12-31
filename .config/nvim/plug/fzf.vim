@@ -7,9 +7,8 @@ let $FZF_DEFAULT_OPTS="--border --reverse --bind ctrl-f:page-down,ctrl-b:page-up
 let g:fzf_layout = { 'down': '40%' }
 
 command! -bang IncludeIgnoreFiles
-\ call fzf#vim#grep(
-\   'ag --hidden --ignore .git --ignore node_modules -l -U '.shellescape(<q-args>), 1,
-\   fzf#vim#with_preview(), <bang>0)
+    \ call fzf#run(
+    \ {'source': 'ag --hidden --ignore .git --ignore node_modules -l -U '.shellescape(<q-args>), 'options': $FZF_DEFAULT_OPTS, 'down': '40%', 'sink': 'e' })
 
 command! -bang -nargs=* Pattern
 \ call fzf#vim#grep(

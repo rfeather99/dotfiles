@@ -24,6 +24,7 @@ set listchars=tab:▸\ ,eol:↲,extends:❯,precedes:❮ " 不可視文字の表
 set foldmethod=indent "折りたたみ範囲の判断基準（デフォルト: manual）
 set foldlevel=100     "ファイルを開いたときにデフォルトで折りたたむレベル
 set completeopt=menuone,noinsert "completionの設定
+set mouse=          "マウス操作不可にする
 
 " カーソル移動関連の設定
 set backspace=indent,eol,start " Backspaceキーの影響範囲に制限を設けない
@@ -36,6 +37,10 @@ set hidden     " 保存されていないファイルがあるときでも別の
 set autoread   "外部でファイルに変更がされた場合は読みなおす
 set nobackup   " ファイル保存時にバックアップファイルを作らない
 set noswapfile " ファイル編集中にスワップファイルを作らない
+
+" ウィンドウ関連の設定
+set splitbelow " 新しいウィンドウを下に開く
+set splitright " 新しいウィンドウを右に開く
 
 " タブインデント設定
 set expandtab     "タブ入力を複数の空白入力に置き換える
@@ -95,7 +100,7 @@ cnoremap <M-f> <S-Right>
 
 " バッファーを移動しやすくする
 nnoremap <silent> <C-p> :bp<CR>
-nnoremap <silent> <C-n> :bn<CR>
+nnoremap <silent> <C-n> :b#<CR>
 
 " quickfixを移動しやすくする
 nnoremap <silent> <C-[> :cp<CR>
