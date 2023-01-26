@@ -8,10 +8,10 @@ zsh,vimは元々入っているけど、最新取得
 * neovim
 * cicaフォント
 
-    ホスト側に入れて、defxとかでアイコン表示できるようにする
-* ag
+    ホスト側に入れて、ファイラーやファジーファインダーとかでアイコン表示できるようにする
+* ag/ripgrep
 
-    fzfでの絞り込み用
+    telescope等での絞り込み用
 
 # tmux
 
@@ -37,11 +37,13 @@ a | 全pane一斉入力のon/off
 # nvim
 
 ## 主要なプラグイン
-- fugitive
 - vim-plug
-- vim-lsp
-- fzf
+- fugitive
 - fern
+- telescope
+- nvim builtin lsp
+  - mason
+  - null-ls
 
 ## よく使うキー
 
@@ -142,15 +144,15 @@ n | Ctrl + e | ファイラーを開く
   R | ファイルのリネーム
   x | システムで開く
 
-### fzf関連
+### Telescope関連
 
 キー | 内容
 --- | ---
 zf | ファイル検索
+zF | ファイル検索(gitignoreも含める)
 zb | バッファー検索
-zd | バッファー削除
-zl | 表示しているバッファー内の行検索
 zg | grep
+zh | ヘルプ検索
 
 - 起動中のコマンド
 
@@ -158,18 +160,20 @@ zg | grep
   --- | ---
   ctrl-n | 次の候補に移動
   ctrl-p | 前の候補に移動
-  ctrl-f | ページ送り
-  ctrl-b | ページ戻り
-  ctrl-c | fzf終了
+  ctrl-d | Previewページ送り
+  ctrl-u | Previewページ戻り
+  ctrl-f | (zg中)追加の絞り込み
+  ctrl-c | 終了
 
-### vim-lsp関連
+### lsp関連
 
 キー | 内容
 --- | ---
 gd | `lsp-definition`を起動
 gi | `lsp-implementation`を起動
 gr | `lsp-references`を起動
-gh | `lsp-hover`を起動
+gn | `lsp-rename`を起動
+K | `lsp-hover`を起動
 
 ### commentary関連
 

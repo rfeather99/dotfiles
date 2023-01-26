@@ -3,7 +3,7 @@ let s:plug_dir = expand('~/.local/share/nvim/site/plugged')
 "" 以下pluginの設定
 
 " colorschemeの設定
-if filereadable(expand(s:plug_dir . "/gruvbox/colors/gruvbox.vim"))
+if filereadable(expand(s:plug_dir . "/gruvbox.nvim/colors/gruvbox.lua"))
   au MyAutoCmd VimEnter * nested colorscheme gruvbox
 endif
 
@@ -38,21 +38,27 @@ if !empty(globpath(&rtp, 'autoload/airline'))
   set laststatus=2
 endif
 
-" ale
-if !empty(globpath(&rtp, 'autoload/ale'))
-  let g:ale_fixers = {
-        \ 'javascript': ['eslint'],
-        \ 'vue': ['eslint'],
-        \ 'typescript': ['eslint'],
-        \ 'ruby': ['rubocop'],
-        \ 'dockerfile': ['hadolint'],
-        \ }
-  let g:ale_fix_on_save = 1
-  " Only run linters named in ale_linters settings.
-  let g:ale_linters_explicit = 1
+" previm
+function! s:open_preview(path) abort
+  let b:previm_opened = 1
+  call previm#refresh()
 
-  " Run linters only when I save files
-  " let g:ale_lint_on_text_changed = 'never'
-  " let g:ale_lint_on_insert_leave = 0
-endif
+  let l:result =  system("lsof -i:8080")
+  if len(l:result) == 0
+    execute 'split | wincmd j | resize 20 | term npx http-server ' . previm#preview_base_dir()
+  endif
+  echo "http://localhost:8080/" . substitute(a:path, previm#preview_base_dir(), "", "g")
 
+  augroup PrevimCleanup
+    au!
+    au VimLeave * call previm#wipe_cache_for_self()
+  augroup END
+endfunction
+
+function! s:setup_previm() abort
+  command! -nargs=0 P call s:open_preview(previm#make_preview_file_path('index.html'))
+endfunction
+augroup PV
+  autocmd!
+  autocmd FileType *{mkd,markdown,mmd,mermaid,rst,textile,asciidoc,plantuml,html}* call s:setup_previm()
+augroup END
