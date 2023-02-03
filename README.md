@@ -153,6 +153,7 @@ zF | ファイル検索(gitignoreも含める)
 zb | バッファー検索
 zg | grep
 zh | ヘルプ検索
+zm | mru
 
 - 起動中のコマンド
 

@@ -12,6 +12,7 @@ set fileformats=unix,dos,mac
 
 " エディタ設定
 set number          "行番号を表示する
+set signcolumn=yes  "行番号横のサイン列を常に表示する
 set cursorline      "カーソル行の背景色を変える
 set title           "編集中のファイル名を表示する
 set showcmd         "入力中のコマンドを表示する

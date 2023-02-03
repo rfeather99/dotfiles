@@ -16,6 +16,12 @@ require('mason-lspconfig').setup_handlers({
   end,
   pylsp = function()
     require("lspconfig").pylsp.setup {
+      root_dir = function(fname)
+        local root_files = {
+          'settings.py',
+        }
+        return require("lspconfig.util").root_pattern(unpack(root_files))(fname) or require("lspconfig.util").find_git_ancestor(fname)
+      end,
       settings = {
         pylsp = {
           plugins = {
@@ -69,7 +75,9 @@ cmp.setup({
   },
   mapping = cmp.mapping.preset.insert({
     ["<C-p>"] = cmp.mapping.select_prev_item(),
+    ["<S-Tab>"] = cmp.mapping.select_next_item(),
     ["<C-n>"] = cmp.mapping.select_next_item(),
+    ["<Tab>"] = cmp.mapping.select_next_item(),
     ['<C-l>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.abort(),
     ["<CR>"] = cmp.mapping.confirm { select = true },
@@ -123,7 +131,6 @@ for _, package in ipairs(mason_registry.get_installed_packages()) do
   end
   if package_categories == mason_package.Cat.Linter then
     if package_name == "mypy" then
-      local h = require("null-ls.helpers")
       table.insert(null_sources, null_ls.builtins.diagnostics[package_name].with({
         extra_args = {"--show-absolute-path"},
         cwd = pypkg_cwd
@@ -137,24 +144,29 @@ for _, package in ipairs(mason_registry.get_installed_packages()) do
     end
   end
 end
+local lsp_formatting = function(bufnr)
+  vim.lsp.buf.format({
+    timeout_ms = 2000,
+    filter = function(client)
+        -- apply whatever logic you want (in this example, we'll only use null-ls)
+        return client.name == "null-ls"
+    end,
+    bufnr = bufnr,
+  })
+end
 
 local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
-local event = "BufWritePre" -- or "BufWritePost"
-local async = event == "BufWritePost"
-
 null_ls.setup({
   sources = null_sources,
   on_attach = function(client, bufnr)
     if client.supports_method("textDocument/formatting") then
-      -- format on save
-      vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
-      vim.api.nvim_create_autocmd(event, {
+      vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        group = augroup,
         buffer = bufnr,
-        group = group,
         callback = function()
-          vim.lsp.buf.format({ bufnr = bufnr, async = async })
+            lsp_formatting(bufnr)
         end,
-        desc = "[lsp] format on save",
       })
     end
   end,
