@@ -123,11 +123,11 @@ runtime local.vim  " LOCAL設定の読み込み
 
 "---------------------------------------------------------------
 " agの結果をquickfixに流せるようにする
-function! s:ag(word) abort
-  cexpr system(printf('ag --nogroup --nocolor --column --hidden --ignore .git --ignore node_modules --vimgrep "%s"', a:word)) | cw
+function! s:rg(word) abort
+  cexpr system(printf('rg --column --hidden --no-heading --glob "!.git" --glob "!node_modules" --vimgrep "%s" .', a:word)) | cw
 endfunction
 
-command! -nargs=1 Ag call <SID>ag(<q-args>)
+command! -nargs=1 Rg call <SID>rg(<q-args>)
 
 syntax enable "シンタックスカラーリングを設定する
 

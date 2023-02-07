@@ -1,8 +1,6 @@
 autoload -U compinit
 compinit
 
-# 履歴ファイルの保存先
-export HISTFILE=${HOME}/.zhistory
 # メモリに保存される履歴の件数
 export HISTSIZE=1000
 # 履歴ファイルに保存される履歴の件数
@@ -36,22 +34,17 @@ alias vim='nvim'
 alias ls='ls -G'
 alias tmux='tmux -u'
 
-[ -f /opt/homebrew/bin/brew ] && eval $(/opt/homebrew/bin/brew shellenv)
-
-command -v rbenv >/dev/null 2>&1 && eval "$(rbenv init --no-rehash -)"
-command -v nodenv >/dev/null 2>&1 && eval "$(nodenv init --no-rehash -)"
-
-agent="$HOME/.ssh/agent"
-if [ -S "$SSH_AUTH_SOCK" ]; then
-    case $SSH_AUTH_SOCK in
-    /tmp/*/agent.[0-9]*)
-        ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
-    esac
-elif [ -S $agent ]; then
-    export SSH_AUTH_SOCK=$agent
-else
-    echo "no ssh-agent"
-fi
+# agent="$HOME/.ssh/agent"
+# if [ -S "$SSH_AUTH_SOCK" ]; then
+#     case $SSH_AUTH_SOCK in
+#     /tmp/*/agent.[0-9]*)
+#         ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
+#     esac
+# elif [ -S $agent ]; then
+#     export SSH_AUTH_SOCK=$agent
+# else
+#     echo "no ssh-agent"
+# fi
 
 # promptinitを使う場合はこちらを読み込む
 # 利用可能なpromptの設定を見る
