@@ -21,7 +21,7 @@ set shortmess+=c
 set ruler           "座標を表示する
 set showmatch       "閉じ括弧の入力時に対応する括弧を表示する
 set list            "不可視文字を表示
-set listchars=tab:▸\ ,eol:↲,extends:❯,precedes:❮ " 不可視文字の表示記号指定
+set listchars=tab:▸\ ,eol:↲,extends:❯,precedes:❮,space:⋅ " 不可視文字の表示記号指定
 set foldmethod=indent "折りたたみ範囲の判断基準（デフォルト: manual）
 set foldlevel=100     "ファイルを開いたときにデフォルトで折りたたむレベル
 set completeopt=menuone,noinsert "completionの設定

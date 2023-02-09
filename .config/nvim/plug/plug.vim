@@ -2,11 +2,6 @@ let s:plug_dir = expand('~/.local/share/nvim/site/plugged')
 
 "" 以下pluginの設定
 
-" colorschemeの設定
-if filereadable(expand(s:plug_dir . "/gruvbox.nvim/colors/gruvbox.lua"))
-  au MyAutoCmd VimEnter * nested colorscheme gruvbox
-endif
-
 " accelerated-jk
 if !empty(globpath(&rtp, 'autoload/accelerated'))
   nmap j <Plug>(accelerated_jk_gj)
@@ -62,3 +57,11 @@ augroup PV
   autocmd!
   autocmd FileType *{mkd,markdown,mmd,mermaid,rst,textile,asciidoc,plantuml,html}* call s:setup_previm()
 augroup END
+
+
+lua <<EOF
+require("indent_blankline").setup {
+    space_char_blankline = " ",
+    show_current_context = true,
+}
+EOF

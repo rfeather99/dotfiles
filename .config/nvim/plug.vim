@@ -76,9 +76,13 @@ call plug#end()
 " 設定ファイルの読み込み
 let s:plug_rc = 'source ' . $HOME . '/.config/nvim/plug/'
 let s:load_rc   = {file -> execute(s:plug_rc . file . '.vim')}
-call s:load_rc('plug')                " プラグインの読み込み
+runtime plug/plug.vim                " プラグインの読み込み
 call s:load_rc('fugitive')            " fugitiveの設定読み込み
 call s:load_rc('fern')                " ファイラーの設定読み込み
 call s:load_rc('treesitter')          " treesitterの設定読み込み
 runtime plug/telescope.lua
 runtime plug/lsp.lua
+
+" colorschemeの設定
+colorscheme gruvbox
+

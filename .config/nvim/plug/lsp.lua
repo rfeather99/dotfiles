@@ -1,5 +1,7 @@
 -- 1. LSP Sever management
+local rootPathRelatedHome = string.gsub(vim.fn.getcwd(), os.getenv("HOME").."/" ,"")
 require('mason').setup({
+  install_root_dir = require("mason-core.path").concat { vim.fn.stdpath "data", "mason", rootPathRelatedHome},
   ui = {
     icons = {
       package_installed = "✓",
@@ -105,12 +107,13 @@ local mason_package = require("mason-core.package")
 local mason_registry = require("mason-registry")
 local null_ls = require("null-ls")
 
-local pypkg = { mypy=true, black=true, isort=true, pyproject_flake8=true }
+local pypkg = { mypy=true, black=true, isort=true, pyproject_flake8=true, eslint_d=true }
 local pypkg_cwd = function(params)
   local fname = params.bufname
   local util = require("lspconfig.util")
   local root_files = {
     "pyproject.toml",
+    "package.json",
   }
   return util.root_pattern(unpack(root_files))(fname) or util.root_pattern ".git" (fname) or util.path.dirname(fname)
 end
@@ -120,7 +123,7 @@ for _, package in ipairs(mason_registry.get_installed_packages()) do
   local package_categories = package.spec.categories[1]
   local package_name = string.gsub(package.name, "-", "_")  -- null-lsのパッケージ名はアンダースコア
 
-  if package_categories == mason_package.Cat.Formatter then
+  if pcall(require, string.format("null-ls.builtins.formatting.%s", package_name)) then
     if pypkg[package_name] then
       table.insert(null_sources, null_ls.builtins.formatting[package_name].with({
         cwd = pypkg_cwd
@@ -155,7 +158,7 @@ local lsp_formatting = function(bufnr)
   })
 end
 
-local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
+local augroup = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
 null_ls.setup({
   sources = null_sources,
   on_attach = function(client, bufnr)

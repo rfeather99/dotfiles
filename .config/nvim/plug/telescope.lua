@@ -20,4 +20,5 @@ vim.keymap.set('n', 'zg', '<cmd>Telescope live_grep vimgrep_arguments=rg,--hidde
 vim.keymap.set('n', 'zb', '<cmd>Telescope buffers theme=ivy<cr>')
 vim.keymap.set('n', 'zh', '<cmd>Telescope help_tags theme=ivy<cr>')
 vim.keymap.set('n', 'zm', '<cmd>Telescope oldfiles theme=ivy<cr>')
+vim.keymap.set('n', 'zs', '<cmd>Telescope colorscheme theme=ivy<cr>')
 

@@ -34,17 +34,17 @@ alias vim='nvim'
 alias ls='ls -G'
 alias tmux='tmux -u'
 
-# agent="$HOME/.ssh/agent"
-# if [ -S "$SSH_AUTH_SOCK" ]; then
-#     case $SSH_AUTH_SOCK in
-#     /tmp/*/agent.[0-9]*)
-#         ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
-#     esac
-# elif [ -S $agent ]; then
-#     export SSH_AUTH_SOCK=$agent
-# else
-#     echo "no ssh-agent"
-# fi
+agent="$HOME/.ssh/agent"
+if [ -S "$SSH_AUTH_SOCK" ]; then
+    case $SSH_AUTH_SOCK in
+    /tmp/*/agent.[0-9]*)
+        ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
+    esac
+elif [ -S $agent ]; then
+    export SSH_AUTH_SOCK=$agent
+else
+    echo "no ssh-agent"
+fi
 
 # promptinitを使う場合はこちらを読み込む
 # 利用可能なpromptの設定を見る
@@ -65,3 +65,13 @@ function select-history() {
 }
 zle -N select-history
 bindkey '^R' select-history
+
+# initialize pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+
+# initialize fnm
+eval "$(fnm env --use-on-cd)"
+
