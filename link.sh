@@ -7,3 +7,6 @@ mkdir -p ~/.config
 ln -sf ${script_dir}/.config/nvim ~/.config
 ln -sf ${script_dir}/.git_commit_template ~/.git_commit_template
 
+# これを作らないとnull-lsがlog出力できずにおちる
+mkdir -p ~/.cache/nvim
+

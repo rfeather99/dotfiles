@@ -50,6 +50,7 @@ call plug#begin(s:plug_dir)
   Plug 'nvim-tree/nvim-web-devicons'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
+  Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
   " lsp
   Plug 'neovim/nvim-lspconfig'

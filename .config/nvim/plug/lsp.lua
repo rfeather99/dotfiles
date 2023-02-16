@@ -16,7 +16,7 @@ require('mason-lspconfig').setup_handlers({
     }
     require('lspconfig')[server].setup(opt)
   end,
-  pylsp = function()
+  ["pylsp"] = function()
     require("lspconfig").pylsp.setup {
       root_dir = function(fname)
         local root_files = {
@@ -180,4 +180,12 @@ require("trouble").setup {
   -- your configuration comes here
   -- or leave it empty to use the default settings
   -- refer to the configuration section below
+  signs = {
+      -- icons / text used for a diagnostic
+      error = "E",
+      warning = "W",
+      hint = "H",
+      information = "",
+      other = "O"
+  },
 }

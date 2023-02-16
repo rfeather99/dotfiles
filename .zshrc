@@ -75,3 +75,5 @@ export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 # initialize fnm
 eval "$(fnm env --use-on-cd)"
 
+# initialize rbenv
+eval "$(rbenv init - zsh)"
