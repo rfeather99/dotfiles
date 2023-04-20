@@ -103,50 +103,43 @@ cmp.setup.cmdline(":", {
 })
 
 -- 4. Formatter / Linter (null-ls)
-local mason_package = require("mason-core.package")
 local mason_registry = require("mason-registry")
 local null_ls = require("null-ls")
 
-local pypkg = { mypy=true, black=true, isort=true, pyproject_flake8=true, eslint_d=true }
 local pypkg_cwd = function(params)
   local fname = params.bufname
   local util = require("lspconfig.util")
   local root_files = {
     "pyproject.toml",
     "package.json",
+    "Gemfile",
   }
   return util.root_pattern(unpack(root_files))(fname) or util.root_pattern ".git" (fname) or util.path.dirname(fname)
 end
 
 local null_sources = {}
 for _, package in ipairs(mason_registry.get_installed_packages()) do
-  local package_categories = package.spec.categories[1]
   local package_name = string.gsub(package.name, "-", "_")  -- null-lsのパッケージ名はアンダースコア
 
   if pcall(require, string.format("null-ls.builtins.formatting.%s", package_name)) then
-    if pypkg[package_name] then
-      table.insert(null_sources, null_ls.builtins.formatting[package_name].with({
-        cwd = pypkg_cwd
-      }))
-    else
-      table.insert(null_sources, null_ls.builtins.formatting[package_name])
-    end
+    table.insert(null_sources, null_ls.builtins.formatting[package_name].with({
+      cwd = pypkg_cwd
+    }))
   end
-  if package_categories == mason_package.Cat.Linter then
+  if pcall(require, string.format("null-ls.builtins.diagnostics.%s", package_name)) then
     if package_name == "mypy" then
       table.insert(null_sources, null_ls.builtins.diagnostics[package_name].with({
         extra_args = {"--show-absolute-path"},
         cwd = pypkg_cwd
       }))
-    elseif pypkg[package_name] then
+    else
       table.insert(null_sources, null_ls.builtins.diagnostics[package_name].with({
         cwd = pypkg_cwd
       }))
-    else
-      table.insert(null_sources, null_ls.builtins.diagnostics[package_name])
     end
   end
 end
+
 local lsp_formatting = function(bufnr)
   vim.lsp.buf.format({
     timeout_ms = 2000,

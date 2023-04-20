@@ -2,16 +2,16 @@
 my dotfiles
 
 # 前提のプログラム
-zsh,vimは元々入っているけど、最新取得
-* zsh zsh-completions
+* zsh
 * tmux
 * neovim
 * cicaフォント
 
     ホスト側に入れて、ファイラーやファジーファインダーとかでアイコン表示できるようにする
-* ag/ripgrep
+* fzf
+* ripgrep
 
-    telescope等での絞り込み用
+    fzf/telescope等での絞り込み用
 
 # tmux
 
