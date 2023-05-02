@@ -59,6 +59,7 @@ call plug#begin(s:plug_dir)
   Plug 'jose-elias-alvarez/null-ls.nvim'
 
   " completion
+  Plug 'onsails/lspkind-nvim'
   Plug 'hrsh7th/nvim-cmp'
   Plug 'hrsh7th/cmp-nvim-lsp'
   Plug 'hrsh7th/vim-vsnip'
@@ -71,6 +72,10 @@ call plug#begin(s:plug_dir)
   Plug 'folke/trouble.nvim'
 
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+  " outline
+  Plug 'stevearc/aerial.nvim'
+
 call plug#end()
 
 "---------------------------------------------------------------

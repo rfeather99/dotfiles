@@ -67,8 +67,3 @@ augroup fern-custom
   autocmd FileType fern call glyph_palette#apply()
   autocmd FileType nerdtree,startify call glyph_palette#apply()
 augroup END
-
-" Cicaフォント用の追加設定
-let g:nerdfont#path#extension#customs = { 'vue': '' }
-let g:glyph_palette#palette = copy(g:glyph_palette#defaults#palette)
-let g:glyph_palette#palette['GlyphPalette2'] += ['']
