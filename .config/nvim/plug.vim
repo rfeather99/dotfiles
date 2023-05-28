@@ -25,6 +25,7 @@ endif
 " :PlugStatus
 call plug#begin(s:plug_dir)
   Plug 'ellisonleao/gruvbox.nvim'             " color schema
+  Plug 'folke/tokyonight.nvim'                " color schema
   Plug 'lukas-reineke/indent-blankline.nvim'  " インデントを可視化
   Plug 'rhysd/accelerated-jk'                 " j, k移動高速化
   Plug 'easymotion/vim-easymotion'            " カーソル移動高速化
@@ -46,11 +47,16 @@ call plug#begin(s:plug_dir)
   Plug 'lambdalisue/fern-renderer-nerdfont.vim'
   Plug 'lambdalisue/glyph-palette.vim'  " アイコンカラー設定
 
+  " highlight
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
   " telescope
   Plug 'nvim-tree/nvim-web-devicons'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
   Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+
+  Plug 'stevearc/aerial.nvim'
 
   " lsp
   Plug 'neovim/nvim-lspconfig'
@@ -68,13 +74,10 @@ call plug#begin(s:plug_dir)
   Plug 'hrsh7th/cmp-cmdline'
   Plug 'hrsh7th/cmp-cmdline'
 
+  Plug 'github/copilot.vim'
+
   " dignostics
   Plug 'folke/trouble.nvim'
-
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-
-  " outline
-  Plug 'stevearc/aerial.nvim'
 
 call plug#end()
 

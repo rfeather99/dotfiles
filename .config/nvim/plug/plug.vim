@@ -71,8 +71,17 @@ require('aerial').setup({
     -- Jump forwards/backwards with '{' and '}'
     vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', {buffer = bufnr})
     vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', {buffer = bufnr})
-  end
+  end,
+  layout = {
+    default_direction = 'prefer_left',
+  }
 })
 -- You probably also want to set a keymap to toggle aerial
 vim.keymap.set('n', '<leader>a', '<cmd>AerialToggle!<CR>')
 EOF
+
+" copilot
+if !empty(globpath(&rtp, 'autoload/copilot'))
+  let g:copilot_node_command = '/opt/homebrew/bin/node'
+  let g:copilot_assume_mapped = v:true
+endif

@@ -31,7 +31,7 @@ setopt inc_append_history
 bindkey "^R" history-incremental-search-backward
 
 alias vim='nvim'
-alias ls='ls -G'
+alias ls='ls -aG'
 alias tmux='tmux -u'
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 
