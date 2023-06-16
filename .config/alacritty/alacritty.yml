@@ -31,8 +31,8 @@ window:
   # カラム数は少なくとも`2`でなければなりません.
   # ウィンドウマネージャの推奨サイズに戻る
   dimensions:
-    columns: 190
-    lines: 60
+    columns: 180
+    lines: 55
 
   # ウィンドウの位置（変更には再起動が必要です）
   #
@@ -111,7 +111,7 @@ window:
   #   - OnlyRight
   #   - Both
   #   - None (default)
-  #option_as_alt: None
+  option_as_alt: OnlyLeft
 
 #scrolling:
   # Maximum number of lines in the scrollback buffer.

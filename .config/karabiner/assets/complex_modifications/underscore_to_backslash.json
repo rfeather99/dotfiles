@@ -1,0 +1,20 @@
+{
+  "title": "backslash",
+  "rules": [
+    {
+      "description": "underscore to backslash",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "international1"
+          },
+          "to": [{
+            "key_code": "international3",
+            "modifiers": [ "option" ]
+          }],
+          "type": "basic"
+        }
+      ]
+    }
+  ]
+}

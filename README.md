@@ -2,10 +2,11 @@
 my dotfiles
 
 # 前提のプログラム
+* alacritty
 * zsh
 * tmux
 * neovim
-* cicaフォント
+* HackGenフォント
 
     ホスト側に入れて、ファイラーやファジーファインダーとかでアイコン表示できるようにする
 * fzf
@@ -44,6 +45,7 @@ a | 全pane一斉入力のon/off
 - nvim builtin lsp
   - mason
   - null-ls
+- copilot
 
 ## よく使うキー
 
@@ -175,6 +177,15 @@ gi | `lsp-implementation`を起動
 gr | `lsp-references`を起動
 gn | `lsp-rename`を起動
 K | `lsp-hover`を起動
+
+### copilot関連
+
+キー | 内容
+--- | ---
+Tab | 提案を受け入れ
+ctrl-] | 提案を却下
+option-] | 次の提案
+option-[ | 前の提案
 
 ### commentary関連
 
