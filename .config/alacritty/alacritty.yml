@@ -858,9 +858,10 @@ key_bindings:
   # (Windows only)
   #- { key: Return,   mods: Alt,           action: ToggleFullscreen }
 
-  # (macOS only)
+  # (macOS only)¥
   - { key: Minus,           mods: Command|Shift,              action: IncreaseFontSize      }
   - { key: Semicolon,       mods: Command|Shift,              action: IncreaseFontSize      }
+  - { key: Backslash,       mods: Alt,                        chars: "\\"                   }
   #- { key: K,              mods: Command, mode: ~Vi|~Search, chars: "\x0c"                 }
   #- { key: K,              mods: Command, mode: ~Vi|~Search, action: ClearHistory          }
   #- { key: Key0,           mods: Command,                    action: ResetFontSize         }
