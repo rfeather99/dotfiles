@@ -2,16 +2,17 @@
 my dotfiles
 
 # 前提のプログラム
-zsh,vimは元々入っているけど、最新取得
-* zsh zsh-completions
+* alacritty
+* zsh
 * tmux
 * neovim
-* cicaフォント
+* HackGenフォント
 
     ホスト側に入れて、ファイラーやファジーファインダーとかでアイコン表示できるようにする
-* ag/ripgrep
+* fzf
+* ripgrep
 
-    telescope等での絞り込み用
+    fzf/telescope等での絞り込み用
 
 # tmux
 
@@ -44,6 +45,7 @@ a | 全pane一斉入力のon/off
 - nvim builtin lsp
   - mason
   - null-ls
+- copilot
 
 ## よく使うキー
 
@@ -175,6 +177,15 @@ gi | `lsp-implementation`を起動
 gr | `lsp-references`を起動
 gn | `lsp-rename`を起動
 K | `lsp-hover`を起動
+
+### copilot関連
+
+キー | 内容
+--- | ---
+Tab | 提案を受け入れ
+ctrl-] | 提案を却下
+option-] | 次の提案
+option-[ | 前の提案
 
 ### commentary関連
 

@@ -1,8 +1,6 @@
 autoload -U compinit
 compinit
 
-# 履歴ファイルの保存先
-export HISTFILE=${HOME}/.zhistory
 # メモリに保存される履歴の件数
 export HISTSIZE=1000
 # 履歴ファイルに保存される履歴の件数
@@ -33,13 +31,9 @@ setopt inc_append_history
 bindkey "^R" history-incremental-search-backward
 
 alias vim='nvim'
-alias ls='ls -G'
+alias ls='ls -aG'
 alias tmux='tmux -u'
-
-[ -f /opt/homebrew/bin/brew ] && eval $(/opt/homebrew/bin/brew shellenv)
-
-command -v rbenv >/dev/null 2>&1 && eval "$(rbenv init --no-rehash -)"
-command -v nodenv >/dev/null 2>&1 && eval "$(nodenv init --no-rehash -)"
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 
 agent="$HOME/.ssh/agent"
 if [ -S "$SSH_AUTH_SOCK" ]; then
@@ -72,3 +66,15 @@ function select-history() {
 }
 zle -N select-history
 bindkey '^R' select-history
+
+# initialize pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+
+# initialize fnm
+eval "$(fnm env --use-on-cd)"
+
+# initialize rbenv
+eval "$(rbenv init - zsh)"

@@ -1,5 +1,7 @@
 -- 1. LSP Sever management
+local rootPathRelatedHome = string.gsub(vim.fn.getcwd(), os.getenv("HOME").."/" ,"")
 require('mason').setup({
+  install_root_dir = require("mason-core.path").concat { vim.fn.stdpath "data", "mason", rootPathRelatedHome},
   ui = {
     icons = {
       package_installed = "✓",
@@ -14,7 +16,7 @@ require('mason-lspconfig').setup_handlers({
     }
     require('lspconfig')[server].setup(opt)
   end,
-  pylsp = function()
+  ["pylsp"] = function()
     require("lspconfig").pylsp.setup {
       root_dir = function(fname)
         local root_files = {
@@ -62,6 +64,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 
 -- 3. completion (hrsh7th/nvim-cmp)
 local cmp = require("cmp")
+local lspkind = require('lspkind')
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -85,6 +88,19 @@ cmp.setup({
   experimental = {
     ghost_text = true,
   },
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = 'symbol', -- show only symbol annotations
+      maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+      ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+
+      -- The function below will be called before any actual modifications from lspkind
+      -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+      before = function (entry, vim_item)
+        return vim_item
+      end
+    })
+  },
 })
 cmp.setup.cmdline('/', {
   mapping = cmp.mapping.preset.cmdline(),
@@ -101,49 +117,43 @@ cmp.setup.cmdline(":", {
 })
 
 -- 4. Formatter / Linter (null-ls)
-local mason_package = require("mason-core.package")
 local mason_registry = require("mason-registry")
 local null_ls = require("null-ls")
 
-local pypkg = { mypy=true, black=true, isort=true, pyproject_flake8=true }
 local pypkg_cwd = function(params)
   local fname = params.bufname
   local util = require("lspconfig.util")
   local root_files = {
     "pyproject.toml",
+    "package.json",
+    "Gemfile",
   }
   return util.root_pattern(unpack(root_files))(fname) or util.root_pattern ".git" (fname) or util.path.dirname(fname)
 end
 
 local null_sources = {}
 for _, package in ipairs(mason_registry.get_installed_packages()) do
-  local package_categories = package.spec.categories[1]
   local package_name = string.gsub(package.name, "-", "_")  -- null-lsのパッケージ名はアンダースコア
 
-  if package_categories == mason_package.Cat.Formatter then
-    if pypkg[package_name] then
-      table.insert(null_sources, null_ls.builtins.formatting[package_name].with({
-        cwd = pypkg_cwd
-      }))
-    else
-      table.insert(null_sources, null_ls.builtins.formatting[package_name])
-    end
+  if pcall(require, string.format("null-ls.builtins.formatting.%s", package_name)) then
+    table.insert(null_sources, null_ls.builtins.formatting[package_name].with({
+      cwd = pypkg_cwd
+    }))
   end
-  if package_categories == mason_package.Cat.Linter then
+  if pcall(require, string.format("null-ls.builtins.diagnostics.%s", package_name)) then
     if package_name == "mypy" then
       table.insert(null_sources, null_ls.builtins.diagnostics[package_name].with({
         extra_args = {"--show-absolute-path"},
         cwd = pypkg_cwd
       }))
-    elseif pypkg[package_name] then
+    else
       table.insert(null_sources, null_ls.builtins.diagnostics[package_name].with({
         cwd = pypkg_cwd
       }))
-    else
-      table.insert(null_sources, null_ls.builtins.diagnostics[package_name])
     end
   end
 end
+
 local lsp_formatting = function(bufnr)
   vim.lsp.buf.format({
     timeout_ms = 2000,
@@ -155,7 +165,7 @@ local lsp_formatting = function(bufnr)
   })
 end
 
-local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
+local augroup = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
 null_ls.setup({
   sources = null_sources,
   on_attach = function(client, bufnr)
@@ -177,4 +187,12 @@ require("trouble").setup {
   -- your configuration comes here
   -- or leave it empty to use the default settings
   -- refer to the configuration section below
+  signs = {
+      -- icons / text used for a diagnostic
+      error = "E",
+      warning = "W",
+      hint = "H",
+      information = "",
+      other = "O"
+  },
 }
