@@ -60,9 +60,9 @@ augroup END
 
 
 lua <<EOF
-require("indent_blankline").setup {
-    space_char_blankline = " ",
-    show_current_context = true,
+require("ibl").setup {
+  indent = { char = "⋅" },
+  scope = { enabled = false },
 }
 
 require('aerial').setup({

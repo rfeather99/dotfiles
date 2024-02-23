@@ -111,7 +111,7 @@ nnoremap <silent> <C-]> :cn<CR>
 nnoremap <silent> <C-t> :term<CR>
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-]> <C-\><C-n>
-command! -nargs=* T split | wincmd j | resize 20 | terminal <args>
+command! -nargs=* T split | wincmd j | terminal <args>
 autocmd TermOpen * startinsert
 
 "---------------------------------------------------------------

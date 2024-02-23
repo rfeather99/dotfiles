@@ -8,7 +8,7 @@ my dotfiles
 * neovim
 * HackGenフォント
 
-    ホスト側に入れて、ファイラーやファジーファインダーとかでアイコン表示できるようにする
+    クライアント側に入れて、ファイラーやファジーファインダーとかでアイコン表示できるようにする
 * fzf
 * ripgrep
 
@@ -58,6 +58,10 @@ v | ctrl+c | visualモード終了(ESCと同じ)
 c | ctrl+c | commandモード終了(ESCと同じ)
 n | ctrl+o | カーソル移動履歴を戻る
 n | ctrl+i | カーソル移動履歴を進む
+n | ctrl+w t | 一番上のWindowに移動
+n | ctrl+w b | 一番下のWindowに移動
+n | u | Undo
+n | ctrl+r | Redo
 n | * | カーソル一にある単語を検索
 n | ~ | 大文字小文字変換
 n | \< | インデント上げ
@@ -68,7 +72,6 @@ c/i | ctrl+r 0 | 貼り付け
 c | noh | ハイライトを消す
 c | diffthis | バッファー同士のdiffをとる
 c | diffoff | diff解除
-c | diffupdate | 差分表示がおかしくなったときに更新
 c | s/\v([a-z]\@=)([A-Z])/\1_\l\2/g | camelケースをsnakeケースに置換
 c | s/\v(^|_)(.)/\u\2/g | snakeケースをpascalケースに置換
 
@@ -163,6 +166,8 @@ zm | mru
   --- | ---
   ctrl-n | 次の候補に移動
   ctrl-p | 前の候補に移動
+  ctrl-x | splitして開く
+  ctrl-v | vsplitして開く
   ctrl-d | Previewページ送り
   ctrl-u | Previewページ戻り
   ctrl-f | (zg中)追加の絞り込み

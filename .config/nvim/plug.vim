@@ -30,6 +30,7 @@ call plug#begin(s:plug_dir)
   Plug 'rhysd/accelerated-jk'                 " j, k移動高速化
   Plug 'easymotion/vim-easymotion'            " カーソル移動高速化
   Plug 'airblade/vim-gitgutter'               " gitの変更箇所を左にマーク表示する
+  Plug 'tpope/vim-rhubarb'                    " fugitiveのGbrowseでブラウザGitHub開く用に
   Plug 'tpope/vim-fugitive'                   " Git関連使いやすいように
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'

@@ -1,5 +1,5 @@
-autoload -U compinit
-compinit
+autoload -Uz compinit
+compinit -u
 
 # メモリに保存される履歴の件数
 export HISTSIZE=1000
@@ -66,6 +66,57 @@ function select-history() {
 }
 zle -N select-history
 bindkey '^R' select-history
+
+## fzf + docker tools
+function docker-attach-active-container() {
+  local container=$(docker ps --format '{{.Names}}' | fzf +m --query "$1" --select-1 --exit-0 --prompt='Containers > ')
+  if [[ -n $container ]]; then
+    print -z "docker attach $container"
+  else
+    echo 'No container selected'
+  fi
+}
+alias doa=docker-attach-active-container
+
+function docker-exec-active-container() {
+  local container=$(docker ps --format '{{.Names}}' | fzf +m --query "$1" --select-1 --exit-0 --prompt='Containers > ')
+  if [[ -n $container ]]; then
+    print -z "docker exec -it $container bash"
+  else
+    echo 'No container selected'
+  fi
+}
+alias doe=docker-exec-active-container
+
+function docker-volume-rm() {
+  local volumes=$(docker volume ls -q | fzf +m --query "$1" --multi --exit-0 --prompt='Volumes > ' | tr '\n' ' ')
+  if [[ -n $volumes ]]; then
+    print -z "docker volume rm $volumes"
+  else
+    echo 'No volume selected'
+  fi
+}
+alias dov=docker-volume-rm
+
+function docker-logs-active-container() {
+  local container=$(docker ps --format '{{.Names}}' | fzf +m --query "$1" --select-1 --exit-0 --prompt='Containers > ')
+  if [[ -n $container ]]; then
+    print -z "docker logs $container -f --tail=100"
+  else
+    echo 'No container selected'
+  fi
+}
+alias dol=docker-logs-active-container
+
+function docker-debug-active-container() {
+  local container=$(docker ps --format '{{.Names}}' | fzf +m --query "$1" --select-1 --exit-0 --prompt='Containers > ')
+  if [[ -n $container ]]; then
+    print -z "docker debug $container"
+  else
+    echo 'No container selected'
+  fi
+}
+alias dod=docker-debug-active-container
 
 # initialize pyenv
 export PYENV_ROOT="$HOME/.pyenv"
