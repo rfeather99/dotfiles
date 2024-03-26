@@ -99,7 +99,7 @@ function docker-volume-rm() {
 alias dov=docker-volume-rm
 
 function docker-logs-active-container() {
-  local container=$(docker ps --format '{{.Names}}' | fzf +m --query "$1" --select-1 --exit-0 --prompt='Containers > ')
+  local container=$(docker ps -a --format '{{.Names}}' | fzf +m --query "$1" --select-1 --exit-0 --prompt='Containers > ')
   if [[ -n $container ]]; then
     print -z "docker logs $container -f --tail=100"
   else

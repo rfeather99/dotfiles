@@ -95,4 +95,6 @@ runtime plug/lsp.lua
 
 " colorschemeの設定
 colorscheme gruvbox
-
+"" 背景透過を有効化
+hi Normal guibg=NONE ctermbg=NONE
+hi NonText guibg=NONE ctermbg=NONE
