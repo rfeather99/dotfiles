@@ -65,6 +65,15 @@ call plug#begin(s:plug_dir)
   Plug 'williamboman/mason-lspconfig.nvim'
   Plug 'jose-elias-alvarez/null-ls.nvim'
 
+  " Java
+  Plug 'mfussenegger/nvim-jdtls'
+
+  " dap
+  Plug 'mfussenegger/nvim-dap'
+  Plug 'theHamsta/nvim-dap-virtual-text'
+  Plug 'rcarriga/nvim-dap-ui'
+  Plug 'nvim-neotest/nvim-nio'
+
   " completion
   Plug 'onsails/lspkind-nvim'
   Plug 'hrsh7th/nvim-cmp'
@@ -92,6 +101,7 @@ call s:load_rc('fern')                " ファイラーの設定読み込み
 call s:load_rc('treesitter')          " treesitterの設定読み込み
 runtime plug/telescope.lua
 runtime plug/lsp.lua
+runtime plug/dap.lua
 
 " colorschemeの設定
 colorscheme gruvbox

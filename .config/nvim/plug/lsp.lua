@@ -14,6 +14,10 @@ require('mason-lspconfig').setup_handlers({
   function(server)
     local opt = {
     }
+    -- jdtlsは除外(nvim-jdtlsを使用するため)
+    if server == "jdtls" then
+      return
+    end
     require('lspconfig')[server].setup(opt)
   end,
   ["pylsp"] = function()
