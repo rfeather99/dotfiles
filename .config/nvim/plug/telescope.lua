@@ -8,7 +8,12 @@ require('telescope').setup({
     },
     buffers = {
       ignore_current_buffer = true,
-      sort_lastused = true
+      sort_lastused = true,
+      mappings = {
+        i = {
+          ["<c-d>"] = actions.delete_buffer + actions.move_to_top,
+        }
+      }
     }
   },
 })

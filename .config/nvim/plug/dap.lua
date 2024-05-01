@@ -26,10 +26,19 @@ dap.configurations = {
   }
 }
 
-vim.api.nvim_set_keymap('n', '<F5>', ':DapContinue<CR>', { silent = true })
-vim.api.nvim_set_keymap('n', '<F10>', ':DapStepOver<CR>', { silent = true })
-vim.api.nvim_set_keymap('n', '<F11>', ':DapStepInto<CR>', { silent = true })
-vim.api.nvim_set_keymap('n', '<F12>', ':DapStepOut<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', '<leader>c', ':DapContinue<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', '<leader>n', ':DapStepOver<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', '<leader>s', ':DapStepInto<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', '<leader>u', ':DapStepOut<CR>', { silent = true })
+-- vim.api.nvim_set_keymap('n', 'dc', ':DapContinue<CR>', { silent = true })
+-- vim.api.nvim_set_keymap('n', 'dn', ':DapStepOver<CR>', { silent = true })
+-- vim.api.nvim_set_keymap('n', 'ds', ':DapStepInto<CR>', { silent = true })
+-- vim.api.nvim_set_keymap('n', 'do', ':DapStepOut<CR>', { silent = true })
+--
+-- vim.api.nvim_set_keymap('n', '<F5>', ':DapContinue<CR>', { silent = true })
+-- vim.api.nvim_set_keymap('n', '<F10>', ':DapStepOver<CR>', { silent = true })
+-- vim.api.nvim_set_keymap('n', '<F11>', ':DapStepInto<CR>', { silent = true })
+-- vim.api.nvim_set_keymap('n', '<F12>', ':DapStepOut<CR>', { silent = true })
 vim.api.nvim_set_keymap('n', '<leader>b', ':DapToggleBreakpoint<CR>', { silent = true })
 vim.api.nvim_set_keymap('n', '<leader>B', ':lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Breakpoint condition: "))<CR>', { silent = true })
 vim.api.nvim_set_keymap('n', '<leader>lp', ':lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', { silent = true })
@@ -39,3 +48,4 @@ vim.api.nvim_set_keymap('n', '<leader>dl', ':lua require("dap").run_last()<CR>',
 require("dapui").setup()
 vim.api.nvim_set_keymap('n', '<leader>d', ':lua require("dapui").toggle()<CR>', {})
 
+require("nvim-dap-virtual-text").setup()

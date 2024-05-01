@@ -63,7 +63,7 @@ call plug#begin(s:plug_dir)
   Plug 'neovim/nvim-lspconfig'
   Plug 'williamboman/mason.nvim'
   Plug 'williamboman/mason-lspconfig.nvim'
-  Plug 'jose-elias-alvarez/null-ls.nvim'
+  Plug 'nvimtools/none-ls.nvim'
 
   " Java
   Plug 'mfussenegger/nvim-jdtls'

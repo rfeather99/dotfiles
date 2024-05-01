@@ -19,3 +19,5 @@ EOF
 au BufRead,BufNewFile *.thor set filetype=ruby
 au BufRead,BufNewFile Thorfile set filetype=ruby
 
+" *.pipelineはJenkinsfileなので、groovyのシンタックス
+au BufRead,BufNewFile *.pipeline set filetype=groovy

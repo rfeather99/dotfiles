@@ -1,12 +1,15 @@
-local root_path_related_home = string.gsub(vim.fn.getcwd(), os.getenv("HOME").."/" ,"")
-local mason_project_path = require("mason-core.path").concat { vim.fn.stdpath "data", "mason", root_path_related_home}
+local mason_project_path = require("mason.settings").current.install_root_dir
 local jdt_path = require("mason-core.path").concat { mason_project_path, "bin", "jdtls"}
 local dap_path = vim.fn.glob(
   require("mason-core.path").concat {
     mason_project_path, "packages/java-debug-adapter/extension/server", "com.microsoft.java.debug.plugin-*.jar"
   }, 1)
+local lombok_path = vim.fn.glob(
+  require("mason-core.path").concat {
+    mason_project_path, "packages/jdtls/lombok.jar"
+  }, 1)
 local config = {
-    cmd = {jdt_path},
+    cmd = { jdt_path, "--jvm-arg=-javaagent:" .. lombok_path, "--jvm-arg=-Xbootclasspath/a:" .. lombok_path },
     root_dir = vim.fs.dirname(vim.fs.find({'gradlew', '.git', 'mvnw'}, { upward = true })[1]),
     init_options = {
         bundles = {

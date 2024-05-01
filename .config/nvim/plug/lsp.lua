@@ -10,6 +10,11 @@ require('mason').setup({
     }
   }
 })
+require('mason-lspconfig').setup {
+  ensure_installed = {
+    'typos_lsp'
+  }
+}
 require('mason-lspconfig').setup_handlers({
   function(server)
     local opt = {
@@ -19,6 +24,13 @@ require('mason-lspconfig').setup_handlers({
       return
     end
     require('lspconfig')[server].setup(opt)
+  end,
+  ["typos_lsp"] = function()
+    require('lspconfig').typos_lsp.setup({
+      init_options = {
+        config = "~/.config/nvim/lsp/typos-ls.toml"
+      }
+    })
   end,
   ["pylsp"] = function()
     require("lspconfig").pylsp.setup {
@@ -120,7 +132,7 @@ cmp.setup.cmdline(":", {
   },
 })
 
--- 4. Formatter / Linter (null-ls)
+-- 4. Formatter / Linter (none-ls)
 local mason_registry = require("mason-registry")
 local null_ls = require("null-ls")
 
@@ -131,6 +143,7 @@ local pypkg_cwd = function(params)
     "pyproject.toml",
     "package.json",
     "Gemfile",
+    "pom.xml",
   }
   return util.root_pattern(unpack(root_files))(fname) or util.root_pattern ".git" (fname) or util.path.dirname(fname)
 end
@@ -138,7 +151,6 @@ end
 local null_sources = {}
 for _, package in ipairs(mason_registry.get_installed_packages()) do
   local package_name = string.gsub(package.name, "-", "_")  -- null-lsのパッケージ名はアンダースコア
-
   if pcall(require, string.format("null-ls.builtins.formatting.%s", package_name)) then
     table.insert(null_sources, null_ls.builtins.formatting[package_name].with({
       cwd = pypkg_cwd
