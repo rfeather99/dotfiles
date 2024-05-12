@@ -29,8 +29,8 @@ let &tabline = '%!' . s:SID_PREFIX() . 'my_tabline()'
 set showtabline=2 " タブラインを常に表示
 
 " The prefix key.
-nnoremap    [Tag]   <Nop>
-nmap    t [Tag]
+nnoremap [Tag] <Nop>
+nmap t [Tag]
 
 " Tab jump
 " t1 で1番左のタブ、t2 で1番左から2番目のタブにジャンプ
@@ -39,7 +39,10 @@ for n in range(1, 9)
 endfor
 
 map <silent> [Tag]c :tablast <bar> tabnew<CR> " tc 新しいタブを一番右に作る
-map <silent> [Tag]x :tabclose<CR>             " tx タブを閉じる
-map <silent> [Tag]n :tabnext<CR>              " tn 次のタブ
-map <silent> [Tag]p :tabprevious<CR>          " tp 前のタブ
+" tx タブを閉じる
+map <silent> [Tag]x :tabclose<CR>
+" tn 次のタブ
+map <silent> [Tag]n :tabnext<CR>
+" 前のタブ
+map <silent> [Tag]p :tabprevious<CR>
 
