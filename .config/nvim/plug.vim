@@ -74,6 +74,9 @@ call plug#begin(s:plug_dir)
   Plug 'rcarriga/nvim-dap-ui'
   Plug 'nvim-neotest/nvim-nio'
 
+  " test runner
+  Plug 'vim-test/vim-test'
+
   " completion
   Plug 'onsails/lspkind-nvim'
   Plug 'hrsh7th/nvim-cmp'
@@ -82,11 +85,10 @@ call plug#begin(s:plug_dir)
   Plug 'hrsh7th/cmp-path'
   Plug 'hrsh7th/cmp-buffer'
   Plug 'hrsh7th/cmp-cmdline'
-  Plug 'hrsh7th/cmp-cmdline'
 
   Plug 'github/copilot.vim'
 
-  " dignostics
+  " diagnostics
   Plug 'folke/trouble.nvim'
 
 call plug#end()
@@ -102,6 +104,7 @@ call s:load_rc('treesitter')          " treesitterの設定読み込み
 runtime plug/telescope.lua
 runtime plug/lsp.lua
 runtime plug/dap.lua
+runtime plug/test.lua
 
 " colorschemeの設定
 colorscheme gruvbox
