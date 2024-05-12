@@ -29,7 +29,7 @@ function OpenDomaSqlFile()
   ]])
 
   local method_name = nil
-  local current_row, _ = unpack(vim.api.nvim_win_get_cursor(0))
+  local current_row, _ = table.unpack(vim.api.nvim_win_get_cursor(0))
   current_row = current_row - 1
 
   for id, node in query:iter_captures(root, 0, current_row, current_row+1) do

@@ -32,13 +32,25 @@ require('mason-lspconfig').setup_handlers({
       }
     })
   end,
+  ["lua_ls"] = function()
+    require('lspconfig').lua_ls.setup({
+      settings = {
+        Lua = {
+          -- 「undefined global vim」を無視する
+          diagnostics = {
+            globals = { "vim" }
+          }
+        }
+      }
+    })
+  end,
   ["pylsp"] = function()
     require("lspconfig").pylsp.setup {
       root_dir = function(fname)
         local root_files = {
           'settings.py',
         }
-        return require("lspconfig.util").root_pattern(unpack(root_files))(fname) or require("lspconfig.util").find_git_ancestor(fname)
+        return require("lspconfig.util").root_pattern(table.unpack(root_files))(fname) or require("lspconfig.util").find_git_ancestor(fname)
       end,
       settings = {
         pylsp = {
@@ -112,7 +124,7 @@ cmp.setup({
 
       -- The function below will be called before any actual modifications from lspkind
       -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-      before = function (entry, vim_item)
+      before = function (_, vim_item)
         return vim_item
       end
     })
@@ -145,7 +157,7 @@ local pypkg_cwd = function(params)
     "Gemfile",
     "pom.xml",
   }
-  return util.root_pattern(unpack(root_files))(fname) or util.root_pattern ".git" (fname) or util.path.dirname(fname)
+  return util.root_pattern(table.unpack(root_files))(fname) or util.root_pattern ".git" (fname) or util.path.dirname(fname)
 end
 
 local null_sources = {}
