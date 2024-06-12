@@ -108,11 +108,10 @@ nnoremap <silent> <C-[> :cp<CR>
 nnoremap <silent> <C-]> :cn<CR>
 
 " terminalモードを使いやすくする
-nnoremap <silent> <C-t> :term<CR>
+nnoremap <silent> <C-t> :term<CR>i
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-]> <C-\><C-n>
-command! -nargs=* T split | wincmd j | terminal <args>
-autocmd TermOpen * startinsert
+command! -nargs=* T execute 'split | wincmd j | terminal ' . <q-args> | startinsert
 
 "---------------------------------------------------------------
 " 設定ファイルの読み込み

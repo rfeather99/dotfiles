@@ -2,7 +2,7 @@
 my dotfiles
 
 # 前提のプログラム
-* alacritty
+* alacritty or wezterm
 * zsh
 * tmux
 * neovim

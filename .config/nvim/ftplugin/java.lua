@@ -1,3 +1,11 @@
+-- Javaファイルのインデントをスペース4に設定
+vim.bo.shiftwidth = 4
+vim.bo.softtabstop = 4
+vim.bo.expandtab = true
+
+-- Mason+nvim-jdtlsの設定。Masonで以下をインストールしておく
+--  - jdtls
+--  - java-debug-adapter
 local mason_project_path = require("mason.settings").current.install_root_dir
 local jdt_path = require("mason-core.path").concat { mason_project_path, "bin", "jdtls"}
 local dap_path = vim.fn.glob(
@@ -9,7 +17,7 @@ local lombok_path = vim.fn.glob(
     mason_project_path, "packages/jdtls/lombok.jar"
   }, 1)
 local config = {
-    cmd = { jdt_path, "--jvm-arg=-javaagent:" .. lombok_path, "--jvm-arg=-Xbootclasspath/a:" .. lombok_path },
+    cmd = { jdt_path, "--jvm-arg=-javaagent:" .. lombok_path },
     root_dir = vim.fs.dirname(vim.fs.find({'gradlew', '.git', 'mvnw'}, { upward = true })[1]),
     init_options = {
         bundles = {
@@ -19,6 +27,26 @@ local config = {
 }
 require('jdtls').start_or_attach(config)
 
+-- vim-testで日本語のテスト名を使えるようにする
+local line_start = [[\v^\s*]]
+local optional_test_decorator = [[%(\zs\@Test\s+\ze)?]]
+local optional_public_modifier = [[%(\zspublic\s+\ze)?]]
+-- \wを\kに変更している。
+local function_def = [[void\s+(\k+)]]
+local class_def = [[class\s+(\w+)]]
+
+local test_patterns = {
+  test = {
+    line_start .. optional_test_decorator .. optional_public_modifier .. function_def
+  },
+  namespace = {
+    line_start .. optional_public_modifier .. class_def
+  },
+}
+
+vim.g['test#java#patterns'] = test_patterns
+
+-- DomaのSQLファイルとJavaファイルを行き来するための関数
 function OpenDomaSqlFile()
   -- get medhot name at the cursor using treesitter
   local parser = vim.treesitter.get_parser(0, 'java')
@@ -29,7 +57,7 @@ function OpenDomaSqlFile()
   ]])
 
   local method_name = nil
-  local current_row, _ = table.unpack(vim.api.nvim_win_get_cursor(0))
+  local current_row, _ = unpack(vim.api.nvim_win_get_cursor(0))
   current_row = current_row - 1
 
   for id, node in query:iter_captures(root, 0, current_row, current_row+1) do
@@ -45,12 +73,11 @@ function OpenDomaSqlFile()
   local query_path = nil
   if file_path and method_name then
     query_path = string.gsub(file_path, "src/main/java/", "src/main/resources/META-INF/")
-    query_path = string.gsub(query_path, ".java", "/" .. method_name .. ".sql")
+    query_path = string.gsub(query_path, "%.java$", "/" .. method_name .. ".sql")
   else
     print("Unable to find full method info at the cursor.")
     return
   end
-
   -- open the query file
   if query_path and vim.fn.filereadable(query_path) == 1 then
     vim.cmd("edit " .. query_path)
@@ -71,7 +98,6 @@ function JumpToDomaMethodFromSql()
     local methodName = vim.fn.expand('%:t:r')
 
   -- open the query file
-  print(javaFilePath)
   if javaFilePath and vim.fn.filereadable(javaFilePath) == 1 then
     -- Javaファイルを開く
     vim.cmd('edit ' .. javaFilePath)

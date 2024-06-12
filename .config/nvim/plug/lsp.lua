@@ -50,7 +50,7 @@ require('mason-lspconfig').setup_handlers({
         local root_files = {
           'settings.py',
         }
-        return require("lspconfig.util").root_pattern(table.unpack(root_files))(fname) or require("lspconfig.util").find_git_ancestor(fname)
+        return require("lspconfig.util").root_pattern(unpack(root_files))(fname) or require("lspconfig.util").find_git_ancestor(fname)
       end,
       settings = {
         pylsp = {
@@ -157,7 +157,7 @@ local pypkg_cwd = function(params)
     "Gemfile",
     "pom.xml",
   }
-  return util.root_pattern(table.unpack(root_files))(fname) or util.root_pattern ".git" (fname) or util.path.dirname(fname)
+  return util.root_pattern(unpack(root_files))(fname) or util.root_pattern ".git" (fname) or util.path.dirname(fname)
 end
 
 local null_sources = {}
