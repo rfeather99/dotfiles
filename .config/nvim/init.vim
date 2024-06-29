@@ -32,7 +32,7 @@ set backspace=indent,eol,start " Backspaceキーの影響範囲に制限を設�
 set whichwrap=b,s,h,l,<,>,[,]  " 行頭行末の左右移動で行をまたぐ
 
 " ファイル処理関連の設定
-filetype plugin on
+filetype plugin indent on
 set confirm    " 保存されていないファイルがあるときは終了前に保存確認
 set hidden     " 保存されていないファイルがあるときでも別のファイルを開くことが出来る
 set autoread   "外部でファイルに変更がされた場合は読みなおす
@@ -108,11 +108,10 @@ nnoremap <silent> <C-[> :cp<CR>
 nnoremap <silent> <C-]> :cn<CR>
 
 " terminalモードを使いやすくする
-nnoremap <silent> <C-t> :term<CR>
+nnoremap <silent> <C-t> :term<CR>i
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-]> <C-\><C-n>
-command! -nargs=* T split | wincmd j | terminal <args>
-autocmd TermOpen * startinsert
+command! -nargs=* T execute 'split | wincmd j | terminal ' . <q-args> | startinsert
 
 "---------------------------------------------------------------
 " 設定ファイルの読み込み
