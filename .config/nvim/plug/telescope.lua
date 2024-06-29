@@ -1,4 +1,4 @@
-local actions = require('telescope.actions') 
+local actions = require('telescope.actions')
 require('telescope').setup({
   pickers = {
     live_grep = {
@@ -12,6 +12,10 @@ require('telescope').setup({
     }
   },
 })
+-- To get fzf loaded and working with telescope, you need to call
+-- load_extension, somewhere after setup function:
+require('telescope').load_extension('fzf')
+require('telescope').load_extension('aerial')
 
 -- Find files using Telescope command-line sugar.
 vim.keymap.set('n', 'zf', '<cmd>Telescope find_files find_command=rg,--hidden,--ignore,--files,--glob,!.git prompt_prefix=🔍 theme=ivy<cr>')
@@ -20,4 +24,6 @@ vim.keymap.set('n', 'zg', '<cmd>Telescope live_grep vimgrep_arguments=rg,--hidde
 vim.keymap.set('n', 'zb', '<cmd>Telescope buffers theme=ivy<cr>')
 vim.keymap.set('n', 'zh', '<cmd>Telescope help_tags theme=ivy<cr>')
 vim.keymap.set('n', 'zm', '<cmd>Telescope oldfiles theme=ivy<cr>')
-
+vim.keymap.set('n', 'zs', '<cmd>Telescope colorscheme theme=ivy<cr>')
+vim.keymap.set('n', 'zj', '<cmd>Telescope lsp_workspace_symbols theme=ivy<cr>')
+vim.keymap.set('n', 'za', '<cmd>Telescope aerial theme=ivy<cr>')

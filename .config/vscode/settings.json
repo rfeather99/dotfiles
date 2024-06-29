@@ -1,0 +1,123 @@
+{
+    "editor.occurrencesHighlight": "off",
+    "workbench.editor.showTabs": "single",
+    "vim.useSystemClipboard": true,
+    "hediet.vscode-drawio.resizeImages": null,
+    "workbench.colorTheme": "Gruvbox Dark Hard",
+    "vim.leader": "<space>",
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": ["x"],
+            "after": ["\"", "_", "x"]
+        },
+        {
+            "before": ["s"],
+            "after": ["\"", "_", "s"]
+        },
+        {
+            "before": ["<leader>", "<leader>"],
+            "after": ["<Shift>", "V"]
+        },
+        {
+            "before": ["p"],
+            "after": ["p", "g", "<esc>"]
+        },
+        {
+            "before": ["<leader>", "w"],
+            "after": [],
+            "commands": [
+                {
+                    "command": "workbench.action.files.save",
+                    "args": []
+                }
+            ]
+        },
+        {
+            "before": [
+                "<Leader>",
+                "q"
+            ],
+            "after": [],
+            "commands": [
+                {
+                    "command": "workbench.action.closeActiveEditor",
+                    "args": []
+                }
+            ]
+        },
+        {
+            "before": [
+                "u"
+            ],
+            "commands": [
+                {
+                    "command": "undo"
+                }
+            ]
+        },
+        {
+            "before": [
+                "<C-r>"
+            ],
+            "commands": [
+                {
+                    "command": "redo"
+                }
+            ]
+        },
+        {
+            "before": [
+                "j"
+            ],
+            "after": [
+                "g",
+                "j"
+            ]
+        },
+        {
+            "before": [
+                "k"
+            ],
+            "after": [
+                "g",
+                "k"
+            ]
+        },
+        {
+            "before": ["g", "r"],
+            "commands": ["editor.action.goToReferences"],
+        },
+        {
+            "before": ["z", "b"],
+            "commands": ["workbench.action.quickOpen"],
+        },
+        {
+            "before": ["z", "f"],
+            "commands": ["workbench.action.quickOpen"],
+        }
+    ],
+    "vim.whichwrap": "h,l,<,>,[,],b,s",
+    "vim.insertModeKeyBindings": [
+        {
+            "before": ["j", "j"],
+            "after": ["<Esc>"]
+        }
+    ],
+    "redhat.telemetry.enabled": true,
+    "rsp-ui.enableStartServerOnActivation": [
+        {
+            "id": "redhat.vscode-community-server-connector",
+            "name": "Community Server Connector",
+            "startOnActivation": true
+        }
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+        {
+            "before": ["p"],
+            "after": ["p", "g", "v", "y", "e"]
+        }
+    ],
+    "java.gradle.buildServer.enabled": "off",
+    "gradle.debug": true,
+    "remote.autoForwardPortsSource": "hybrid",
+}

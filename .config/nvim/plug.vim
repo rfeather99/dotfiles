@@ -25,10 +25,12 @@ endif
 " :PlugStatus
 call plug#begin(s:plug_dir)
   Plug 'ellisonleao/gruvbox.nvim'             " color schema
+  Plug 'folke/tokyonight.nvim'                " color schema
   Plug 'lukas-reineke/indent-blankline.nvim'  " インデントを可視化
   Plug 'rhysd/accelerated-jk'                 " j, k移動高速化
   Plug 'easymotion/vim-easymotion'            " カーソル移動高速化
   Plug 'airblade/vim-gitgutter'               " gitの変更箇所を左にマーク表示する
+  Plug 'tpope/vim-rhubarb'                    " fugitiveのGbrowseでブラウザGitHub開く用に
   Plug 'tpope/vim-fugitive'                   " Git関連使いやすいように
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
@@ -46,10 +48,16 @@ call plug#begin(s:plug_dir)
   Plug 'lambdalisue/fern-renderer-nerdfont.vim'
   Plug 'lambdalisue/glyph-palette.vim'  " アイコンカラー設定
 
+  " highlight
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
   " telescope
   Plug 'nvim-tree/nvim-web-devicons'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
+  Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+
+  Plug 'stevearc/aerial.nvim'
 
   " lsp
   Plug 'neovim/nvim-lspconfig'
@@ -58,6 +66,7 @@ call plug#begin(s:plug_dir)
   Plug 'jose-elias-alvarez/null-ls.nvim'
 
   " completion
+  Plug 'onsails/lspkind-nvim'
   Plug 'hrsh7th/nvim-cmp'
   Plug 'hrsh7th/cmp-nvim-lsp'
   Plug 'hrsh7th/vim-vsnip'
@@ -66,19 +75,26 @@ call plug#begin(s:plug_dir)
   Plug 'hrsh7th/cmp-cmdline'
   Plug 'hrsh7th/cmp-cmdline'
 
+  Plug 'github/copilot.vim'
+
   " dignostics
   Plug 'folke/trouble.nvim'
 
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
 
 "---------------------------------------------------------------
 " 設定ファイルの読み込み
 let s:plug_rc = 'source ' . $HOME . '/.config/nvim/plug/'
 let s:load_rc   = {file -> execute(s:plug_rc . file . '.vim')}
-call s:load_rc('plug')                " プラグインの読み込み
+runtime plug/plug.vim                " プラグインの読み込み
 call s:load_rc('fugitive')            " fugitiveの設定読み込み
 call s:load_rc('fern')                " ファイラーの設定読み込み
 call s:load_rc('treesitter')          " treesitterの設定読み込み
 runtime plug/telescope.lua
 runtime plug/lsp.lua
+
+" colorschemeの設定
+colorscheme gruvbox
+"" 背景透過を有効化
+hi Normal guibg=NONE ctermbg=NONE
+hi NonText guibg=NONE ctermbg=NONE

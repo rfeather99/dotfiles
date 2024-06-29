@@ -16,12 +16,12 @@ set signcolumn=yes  "行番号横のサイン列を常に表示する
 set cursorline      "カーソル行の背景色を変える
 set title           "編集中のファイル名を表示する
 set showcmd         "入力中のコマンドを表示する
-set cmdheight=2     "コマンド入力欄の行数を2行にする
+set cmdheight=1     "コマンド入力欄の行数を1行にする
 set shortmess+=c
 set ruler           "座標を表示する
 set showmatch       "閉じ括弧の入力時に対応する括弧を表示する
 set list            "不可視文字を表示
-set listchars=tab:▸\ ,eol:↲,extends:❯,precedes:❮ " 不可視文字の表示記号指定
+set listchars=tab:▸\ ,eol:↲,extends:❯,precedes:❮,space:⋅ " 不可視文字の表示記号指定
 set foldmethod=indent "折りたたみ範囲の判断基準（デフォルト: manual）
 set foldlevel=100     "ファイルを開いたときにデフォルトで折りたたむレベル
 set completeopt=menuone,noinsert "completionの設定
@@ -111,7 +111,7 @@ nnoremap <silent> <C-]> :cn<CR>
 nnoremap <silent> <C-t> :term<CR>
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-]> <C-\><C-n>
-command! -nargs=* T split | wincmd j | resize 20 | terminal <args>
+command! -nargs=* T split | wincmd j | terminal <args>
 autocmd TermOpen * startinsert
 
 "---------------------------------------------------------------
@@ -123,11 +123,11 @@ runtime local.vim  " LOCAL設定の読み込み
 
 "---------------------------------------------------------------
 " agの結果をquickfixに流せるようにする
-function! s:ag(word) abort
-  cexpr system(printf('ag --nogroup --nocolor --column --hidden --ignore .git --ignore node_modules --vimgrep "%s"', a:word)) | cw
+function! s:rg(word) abort
+  cexpr system(printf('rg --column --hidden --no-heading --glob "!.git" --glob "!node_modules" --vimgrep "%s" .', a:word)) | cw
 endfunction
 
-command! -nargs=1 Ag call <SID>ag(<q-args>)
+command! -nargs=1 Rg call <SID>rg(<q-args>)
 
 syntax enable "シンタックスカラーリングを設定する
 
