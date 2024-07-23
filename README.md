@@ -34,6 +34,11 @@ option + 1 | horizontal to verticalレイアウト
 option + 2 | vertical to horizontalレイアウト
 :set-window-option synchronize-panes on | 全pane一斉入力
 a | 全pane一斉入力のon/off
+:select-layout even-horizontal | ペインを均等に配置（横）
+:select-layout even-vertical | ペインを均等に配置（縦）
+:select-layout main-horizontal | メインペインを上下に配置
+:select-layout main-vertical | メインペインを左右に配置
+:select-layout tiled | ペインをタイル状に配置
 
 # nvim
 

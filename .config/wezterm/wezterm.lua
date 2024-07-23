@@ -4,7 +4,7 @@ return {
   -- Window settings
   window_decorations = "RESIZE",
   initial_cols = 180,
-  initial_rows = 55,
+  initial_rows = 50,
   window_padding = {
     left = 0,
     right = 0,
@@ -23,7 +23,7 @@ return {
 
   -- Font settings
   font = wezterm.font("HackGen35 Console NF"),
-  font_size = 16.0,
+  font_size = 15.5,
   harfbuzz_features = {"calt=0", "clig=0", "liga=0"},
 
   -- Colors

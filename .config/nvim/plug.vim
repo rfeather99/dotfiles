@@ -40,7 +40,6 @@ call plug#begin(s:plug_dir)
 
   Plug 'mechatroner/rainbow_csv',     { 'for': 'csv' }
   Plug 'mattn/emmet-vim',             { 'for': ['html', 'css', 'scss', 'vue', 'eruby'] }
-  Plug 'previm/previm',               { 'for': 'markdown' }
 
   Plug 'lambdalisue/fern.vim'
   "Plug 'lambdalisue/fern-git-status.vim'
