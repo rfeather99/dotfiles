@@ -72,6 +72,8 @@ call plug#begin(s:plug_dir)
   Plug 'theHamsta/nvim-dap-virtual-text'
   Plug 'nvim-neotest/nvim-nio'
 
+  Plug 'LiadOz/nvim-dap-repl-highlights'
+  Plug 'rcarriga/cmp-dap'
   Plug 'nvim-telescope/telescope-dap.nvim'
 
   " test runner

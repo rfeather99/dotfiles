@@ -3,6 +3,7 @@ if empty(globpath(&rtp, 'autoload/nvim_treesitter.vim'))
 endif
 
 lua <<EOF
+require('nvim-dap-repl-highlights').setup()
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "all",
   highlight = {

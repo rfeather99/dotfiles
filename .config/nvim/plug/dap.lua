@@ -4,14 +4,6 @@ local dap = require('dap')
 vim.fn.sign_define('DapBreakpoint', { text='', texthl='DapBreakpointTextHl' })
 vim.fn.sign_define('DapStopped', { text='', texthl='DapStoppedTextHl' })
 
--- Replのcompletionを有効にする(CTRL-X CTRL-Oでも補完できる)
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "dap-repl",
-  callback = function()
-    require('dap.ext.autocompl').attach()
-  end
-})
-
 -- ここにファイルタイプ別の設定
 dap.configurations = {
   java = {
@@ -89,3 +81,16 @@ end
 vim.cmd([[
   command! -nargs=* -complete=customlist,v:lua._G.custom_commands.dap_complete D lua _G.custom_commands.dap_command_handler("<args>")
 ]])
+
+-- dap-cmp設定
+require("cmp").setup({
+  enabled = function()
+    return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
+        or require("cmp_dap").is_dap_buffer()
+  end
+})
+require("cmp").setup.filetype({ "dap-repl" }, {
+  sources = {
+    { name = "dap" },
+  },
+})

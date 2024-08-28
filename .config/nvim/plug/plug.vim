@@ -10,7 +10,7 @@ endif
 
 " easymotion
 if !empty(globpath(&rtp, 'autoload/easymotion'))
-  " Do not rely on default bidings.
+  " Do not rely on default bindings.
   let g:EasyMotion_do_mapping = 0
   " Turn on case sensitive feature
   let g:EasyMotion_smartcase = 1
