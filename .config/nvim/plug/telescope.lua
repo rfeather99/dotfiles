@@ -1,6 +1,10 @@
 local actions = require('telescope.actions')
 require('telescope').setup({
+  defaults = require('telescope.themes').get_ivy(),
   pickers = {
+    oldfiles = {
+      only_cwd = true,
+    },
     live_grep = {
       mappings = {
         i = { ["<c-f>"] = actions.to_fuzzy_refine },

@@ -53,7 +53,39 @@ vim.api.nvim_set_keymap('n', '<leader>lp', ':lua require("dap").set_breakpoint(n
 vim.api.nvim_set_keymap('n', '<leader>dr', ':lua require("dap").repl.open()<CR>', { silent = true })
 vim.api.nvim_set_keymap('n', '<leader>dl', ':lua require("dap").run_last()<CR>', { silent = true })
 
-require("dapui").setup()
-vim.api.nvim_set_keymap('n', '<leader>d', ':lua require("dapui").toggle()<CR>', {})
-
 require("nvim-dap-virtual-text").setup()
+
+-- プラグイン設定
+
+-- telescope-dap設定
+-- :DでTelescope dap <args>を実行する。引数がない場合はcommandsを実行する
+require('telescope').load_extension('dap')
+
+local dap_commands = {
+  "commands",
+  "configurations",
+  "variables",
+  "frames",
+  "list_breakpoints",
+}
+_G.custom_commands = {}
+function _G.custom_commands.dap_complete(arg_lead, cmd_line, cursor_pos)
+  return vim.tbl_filter(function(val)
+    return vim.startswith(val, arg_lead)
+  end, dap_commands)
+end
+function _G.custom_commands.dap_command_handler(args)
+  if args == "" then
+    require('telescope').extensions.dap.commands({})
+  else
+    local tdap = require('telescope').extensions.dap
+    if tdap[args] then
+      tdap[args]({})
+    else
+      print("Invalid argument: " .. args)
+    end
+  end
+end
+vim.cmd([[
+  command! -nargs=* -complete=customlist,v:lua._G.custom_commands.dap_complete D lua _G.custom_commands.dap_command_handler("<args>")
+]])

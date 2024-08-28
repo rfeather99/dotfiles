@@ -70,8 +70,9 @@ call plug#begin(s:plug_dir)
   " dap
   Plug 'mfussenegger/nvim-dap'
   Plug 'theHamsta/nvim-dap-virtual-text'
-  Plug 'rcarriga/nvim-dap-ui'
   Plug 'nvim-neotest/nvim-nio'
+
+  Plug 'nvim-telescope/telescope-dap.nvim'
 
   " test runner
   Plug 'vim-test/vim-test'
