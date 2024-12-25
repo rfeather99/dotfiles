@@ -118,6 +118,106 @@ function docker-debug-active-container() {
 }
 alias dod=docker-debug-active-container
 
+function docker-compose-restart-service() {
+  # 起動中のコンテナリストを取得し、fzfで選択
+  local container=$(docker ps -a --format '{{.Names}}' | fzf +m --query "$1" --select-1 --exit-0 --prompt='Containers > ')
+  # コンテナが選択されなかった場合は終了
+  if [ -z "$container" ]; then
+    echo "コンテナが選択されませんでした。スクリプトを終了します。"
+    return 1
+  fi
+
+  # 選択したコンテナのComposeプロジェクトディレクトリを取得
+  local compose_dir=$(docker inspect -f '{{ index .Config.Labels "com.docker.compose.project.working_dir" }}' "$container")
+
+  # Composeディレクトリに移動してdocker compose down & upを実行
+  if [ -d "$compose_dir" ]; then
+    cd "$compose_dir" || return
+    docker compose down
+    docker compose up -d
+    echo "$container_name を再起動しました。"
+  else
+    echo "Composeディレクトリが見つかりませんでした。"
+  fi
+}
+alias dcr=docker-compose-restart-service
+
+# redis-cli
+# 指定されたキー、ポート、データベースから値を取得する関数
+get_redis_value() {
+  local KEY=$1
+  local PORT=$2
+  local DB=$3
+
+  # データベースを選択
+  redis-cli -p $PORT SELECT $DB
+
+  # キーのデータ型を取得
+  local KEY_TYPE=$(redis-cli -p $PORT TYPE "$KEY")
+
+  # データ型に応じて値を取得する
+  local VALUE
+  case $KEY_TYPE in
+    string)
+      VALUE=$(redis-cli -p $PORT GET "$KEY")
+      ;;
+    list)
+      VALUE=$(redis-cli -p $PORT LRANGE "$KEY" 0 -1)
+      ;;
+    set)
+      VALUE=$(redis-cli -p $PORT SMEMBERS "$KEY")
+      ;;
+    hash)
+      VALUE=$(redis-cli -p $PORT HGETALL "$KEY")
+      ;;
+    zset)
+      VALUE=$(redis-cli -p $PORT ZRANGE "$KEY" 0 -1 WITHSCORES)
+      ;;
+    *)
+      echo "Unknown data type: $KEY_TYPE"
+      return 1
+      ;;
+  esac
+
+  # 結果を返す
+  echo "$VALUE"
+}
+
+redis-fzf() {
+  # デフォルトポート
+  local REDIS_PORT="6379"
+
+  # 引数としてポート番号が渡された場合、そのポート番号を使用
+  if [ ! -z "$1" ]; then
+    REDIS_PORT="$1"
+  fi
+
+  # DBをfzfで選択
+  local DB=$(seq 0 15 | fzf --prompt="Select Redis DB: ")
+
+  if [ -z "$DB" ]; then
+    echo "No DB selected"
+    return 1
+  fi
+
+  # キーの一覧をfzfで表示して選択
+  local KEY=$(redis-cli -n $DB -p $REDIS_PORT KEYS "*" | fzf --prompt="Select a Redis key: " --preview="redis-cli -n $DB -p $REDIS_PORT SELECT $DB >/dev/null; KEY_TYPE=\$(redis-cli -n $DB -p $REDIS_PORT TYPE {}); case \$KEY_TYPE in string) redis-cli -n $DB -p $REDIS_PORT GET {};; list) redis-cli -n $DB -p $REDIS_PORT LRANGE {} 0 -1;; set) redis-cli -n $DB -p $REDIS_PORT SMEMBERS {};; hash) redis-cli -n $DB -p $REDIS_PORT HGETALL {};; zset) redis-cli -n $DB -p $REDIS_PORT ZRANGE {} 0 -1 WITHSCORES;; *) echo 'Unknown data type';; esac")
+
+  if [ -z "$KEY" ]; then
+    echo "No key selected"
+    return 1
+  fi
+
+  # 選択したキーの値を取得して表示
+  local VALUE=$(get_redis_value "$KEY" "$REDIS_PORT" "$DB")
+
+  # 結果を表示
+  echo "Key: $KEY"
+  echo "Type: $KEY_TYPE"
+  echo "Value:"
+  # echo "$VALUE"
+}
+
 # initialize pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"

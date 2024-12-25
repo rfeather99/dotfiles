@@ -37,6 +37,7 @@ call plug#begin(s:plug_dir)
   Plug 'cohama/lexima.vim'                    " rubyとかvimscriptのifとかの終了を補完してくれる
   Plug 'tpope/vim-commentary'                 " コメントの切り替えをgccでできるようになる
   Plug 'tpope/vim-surround'                   " 選択文字をSで囲んだり、囲み文字切り替えできるようになる
+  Plug 'thinca/vim-quickrun'                  " ファイルの実行結果を表示する
 
   Plug 'mechatroner/rainbow_csv',     { 'for': 'csv' }
   Plug 'mattn/emmet-vim',             { 'for': ['html', 'css', 'scss', 'vue', 'eruby'] }
@@ -112,4 +113,4 @@ runtime plug/test.lua
 colorscheme gruvbox
 "" 背景透過を有効化
 hi Normal guibg=NONE ctermbg=NONE
-hi NonText guibg=NONE ctermbg=NONE
+" hi NonText guibg=NONE ctermbg=NONE

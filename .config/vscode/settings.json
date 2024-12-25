@@ -3,7 +3,7 @@
     "workbench.editor.showTabs": "single",
     "vim.useSystemClipboard": true,
     "hediet.vscode-drawio.resizeImages": null,
-    "workbench.colorTheme": "Gruvbox Dark Hard",
+    "workbench.colorTheme": "Default Light Modern",
     "vim.leader": "<space>",
     "vim.normalModeKeyBindingsNonRecursive": [
         {

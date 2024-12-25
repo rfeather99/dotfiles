@@ -52,7 +52,7 @@ set autoindent    "改行時に前の行のインデントを継続する
 set smartindent   "改行時に入力された行の末尾に合わせて次の行のインデントを増減す
 set breakindent   "行の折り返し時に、インデントを維持する
 
-"clipboad連携設定
+"clipboard連携設定
 set clipboard+=unnamedplus
 
 " 検索関連

@@ -61,7 +61,10 @@ augroup END
 
 lua <<EOF
 require("ibl").setup {
-  indent = { char = "⋅" },
+  indent = {
+    -- char = "⋅",
+    char = "▏"
+  },
   scope = { enabled = false },
 }
 
