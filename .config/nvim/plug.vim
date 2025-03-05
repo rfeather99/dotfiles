@@ -94,16 +94,20 @@ call plug#begin(s:plug_dir)
   " diagnostics
   Plug 'folke/trouble.nvim'
 
+  " markdown preview(need node.js)
+  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+
 call plug#end()
 
 "---------------------------------------------------------------
 " 設定ファイルの読み込み
 let s:plug_rc = 'source ' . $HOME . '/.config/nvim/plug/'
 let s:load_rc   = {file -> execute(s:plug_rc . file . '.vim')}
-runtime plug/plug.vim                " プラグインの読み込み
+runtime plug/plug.vim                 " プラグインの読み込み
 call s:load_rc('fugitive')            " fugitiveの設定読み込み
 call s:load_rc('fern')                " ファイラーの設定読み込み
 call s:load_rc('treesitter')          " treesitterの設定読み込み
+call s:load_rc('markdown')            " markdownの設定読み込み
 runtime plug/telescope.lua
 runtime plug/lsp.lua
 runtime plug/dap.lua
