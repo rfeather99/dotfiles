@@ -45,4 +45,5 @@ map <silent> [Tag]x :tabclose<CR>
 map <silent> [Tag]n :tabnext<CR>
 " 前のタブ
 map <silent> [Tag]p :tabprevious<CR>
-
+" 今のバッファーを新しいタブで開く(擬似的なwindowの拡大)
+map <silent> [Tag]t :tab split<CR>

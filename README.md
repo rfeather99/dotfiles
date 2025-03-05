@@ -108,6 +108,7 @@ t8 | TAB 8に移動
 t9 | TAB 9に移動
 tn | 次のTABに移動
 tc | 前のTABに移動
+tt | アクティブなwindowを別タブで開く(擬似的な拡大)
 
 ### easymotion関連
 
