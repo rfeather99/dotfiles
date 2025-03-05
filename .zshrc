@@ -1,3 +1,4 @@
+fpath+=($HOME/.docker/completions $fpath)
 autoload -Uz compinit
 compinit -u
 
@@ -149,29 +150,25 @@ get_redis_value() {
   local PORT=$2
   local DB=$3
 
-  # データベースを選択
-  redis-cli -p $PORT SELECT $DB
-
-  # キーのデータ型を取得
-  local KEY_TYPE=$(redis-cli -p $PORT TYPE "$KEY")
-
+  # データベースを指定して一度のコマンドで処理する
+  local KEY_TYPE=$(redis-cli -p "$PORT" -n "$DB" TYPE "$KEY" | tr -d '\r')
   # データ型に応じて値を取得する
   local VALUE
   case $KEY_TYPE in
     string)
-      VALUE=$(redis-cli -p $PORT GET "$KEY")
+      VALUE=$(redis-cli -n "$DB" -p $PORT GET "$KEY")
       ;;
     list)
-      VALUE=$(redis-cli -p $PORT LRANGE "$KEY" 0 -1)
+      VALUE=$(redis-cli -n "$DB" -p $PORT LRANGE "$KEY" 0 -1)
       ;;
     set)
-      VALUE=$(redis-cli -p $PORT SMEMBERS "$KEY")
+      VALUE=$(redis-cli -n "$DB" -p $PORT SMEMBERS "$KEY")
       ;;
     hash)
-      VALUE=$(redis-cli -p $PORT HGETALL "$KEY")
+      VALUE=$(redis-cli -n "$DB" -p $PORT HGETALL "$KEY")
       ;;
     zset)
-      VALUE=$(redis-cli -p $PORT ZRANGE "$KEY" 0 -1 WITHSCORES)
+      VALUE=$(redis-cli -n "$DB" -p $PORT ZRANGE "$KEY" 0 -1 WITHSCORES | awk 'NR%2{printf "%s, ", $0; next} {print $0}')
       ;;
     *)
       echo "Unknown data type: $KEY_TYPE"
@@ -180,7 +177,8 @@ get_redis_value() {
   esac
 
   # 結果を返す
-  echo "$VALUE"
+  #echo "$VALUE"
+  echo "$KEY_TYPE:$VALUE"
 }
 
 redis-fzf() {
@@ -201,31 +199,76 @@ redis-fzf() {
   fi
 
   # キーの一覧をfzfで表示して選択
-  local KEY=$(redis-cli -n $DB -p $REDIS_PORT KEYS "*" | fzf --prompt="Select a Redis key: " --preview="redis-cli -n $DB -p $REDIS_PORT SELECT $DB >/dev/null; KEY_TYPE=\$(redis-cli -n $DB -p $REDIS_PORT TYPE {}); case \$KEY_TYPE in string) redis-cli -n $DB -p $REDIS_PORT GET {};; list) redis-cli -n $DB -p $REDIS_PORT LRANGE {} 0 -1;; set) redis-cli -n $DB -p $REDIS_PORT SMEMBERS {};; hash) redis-cli -n $DB -p $REDIS_PORT HGETALL {};; zset) redis-cli -n $DB -p $REDIS_PORT ZRANGE {} 0 -1 WITHSCORES;; *) echo 'Unknown data type';; esac")
-
+  local KEY=$(redis-cli -n $DB -p $REDIS_PORT KEYS "*" | fzf --prompt="Select a Redis key: " --preview="
+    KEY_TYPE=\$(redis-cli -n $DB -p $REDIS_PORT TYPE {});
+    case \$KEY_TYPE in
+      string)
+        redis-cli -n $DB -p $REDIS_PORT GET {}
+        ;;
+      list)
+        redis-cli -n $DB -p $REDIS_PORT LRANGE {} 0 -1 | tr '\n' ' '
+        ;;
+      set)
+        redis-cli -n $DB -p $REDIS_PORT SMEMBERS {} | tr '\n' ' '
+        ;;
+      hash)
+        redis-cli -n $DB -p $REDIS_PORT HGETALL {} | tr '\n' ' '
+        ;;
+      zset)
+        redis-cli -n $DB -p $REDIS_PORT ZRANGE {} 0 -1 WITHSCORES | awk 'NR%2==1{printf \"%s, \", \$0; next} {print \$0}'
+        ;;
+      *)
+        echo 'Unknown data type'
+        ;;
+    esac
+  ")
   if [ -z "$KEY" ]; then
     echo "No key selected"
     return 1
   fi
 
   # 選択したキーの値を取得して表示
-  local VALUE=$(get_redis_value "$KEY" "$REDIS_PORT" "$DB")
+  local result=$(get_redis_value "$KEY" "$REDIS_PORT" "$DB")
+  local KEY_TYPE="${result%%:*}"  # コロンの前の部分を取得
+  local VALUE="${result#*:}"  # コロンの後の部分を取得
 
   # 結果を表示
   echo "Key: $KEY"
   echo "Type: $KEY_TYPE"
   echo "Value:"
-  # echo "$VALUE"
+  echo "$VALUE"
 }
 
 # initialize pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+export PATH="$HOME/.pyenv/shims:$PATH"
+pyenv_cmds=(pyenv python python3 pip pip3)
+pyenv_lazy() {
+  unalias "${pyenv_cmds[@]}"
+  eval "$(pyenv init -)"
+}
+for cmd in "${pyenv_cmds[@]}"; do
+  alias $cmd="pyenv_lazy && $cmd"
+done
 
 # initialize fnm
-eval "$(fnm env --use-on-cd)"
+fnm_cmds=(fnm node npm npx yarn)
+fnm_lazy() {
+  unalias "${fnm_cmds[@]}"
+  eval "$(fnm env --use-on-cd)"
+}
+for cmd in "${fnm_cmds[@]}"; do
+  alias $cmd="fnm_lazy && $cmd"
+done
 
 # initialize rbenv
-eval "$(rbenv init - zsh)"
+export PATH="$HOME/.rbenv/shims:$PATH"
+rbenv_cmds=(rbenv ruby bundle gem irb rake)
+rbenv_lazy() {
+  unalias "${rbenv_cmds[@]}"
+  eval "$(rbenv init - zsh)"
+}
+for cmd in "${rbenv_cmds[@]}"; do
+  alias $cmd="rbenv_lazy && $cmd"
+done
