@@ -5,6 +5,8 @@ augroup MyAutoCmd
   autocmd!
 augroup END
 
+set maxmempattern=2000000 " 検索時のメモリ制限を2GBにする
+
 " 文字設定
 set encoding=utf-8
 set fileencodings=utf-8,iso-2022-jp,euc-jp,cp932,sjis

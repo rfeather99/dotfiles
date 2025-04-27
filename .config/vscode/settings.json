@@ -120,4 +120,7 @@
     "java.gradle.buildServer.enabled": "off",
     "gradle.debug": true,
     "remote.autoForwardPortsSource": "hybrid",
+    "cline.preferredLanguage": "Japanese - 日本語",
+    "terminal.integrated.autoReplies": {},
+    "chat.agent.enabled": true,
 }

@@ -85,15 +85,18 @@ return {
       },
     },
   },
-
   -- Key bindings
   --
-
+  disable_default_key_bindings = true,
   keys = {
     {key="¥", mods="ALT", action=wezterm.action{SendString="\\"}},
     {key="V", mods="CTRL|SHIFT", action=wezterm.action.PasteFrom("Clipboard")},
     {key="C", mods="CTRL|SHIFT", action=wezterm.action.CopyTo("Clipboard")},
+    {key="v", mods="CMD", action=wezterm.action.PasteFrom("Clipboard")},
+    {key="c", mods="CMD", action=wezterm.action.CopyTo("Clipboard")},
+    {key="n", mods="CMD", action=wezterm.action.SpawnWindow},
     {key="=", mods="CMD|SHIFT", action=wezterm.action.IncreaseFontSize},
+    {key="[", mods="CTRL", action=wezterm.action.SendKey { key = "[", mods = "CTRL" }},
   },
 
   -- Other settings

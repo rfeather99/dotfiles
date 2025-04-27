@@ -122,26 +122,13 @@ alias dod=docker-debug-active-container
 function docker-compose-restart-service() {
   # 起動中のコンテナリストを取得し、fzfで選択
   local container=$(docker ps -a --format '{{.Names}}' | fzf +m --query "$1" --select-1 --exit-0 --prompt='Containers > ')
-  # コンテナが選択されなかった場合は終了
-  if [ -z "$container" ]; then
-    echo "コンテナが選択されませんでした。スクリプトを終了します。"
-    return 1
-  fi
-
-  # 選択したコンテナのComposeプロジェクトディレクトリを取得
-  local compose_dir=$(docker inspect -f '{{ index .Config.Labels "com.docker.compose.project.working_dir" }}' "$container")
-
-  # Composeディレクトリに移動してdocker compose down & upを実行
-  if [ -d "$compose_dir" ]; then
-    cd "$compose_dir" || return
-    docker compose down
-    docker compose up -d
-    echo "$container_name を再起動しました。"
+  if [[ -n $container ]]; then
+    print -z "docker restart $container"
   else
-    echo "Composeディレクトリが見つかりませんでした。"
+    echo 'No container selected'
   fi
 }
-alias dcr=docker-compose-restart-service
+alias dor=docker-compose-restart-service
 
 # redis-cli
 # 指定されたキー、ポート、データベースから値を取得する関数
@@ -239,19 +226,6 @@ redis-fzf() {
   echo "$VALUE"
 }
 
-# initialize pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-export PATH="$HOME/.pyenv/shims:$PATH"
-pyenv_cmds=(pyenv python python3 pip pip3)
-pyenv_lazy() {
-  unalias "${pyenv_cmds[@]}"
-  eval "$(pyenv init -)"
-}
-for cmd in "${pyenv_cmds[@]}"; do
-  alias $cmd="pyenv_lazy && $cmd"
-done
-
 # initialize fnm
 fnm_cmds=(fnm node npm npx yarn)
 fnm_lazy() {
@@ -272,3 +246,8 @@ rbenv_lazy() {
 for cmd in "${rbenv_cmds[@]}"; do
   alias $cmd="rbenv_lazy && $cmd"
 done
+
+# setup uv
+. "$HOME/.local/bin/env"
+eval "$(uv generate-shell-completion zsh)"
+
