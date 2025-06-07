@@ -130,6 +130,16 @@ function docker-compose-restart-service() {
 }
 alias dor=docker-compose-restart-service
 
+function docker-compose-down-services() {
+  local containers=$(docker ps -a --format '{{.Names}}' | fzf +m --query "$1" --multi --exit-0 --prompt='Containers > ' | tr '\n' ' ')
+  if [[ -n $containers ]]; then
+    print -z "docker compose down $containers"
+  else
+    echo 'No container selected'
+  fi
+}
+alias dods=docker-compose-down-services
+
 # redis-cli
 # 指定されたキー、ポート、データベースから値を取得する関数
 get_redis_value() {
