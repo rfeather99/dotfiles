@@ -121,7 +121,7 @@ runtime plug.vim   " プラグインの読み込み
 runtime tab.vim    " TAB設定
 runtime osc52.vim  " OSC52設定
 runtime local.vim  " LOCAL設定の読み込み
-
+lua require('toggle_terminal')
 "---------------------------------------------------------------
 " agの結果をquickfixに流せるようにする
 function! s:rg(word) abort
