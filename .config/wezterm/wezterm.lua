@@ -97,7 +97,7 @@ return {
     {key="n", mods="CMD", action=wezterm.action.SpawnWindow},
     {key="=", mods="CTRL|SHIFT", action=wezterm.action.IncreaseFontSize},
     {key="-", mods="CTRL", action=wezterm.action.DecreaseFontSize},
-    {key="[", mods="CTRL", action=wezterm.action.SendKey { key = "[", mods = "CTRL" }},
+    {key="[", mods="CTRL", action=wezterm.action.SendString("\x1b")},
   },
 
   -- Other settings

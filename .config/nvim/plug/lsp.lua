@@ -10,11 +10,81 @@ require('mason').setup({
     }
   }
 })
-require('mason-lspconfig').setup {
-  ensure_installed = {
-    'typos_lsp'
-  }
-}
+-- require('mason-lspconfig').setup {
+--   ensure_installed = {
+--     'typos_lsp'
+--   }
+-- }
+vim.lsp.config("lua_ls", {
+    settings = {
+      Lua = {
+        -- 「undefined global vim」を無視する
+        diagnostics = {
+          globals = { "vim" }
+        }
+      }
+    }
+  })
+vim.lsp.config("pylsp", {
+    root_markers = {"settings.py", ".git"},
+    settings = {
+      pylsp = {
+        plugins = {
+          pyflakes = {
+            enabled = false
+          },
+          flake8 = {
+            enabled = false
+          },
+          pycodestyle = {
+            enabled = false
+          },
+        }
+      }
+    }
+  })
+-- monorepoで、ルートと配下でrubyバージョンが異なる場合に問題があったので、Masonを利用しない設定に変更
+-- ただし、LSPを有効にするためには、Masonでインストールする必要がある(でも実際は使われない)
+-- 参照: https://github.com/williamboman/mason.nvim/issues/1777
+--
+
+-- projectごとの、.vimrc.localで定義されていればそれを使う(dockerでlspを起動したい場合(ローカルだとbundle installができない)を想定)
+-- 未定義または空ならデフォルトにフォールバック
+local ruby_lsp_cmd = vim.g.ruby_lsp_cmd
+if ruby_lsp_cmd == nil or #ruby_lsp_cmd == 0 then
+  ruby_lsp_cmd = { vim.fn.expand("~/.rbenv/shims/ruby-lsp") }
+end
+
+vim.lsp.config("ruby_lsp", {
+    mason = false, -- mason を無効化して、rbenv を利用
+    cmd = ruby_lsp_cmd,
+    root_markers = {"Gemfile", ".git"},
+    settings = {
+      rubyLsp = {
+        diagnostics = {
+          enabled = true,
+          rubocopPath = vim.fn.expand("~/.rbenv/shims/rubocop"),
+        },
+      }
+    }
+  })
+vim.lsp.config("rubocop", {
+    mason = false, -- mason を無効化
+    cmd = { vim.fn.expand("~/.rbenv/shims/rubocop"), "--lsp" },
+    root_markers = {"Gemfile", ".git"}
+  })
+vim.lsp.config("solargraph", {
+    mason = false, -- mason を無効化して、rbenv を利用
+    cmd = { vim.fn.expand("~/.rbenv/shims/solargraph"), "stdio" },
+    root_markers = {"Gemfile", ".git"},
+    settings = {
+      solargraph = {
+        diagnostics = true, -- LSP による診断を有効化
+        completion = true, -- 補完機能を有効化
+        formatting = true, -- フォーマット機能を有効化
+      }
+    }
+  })
 require('mason-lspconfig').setup_handlers({
   function(server)
     local opt = {
@@ -23,91 +93,7 @@ require('mason-lspconfig').setup_handlers({
     if server == "jdtls" then
       return
     end
-    require('lspconfig')[server].setup(opt)
-  end,
-  ["typos_lsp"] = function()
-    require('lspconfig').typos_lsp.setup({
-      init_options = {
-        config = "~/.config/nvim/lsp/typos-ls.toml"
-      }
-    })
-  end,
-  ["lua_ls"] = function()
-    require('lspconfig').lua_ls.setup({
-      settings = {
-        Lua = {
-          -- 「undefined global vim」を無視する
-          diagnostics = {
-            globals = { "vim" }
-          }
-        }
-      }
-    })
-  end,
-  ["pylsp"] = function()
-    require("lspconfig").pylsp.setup {
-      root_dir = function(fname)
-        local root_files = {
-          'settings.py',
-        }
-        return require("lspconfig.util").root_pattern(unpack(root_files))(fname) or require("lspconfig.util").find_git_ancestor(fname)
-      end,
-      settings = {
-        pylsp = {
-          plugins = {
-            pyflakes = {
-              enabled = false
-            },
-            flake8 = {
-              enabled = false
-            },
-            pycodestyle = {
-              enabled = false
-            },
-          }
-        }
-      }
-    }
-  end,
-  -- monorepoで、ルートと配下でrubyバージョンが異なる場合に問題があったので、Masonを利用しない設定に変更
-  -- ただし、LSPを有効にするためには、Masonでインストールする必要がある(でも実際は使われない)
-  -- 参照: https://github.com/williamboman/mason.nvim/issues/1777
-  --
-  ["ruby_lsp"] = function()
-    require('lspconfig').ruby_lsp.setup({
-      mason = false, -- mason を無効化して、rbenv を利用
-      cmd = { vim.fn.expand("~/.rbenv/shims/ruby-lsp") },
-      root_dir = require("lspconfig.util").root_pattern("Gemfile", ".git"),
-      settings = {
-        rubyLsp = {
-          diagnostics = {
-            enabled = true,
-            rubocopPath = vim.fn.expand("~/.rbenv/shims/rubocop"),
-          },
-        }
-      }
-    })
-  end,
-  ["rubocop"] = function()
-    require('lspconfig').rubocop.setup({
-      mason = false, -- mason を無効化
-      cmd = { vim.fn.expand("~/.rbenv/shims/rubocop"), "--lsp" },
-      root_dir = require("lspconfig.util").root_pattern("Gemfile", ".git"),
-    })
-  end,
-  ["solargraph"] = function()
-    require('lspconfig').solargraph.setup({
-      mason = false, -- mason を無効化して、rbenv を利用
-      cmd = { vim.fn.expand("~/.rbenv/shims/solargraph"), "stdio" },
-      root_dir = require("lspconfig.util").root_pattern("Gemfile", ".git"),
-      settings = {
-        solargraph = {
-          diagnostics = true, -- LSP による診断を有効化
-          completion = true, -- 補完機能を有効化
-          formatting = true, -- フォーマット機能を有効化
-        }
-      }
-    })
+    vim.lsp.enable({ server })
   end,
 })
 

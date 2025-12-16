@@ -113,14 +113,14 @@ nnoremap <silent> <C-]> :cn<CR>
 nnoremap <silent> <C-t> :term<CR>i
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-]> <C-\><C-n>
-command! -nargs=* T execute 'split | wincmd j | terminal ' . <q-args> | startinsert
+command! -nargs=* T execute 'split | wincmd J | terminal ' . <q-args> | startinsert
 
 "---------------------------------------------------------------
 " 設定ファイルの読み込み
+runtime local.vim  " LOCAL設定の読み込み
 runtime plug.vim   " プラグインの読み込み
 runtime tab.vim    " TAB設定
 runtime osc52.vim  " OSC52設定
-runtime local.vim  " LOCAL設定の読み込み
 lua require('toggle_terminal')
 "---------------------------------------------------------------
 " agの結果をquickfixに流せるようにする

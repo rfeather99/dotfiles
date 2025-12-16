@@ -35,18 +35,16 @@ alias vim='nvim'
 alias ls='ls -aG'
 alias tmux='tmux -u'
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+alias difit="npx difit@latest"
+claude() {
+  fnm exec --using default -- claude "$@"
+}
+copilot() {
+  fnm exec --using default -- copilot "$@"
+}
 
-agent="$HOME/.ssh/agent"
-if [ -S "$SSH_AUTH_SOCK" ]; then
-    case $SSH_AUTH_SOCK in
-    /tmp/*/agent.[0-9]*)
-        ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
-    esac
-elif [ -S $agent ]; then
-    export SSH_AUTH_SOCK=$agent
-else
-    echo "no ssh-agent"
-fi
+# 1passwordのssh agentを使う
+export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
 
 # promptinitを使う場合はこちらを読み込む
 # 利用可能なpromptの設定を見る
@@ -119,7 +117,7 @@ function docker-debug-active-container() {
 }
 alias dod=docker-debug-active-container
 
-function docker-compose-restart-service() {
+function docker-restart-container() {
   # 起動中のコンテナリストを取得し、fzfで選択
   local container=$(docker ps -a --format '{{.Names}}' | fzf +m --query "$1" --select-1 --exit-0 --prompt='Containers > ')
   if [[ -n $container ]]; then
@@ -128,17 +126,17 @@ function docker-compose-restart-service() {
     echo 'No container selected'
   fi
 }
-alias dor=docker-compose-restart-service
+alias dor=docker-restart-container
 
 function docker-compose-down-services() {
-  local containers=$(docker ps -a --format '{{.Names}}' | fzf +m --query "$1" --multi --exit-0 --prompt='Containers > ' | tr '\n' ' ')
+  local containers=$(docker compose ps --services | fzf +m --query "$1" --multi --exit-0 --prompt='Services > ' | tr '\n' ' ')
   if [[ -n $containers ]]; then
     print -z "docker compose down $containers"
   else
     echo 'No container selected'
   fi
 }
-alias dods=docker-compose-down-services
+alias dcd=docker-compose-down-services
 
 # redis-cli
 # 指定されたキー、ポート、データベースから値を取得する関数

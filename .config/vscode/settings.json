@@ -123,4 +123,31 @@
     "cline.preferredLanguage": "Japanese - 日本語",
     "terminal.integrated.autoReplies": {},
     "chat.agent.enabled": true,
+    "terminal.integrated.scrollback": 10000,
+    "chat.mcp.discovery.enabled": {
+        "claude-desktop": true,
+        "windsurf": true,
+        "cursor-global": true,
+        "cursor-workspace": true
+    },
+    "editor.wordWrap": "on",
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "chat.tools.terminal.autoApprove": {
+        "/^gh search prs": true,
+        "/^gh pr view": true,
+        "/^docker compose": true,
+        "/^gem list -r \\^rails\\$ -a \\| grep \"7\\\\\\.0\\\\\\.\" \\| head -n 10$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "npx": true,
+        "gh": true,
+        "docker exec": true,
+        "docker volume": true,
+        "docker logs": true,
+        "docker compose": true
+    },
+    "chat.agent.maxRequests": 100,
+    "workbench.editor.enablePreview": false,
+    "chat.customAgentInSubagent.enabled": true,
 }

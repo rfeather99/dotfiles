@@ -38,6 +38,7 @@ call plug#begin(s:plug_dir)
   Plug 'tpope/vim-commentary'                 " コメントの切り替えをgccでできるようになる
   Plug 'tpope/vim-surround'                   " 選択文字をSで囲んだり、囲み文字切り替えできるようになる
   Plug 'thinca/vim-quickrun'                  " ファイルの実行結果を表示する
+  Plug 'vim-scripts/AnsiEsc.vim'              " Ansi Color Escape Sequenceを反映する
 
   Plug 'mechatroner/rainbow_csv',     { 'for': 'csv' }
   Plug 'mattn/emmet-vim',             { 'for': ['html', 'css', 'scss', 'vue', 'eruby'] }
@@ -61,6 +62,8 @@ call plug#begin(s:plug_dir)
 
   " lsp
   Plug 'neovim/nvim-lspconfig'
+  "Plug 'williamboman/mason.nvim',           { 'tag': 'v1.11.0' }
+  "Plug 'williamboman/mason-lspconfig.nvim', { 'tag': 'v1.32.0' }
   Plug 'williamboman/mason.nvim'
   Plug 'williamboman/mason-lspconfig.nvim'
   Plug 'nvimtools/none-ls.nvim'
