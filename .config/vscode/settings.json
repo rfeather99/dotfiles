@@ -3,7 +3,7 @@
     "workbench.editor.showTabs": "single",
     "vim.useSystemClipboard": true,
     "hediet.vscode-drawio.resizeImages": null,
-    "workbench.colorTheme": "Gruvbox Dark Hard",
+    "workbench.colorTheme": "Default Light Modern",
     "vim.leader": "<space>",
     "vim.normalModeKeyBindingsNonRecursive": [
         {
@@ -120,4 +120,7 @@
     "java.gradle.buildServer.enabled": "off",
     "gradle.debug": true,
     "remote.autoForwardPortsSource": "hybrid",
+    "cline.preferredLanguage": "Japanese - 日本語",
+    "terminal.integrated.autoReplies": {},
+    "chat.agent.enabled": true,
 }

@@ -37,10 +37,10 @@ call plug#begin(s:plug_dir)
   Plug 'cohama/lexima.vim'                    " rubyとかvimscriptのifとかの終了を補完してくれる
   Plug 'tpope/vim-commentary'                 " コメントの切り替えをgccでできるようになる
   Plug 'tpope/vim-surround'                   " 選択文字をSで囲んだり、囲み文字切り替えできるようになる
+  Plug 'thinca/vim-quickrun'                  " ファイルの実行結果を表示する
 
   Plug 'mechatroner/rainbow_csv',     { 'for': 'csv' }
   Plug 'mattn/emmet-vim',             { 'for': ['html', 'css', 'scss', 'vue', 'eruby'] }
-  Plug 'previm/previm',               { 'for': 'markdown' }
 
   Plug 'lambdalisue/fern.vim'
   "Plug 'lambdalisue/fern-git-status.vim'
@@ -71,8 +71,11 @@ call plug#begin(s:plug_dir)
   " dap
   Plug 'mfussenegger/nvim-dap'
   Plug 'theHamsta/nvim-dap-virtual-text'
-  Plug 'rcarriga/nvim-dap-ui'
   Plug 'nvim-neotest/nvim-nio'
+
+  Plug 'LiadOz/nvim-dap-repl-highlights'
+  Plug 'rcarriga/cmp-dap'
+  Plug 'nvim-telescope/telescope-dap.nvim'
 
   " test runner
   Plug 'vim-test/vim-test'
@@ -91,16 +94,20 @@ call plug#begin(s:plug_dir)
   " diagnostics
   Plug 'folke/trouble.nvim'
 
+  " markdown preview(need node.js)
+  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+
 call plug#end()
 
 "---------------------------------------------------------------
 " 設定ファイルの読み込み
 let s:plug_rc = 'source ' . $HOME . '/.config/nvim/plug/'
 let s:load_rc   = {file -> execute(s:plug_rc . file . '.vim')}
-runtime plug/plug.vim                " プラグインの読み込み
+runtime plug/plug.vim                 " プラグインの読み込み
 call s:load_rc('fugitive')            " fugitiveの設定読み込み
 call s:load_rc('fern')                " ファイラーの設定読み込み
 call s:load_rc('treesitter')          " treesitterの設定読み込み
+call s:load_rc('markdown')            " markdownの設定読み込み
 runtime plug/telescope.lua
 runtime plug/lsp.lua
 runtime plug/dap.lua
@@ -110,4 +117,4 @@ runtime plug/test.lua
 colorscheme gruvbox
 "" 背景透過を有効化
 hi Normal guibg=NONE ctermbg=NONE
-hi NonText guibg=NONE ctermbg=NONE
+" hi NonText guibg=NONE ctermbg=NONE

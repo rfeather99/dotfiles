@@ -1,10 +1,48 @@
 local wezterm = require 'wezterm';
 
+-- カレントディレクトリ名を取得する関数
+local function get_current_directory_name(pane)
+  if not pane then
+    return nil
+  end
+
+  local cwd_uri = pane:get_current_working_dir()
+
+  if cwd_uri then
+    local cwd_str = tostring(cwd_uri)
+    local cwd = cwd_str:match("file://.+/(.+)")
+    if cwd then
+      return cwd:match("([^/]+)$") or cwd  -- 最後のディレクトリ名を取得
+    end
+  end
+
+  return nil
+end
+
+-- タブのタイトルを変更
+wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
+  local pane = wezterm.mux.get_pane(tab.active_pane.pane_id)
+  local process_name = tab.active_pane.foreground_process_name or ""
+
+  if process_name:match(".+/nvim$") then
+    return tostring(tab.tab_index + 1) .. ": " .. get_current_directory_name(pane) .. " - NVIM"
+  elseif process_name:match(".+/zsh$") then
+    return tostring(tab.tab_index + 1) .. ": " .. get_current_directory_name(pane) .. " - zsh"
+  end
+end)
+
+local act = wezterm.action
+
 return {
+  -- Mux settings
+  --
+  -- デフォルトでこのセッションに接続
+  default_gui_startup_args = {"connect", "local"},
+
   -- Window settings
   window_decorations = "RESIZE",
   initial_cols = 180,
-  initial_rows = 55,
+  initial_rows = 50,
   window_padding = {
     left = 0,
     right = 0,
@@ -23,30 +61,43 @@ return {
 
   -- Font settings
   font = wezterm.font("HackGen35 Console NF"),
-  font_size = 16.0,
+  font_size = 15.5,
   harfbuzz_features = {"calt=0", "clig=0", "liga=0"},
 
   -- Colors
   color_scheme = 'Gruvbox Dark (Gogh)',
-  -- colors = {
-  --   foreground = '#c5c8c6',
-  --   cursor_bg = '#c5c8c6',
-  --   cursor_fg = '#1d1f21',
-  --   cursor_border = '#c5c8c6',
-  --   selection_fg = '#c5c8c6',
-  --   selection_bg = '#3E4451',
-  --   scrollbar_thumb = '#3E4451',
-  --   split = '#444444',
-  --   ansi = {'#1d1f21', '#cc6666', '#b5bd68', '#f0c674', '#81a2be', '#b294bb', '#8abeb7', '#c5c8c6'},
-  --   brights = {'#666666', '#d54e53', '#b9ca4a', '#e7c547', '#7aa6da', '#c397d8', '#70c0b1', '#eaeaea'},
-  -- },
-
+  colors = {
+    tab_bar = {
+      background = '#1d1f21',
+      active_tab = {
+        bg_color = '#2e3440',
+        fg_color = '#d8dee9',
+        intensity = 'Normal',
+        underline = 'None',
+      },
+      inactive_tab = {
+        bg_color = '#1d1f21',
+        fg_color = '#666666',
+      },
+      inactive_tab_hover = {
+        bg_color = '#1d1f21',
+        fg_color = '#c5c8c6',
+      },
+    },
+  },
   -- Key bindings
+  --
+  disable_default_key_bindings = true,
   keys = {
     {key="¥", mods="ALT", action=wezterm.action{SendString="\\"}},
     {key="V", mods="CTRL|SHIFT", action=wezterm.action.PasteFrom("Clipboard")},
     {key="C", mods="CTRL|SHIFT", action=wezterm.action.CopyTo("Clipboard")},
-    {key="=", mods="CMD|SHIFT", action=wezterm.action.IncreaseFontSize},
+    {key="v", mods="CMD", action=wezterm.action.PasteFrom("Clipboard")},
+    {key="c", mods="CMD", action=wezterm.action.CopyTo("Clipboard")},
+    {key="n", mods="CMD", action=wezterm.action.SpawnWindow},
+    {key="=", mods="CTRL|SHIFT", action=wezterm.action.IncreaseFontSize},
+    {key="-", mods="CTRL", action=wezterm.action.DecreaseFontSize},
+    {key="[", mods="CTRL", action=wezterm.action.SendKey { key = "[", mods = "CTRL" }},
   },
 
   -- Other settings

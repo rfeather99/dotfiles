@@ -5,6 +5,8 @@ augroup MyAutoCmd
   autocmd!
 augroup END
 
+set maxmempattern=2000000 " 検索時のメモリ制限を2GBにする
+
 " 文字設定
 set encoding=utf-8
 set fileencodings=utf-8,iso-2022-jp,euc-jp,cp932,sjis
@@ -52,7 +54,7 @@ set autoindent    "改行時に前の行のインデントを継続する
 set smartindent   "改行時に入力された行の末尾に合わせて次の行のインデントを増減す
 set breakindent   "行の折り返し時に、インデントを維持する
 
-"clipboad連携設定
+"clipboard連携設定
 set clipboard+=unnamedplus
 
 " 検索関連
@@ -119,7 +121,7 @@ runtime plug.vim   " プラグインの読み込み
 runtime tab.vim    " TAB設定
 runtime osc52.vim  " OSC52設定
 runtime local.vim  " LOCAL設定の読み込み
-
+lua require('toggle_terminal')
 "---------------------------------------------------------------
 " agの結果をquickfixに流せるようにする
 function! s:rg(word) abort
