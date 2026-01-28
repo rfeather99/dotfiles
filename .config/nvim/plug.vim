@@ -109,8 +109,8 @@ let s:load_rc   = {file -> execute(s:plug_rc . file . '.vim')}
 runtime plug/plug.vim                 " プラグインの読み込み
 call s:load_rc('fugitive')            " fugitiveの設定読み込み
 call s:load_rc('fern')                " ファイラーの設定読み込み
-call s:load_rc('treesitter')          " treesitterの設定読み込み
 call s:load_rc('markdown')            " markdownの設定読み込み
+runtime plug/treesitter.lua
 runtime plug/telescope.lua
 runtime plug/lsp.lua
 runtime plug/dap.lua

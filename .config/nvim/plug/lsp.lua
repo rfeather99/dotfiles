@@ -85,17 +85,23 @@ vim.lsp.config("solargraph", {
       }
     }
   })
-require('mason-lspconfig').setup_handlers({
-  function(server)
-    local opt = {
-    }
-    -- jdtlsは除外(nvim-jdtlsを使用するため)
-    if server == "jdtls" then
-      return
-    end
-    vim.lsp.enable({ server })
-  end,
-})
+
+-- mason-lspconfigでインストール済みサーバーを自動有効化
+local mason_lspconfig = require('mason-lspconfig')
+mason_lspconfig.setup()
+local servers = mason_lspconfig.get_installed_servers()
+for _, server in ipairs(servers) do
+  -- jdtlsは除外(nvim-jdtlsを使用するため)
+  if server ~= "jdtls" then
+    vim.lsp.enable(server)
+  end
+end
+
+local on_attach = function(client, bufnr)
+  if vim.b[bufnr].large_file then
+    client.stop()
+  end
+end
 
 -- vim.api.nvim_create_autocmd("BufWritePre", {
 --     buffer = buffer,

@@ -148,6 +148,5 @@
         "docker compose": true
     },
     "chat.agent.maxRequests": 100,
-    "workbench.editor.enablePreview": false,
     "chat.customAgentInSubagent.enabled": true,
 }

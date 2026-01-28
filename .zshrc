@@ -36,15 +36,21 @@ alias ls='ls -aG'
 alias tmux='tmux -u'
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias difit="npx difit@latest"
-claude() {
-  fnm exec --using default -- claude "$@"
-}
 copilot() {
   fnm exec --using default -- copilot "$@"
 }
+opencode() {
+  fnm exec --using default -- opencode "$@"
+}
 
-# 1passwordのssh agentを使う
-export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
+# ローカルの場合は、1passwordのssh agentを使う
+if [[ -z "$SSH_CONNECTION" ]]; then
+  op_sock="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
+  if [[ -S "$op_sock" ]]; then
+    export SSH_AUTH_SOCK="$op_sock"
+  fi
+fi
 
 # promptinitを使う場合はこちらを読み込む
 # 利用可能なpromptの設定を見る
