@@ -149,4 +149,5 @@
     },
     "chat.agent.maxRequests": 100,
     "chat.customAgentInSubagent.enabled": true,
+    "chat.viewSessions.orientation": "stacked",
 }

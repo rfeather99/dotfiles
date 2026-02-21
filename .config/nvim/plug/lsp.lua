@@ -10,11 +10,11 @@ require('mason').setup({
     }
   }
 })
--- require('mason-lspconfig').setup {
---   ensure_installed = {
---     'typos_lsp'
---   }
--- }
+require('mason-lspconfig').setup {
+  ensure_installed = {
+    'typos_lsp'
+  }
+}
 vim.lsp.config("lua_ls", {
     settings = {
       Lua = {

@@ -54,7 +54,19 @@ vim.opt.smartindent = true
 vim.opt.breakindent = true
 
 -- Clipboard settings
-vim.opt.clipboard:append('unnamedplus')
+local osc52 = require("vim.ui.clipboard.osc52")
+vim.g.clipboard = {
+  name = "OSC52",
+  copy = {
+    ["+"] = osc52.copy("+"),
+    ["*"] = osc52.copy("*"),
+  },
+  paste = {
+    ["+"] = osc52.paste("+"),
+    ["*"] = osc52.paste("*"),
+  },
+}
+vim.opt.clipboard:append("unnamedplus")
 
 -- Search settings
 vim.opt.ignorecase = true
@@ -125,7 +137,6 @@ end, { noremap = true, silent = true })
 vim.cmd('runtime local.vim')
 vim.cmd('runtime plug.vim')
 vim.cmd('runtime tab.vim')
-vim.cmd('runtime osc52.vim')
 require('toggle_terminal')
 
 ---------------------------------------------------------------

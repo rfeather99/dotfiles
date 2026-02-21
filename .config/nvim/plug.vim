@@ -44,26 +44,23 @@ call plug#begin(s:plug_dir)
   Plug 'mattn/emmet-vim',             { 'for': ['html', 'css', 'scss', 'vue', 'eruby'] }
 
   Plug 'lambdalisue/fern.vim'
-  "Plug 'lambdalisue/fern-git-status.vim'
   Plug 'lambdalisue/nerdfont.vim'       " ファイラーのアイコン表示
   Plug 'lambdalisue/fern-renderer-nerdfont.vim'
   Plug 'lambdalisue/glyph-palette.vim'  " アイコンカラー設定
 
   " highlight
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'main', 'do': ':TSUpdate' }
 
   " telescope
   Plug 'nvim-tree/nvim-web-devicons'
   Plug 'nvim-lua/plenary.nvim'
-  Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
+  Plug 'nvim-telescope/telescope.nvim', { 'tag': '*' }
   Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
   Plug 'stevearc/aerial.nvim'
 
   " lsp
   Plug 'neovim/nvim-lspconfig'
-  "Plug 'williamboman/mason.nvim',           { 'tag': 'v1.11.0' }
-  "Plug 'williamboman/mason-lspconfig.nvim', { 'tag': 'v1.32.0' }
   Plug 'williamboman/mason.nvim'
   Plug 'williamboman/mason-lspconfig.nvim'
   Plug 'nvimtools/none-ls.nvim'

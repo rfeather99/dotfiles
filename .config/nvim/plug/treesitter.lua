@@ -1,23 +1,15 @@
-if vim.fn.empty(vim.fn.globpath(vim.o.rtp, 'autoload/nvim_treesitter.vim')) == 1 then
-  return
-end
-
 require('nvim-dap-repl-highlights').setup()
-require('nvim-treesitter.configs').setup {
-  ensure_installed = "all",
-  highlight = {
-    enable = true,
-    disable = function(_, buf)
-      return vim.b[buf].large_file
-    end,
-  },
-  indent = {
-    enable = false, -- これを設定することでtree-sitterによるインデントを有効にできます
-    disable = function(_, buf)
-      return vim.b[buf].large_file
-    end,
-  },
-}
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("vim-treesitter-start", {}),
+  pattern = "*",
+  callback = function(ctx)
+    if vim.b[ctx.buf].large_file then
+      return
+    end
+    -- parser が無い等のエラーは握りつぶすのが推奨パターン
+    pcall(vim.treesitter.start, ctx.buf)
+  end,
+})
 
 -- thorはrubyのシンタックス
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
@@ -29,4 +21,10 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   pattern = '*.pipeline',
   command = 'set filetype=groovy',
+})
+
+-- CoffeeScript
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = '*.coffee',
+  command = 'set filetype=coffee',
 })
