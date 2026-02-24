@@ -132,6 +132,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 -- 3. completion (hrsh7th/nvim-cmp)
 local cmp = require("cmp")
 local lspkind = require('lspkind')
+local compare = cmp.config.compare
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -140,12 +141,13 @@ cmp.setup({
   },
   sources = {
     { name = "nvim_lsp" },
+    { name = "omni" },
     { name = "buffer" },
     { name = "path" },
   },
   mapping = cmp.mapping.preset.insert({
     ["<C-p>"] = cmp.mapping.select_prev_item(),
-    ["<S-Tab>"] = cmp.mapping.select_next_item(),
+    ["<S-Tab>"] = cmp.mapping.select_prev_item(),
     ["<C-n>"] = cmp.mapping.select_next_item(),
     ["<Tab>"] = cmp.mapping.select_next_item(),
     ['<C-l>'] = cmp.mapping.complete(),
