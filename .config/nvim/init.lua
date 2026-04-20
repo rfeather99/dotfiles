@@ -54,18 +54,6 @@ vim.opt.smartindent = true
 vim.opt.breakindent = true
 
 -- Clipboard settings
-local osc52 = require("vim.ui.clipboard.osc52")
-vim.g.clipboard = {
-  name = "OSC52",
-  copy = {
-    ["+"] = osc52.copy("+"),
-    ["*"] = osc52.copy("*"),
-  },
-  paste = {
-    ["+"] = osc52.paste("+"),
-    ["*"] = osc52.paste("*"),
-  },
-}
 vim.opt.clipboard:append("unnamedplus")
 
 -- Search settings
@@ -131,12 +119,15 @@ vim.keymap.set("t", "<C-]>", function()
     vim.api.nvim_chan_send(chan, "\x1b")
   end
 end, { noremap = true, silent = true })
+vim.keymap.set('t', '<C-l>l', [[<C-\><C-n>:tabnext<CR>]], { silent = true })
+vim.keymap.set('t', '<C-l>h', [[<C-\><C-n>:tabprevious<CR>]], { silent = true })
 
 ---------------------------------------------------------------
 -- Load configuration files
 vim.cmd('runtime local.vim')
 vim.cmd('runtime plug.vim')
 vim.cmd('runtime tab.vim')
+vim.cmd('runtime osc52.vim')
 require('toggle_terminal')
 
 ---------------------------------------------------------------
