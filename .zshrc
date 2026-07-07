@@ -1,4 +1,9 @@
-fpath+=($HOME/.docker/completions $fpath)
+# プロファイリング: ZSHRC_PROFILE=1 zsh で起動すると計測結果を表示
+if [[ -n "$ZSHRC_PROFILE" ]]; then
+  zmodload zsh/zprof
+fi
+
+fpath=($HOME/.docker/completions $fpath)
 autoload -Uz compinit
 compinit -u
 
@@ -44,13 +49,35 @@ opencode() {
 }
 
 # ローカルの場合は、1passwordのssh agentを使う
-if [[ -z "$SSH_CONNECTION" ]]; then
-  op_sock="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+setup_ssh_auth_sock() {
+  local fixed_sock="$HOME/.ssh/agent.sock"
+  local op_sock="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
 
-  if [[ -S "$op_sock" ]]; then
-    export SSH_AUTH_SOCK="$op_sock"
+  mkdir -p "$HOME/.ssh"
+
+  # tmux外 + SSHログイン:
+  if [[ -z "$TMUX" ]]; then
+    # sshd が作った agent forwarding socket を固定パスに寄せる
+    if [[ -n "$SSH_CONNECTION" && -n "$SSH_AUTH_SOCK" && -S "$SSH_AUTH_SOCK" ]]; then
+      ln -snf "$SSH_AUTH_SOCK" "$fixed_sock"
+
+      export SSH_AUTH_SOCK="$fixed_sock"
+      tmux set-environment -g SSH_AUTH_SOCK "$fixed_sock" 2>/dev/null
+      return
+    # ローカルの場合は1passwordがあれば1password
+    elif [[ -S "$op_sock" ]]; then
+      ln -snf "$op_sock" "$fixed_sock"
+
+      export SSH_AUTH_SOCK="$fixed_sock"
+      tmux set-environment -g SSH_AUTH_SOCK "$fixed_sock" 2>/dev/null
+      return
+    fi
   fi
-fi
+
+  echo "no ssh-agent"
+}
+
+setup_ssh_auth_sock
 
 # promptinitを使う場合はこちらを読み込む
 # 利用可能なpromptの設定を見る
@@ -396,3 +423,8 @@ eval "$(uv generate-shell-completion zsh)"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# プロファイリング結果を表示
+if [[ -n "$ZSHRC_PROFILE" ]]; then
+  zprof
+fi

@@ -113,12 +113,21 @@ vim.api.nvim_create_user_command('T', function(opts)
   vim.cmd('startinsert')
 end, { nargs = '*' })
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true })
-vim.keymap.set("t", "<C-]>", function()
+local function send_to_terminal(seq)
   local chan = vim.b.terminal_job_id
   if chan then
-    vim.api.nvim_chan_send(chan, "\x1b")
+    vim.api.nvim_chan_send(chan, seq)
   end
+end
+vim.keymap.set("t", "<C-]>", function()
+  send_to_terminal("\x1b")
 end, { noremap = true, silent = true })
+vim.keymap.set("t", "<S-Up>", function()
+  send_to_terminal("\x1b[<64;40;1M")
+end, { noremap = true, silent = true, desc = "Send wheel Up to terminal job"})
+vim.keymap.set("t", "<S-Down>", function()
+  send_to_terminal("\x1b[<65;40;1M")
+end, { noremap = true, silent = true, desc = "Send wheel down to terminal job"})
 vim.keymap.set('t', '<C-l>l', [[<C-\><C-n>:tabnext<CR>]], { silent = true })
 vim.keymap.set('t', '<C-l>h', [[<C-\><C-n>:tabprevious<CR>]], { silent = true })
 
@@ -129,6 +138,7 @@ vim.cmd('runtime plug.vim')
 vim.cmd('runtime tab.vim')
 vim.cmd('runtime osc52.vim')
 require('toggle_terminal')
+require('utility')
 
 ---------------------------------------------------------------
 -- Ripgrep function to send results to quickfix
