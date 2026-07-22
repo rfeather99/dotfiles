@@ -128,9 +128,6 @@ end, { noremap = true, silent = true, desc = "Send wheel Up to terminal job"})
 vim.keymap.set("t", "<S-Down>", function()
   send_to_terminal("\x1b[<65;40;1M")
 end, { noremap = true, silent = true, desc = "Send wheel down to terminal job"})
-vim.keymap.set('t', '<C-l>l', [[<C-\><C-n>:tabnext<CR>]], { silent = true })
-vim.keymap.set('t', '<C-l>h', [[<C-\><C-n>:tabprevious<CR>]], { silent = true })
-
 ---------------------------------------------------------------
 -- Load configuration files
 vim.cmd('runtime local.vim')
@@ -139,6 +136,7 @@ vim.cmd('runtime tab.vim')
 vim.cmd('runtime osc52.vim')
 require('toggle_terminal')
 require('utility')
+require('win_nav')
 
 ---------------------------------------------------------------
 -- Ripgrep function to send results to quickfix

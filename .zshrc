@@ -36,6 +36,9 @@ setopt inc_append_history
 # インクリメンタルからの検索
 bindkey "^R" history-incremental-search-backward
 
+# 描画停止(CTRL-S)からどのキーでも復帰できるようにする
+stty ixany
+
 alias vim='nvim'
 alias ls='ls -aG'
 alias tmux='tmux -u'

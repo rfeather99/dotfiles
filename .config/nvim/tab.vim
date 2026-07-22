@@ -47,7 +47,3 @@ map <silent> [Tag]n :tabnext<CR>
 map <silent> [Tag]p :tabprevious<CR>
 " 今のバッファーを新しいタブで開く(擬似的なwindowの拡大)
 map <silent> [Tag]t :tab split<CR>
-
-map <silent> <C-l>c :tablast <bar> tabnew<CR> " tc 新しいタブを一番右に作る
-map <silent> <C-l>l :tabnext<CR>
-map <silent> <C-l>h :tabprevious<CR>
