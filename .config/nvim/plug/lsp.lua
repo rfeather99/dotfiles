@@ -15,108 +15,86 @@ require('mason-lspconfig').setup {
     'typos_lsp'
   }
 }
-require('mason-lspconfig').setup_handlers({
-  function(server)
-    local opt = {
-    }
-    -- jdtlsは除外(nvim-jdtlsを使用するため)
-    if server == "jdtls" then
-      return
-    end
-    require('lspconfig')[server].setup(opt)
-  end,
-  ["typos_lsp"] = function()
-    require('lspconfig').typos_lsp.setup({
-      init_options = {
-        config = "~/.config/nvim/lsp/typos-ls.toml"
-      }
-    })
-  end,
-  ["lua_ls"] = function()
-    require('lspconfig').lua_ls.setup({
-      settings = {
-        Lua = {
-          -- 「undefined global vim」を無視する
-          diagnostics = {
-            globals = { "vim" }
-          }
-        }
-      }
-    })
-  end,
-  ["pylsp"] = function()
-    require("lspconfig").pylsp.setup {
-      root_dir = function(fname)
-        local root_files = {
-          'settings.py',
-        }
-        return require("lspconfig.util").root_pattern(unpack(root_files))(fname) or require("lspconfig.util").find_git_ancestor(fname)
-      end,
-      settings = {
-        pylsp = {
-          plugins = {
-            pyflakes = {
-              enabled = false
-            },
-            flake8 = {
-              enabled = false
-            },
-            pycodestyle = {
-              enabled = false
-            },
-          }
+vim.lsp.config("lua_ls", {
+    settings = {
+      Lua = {
+        -- 「undefined global vim」を無視する
+        diagnostics = {
+          globals = { "vim" }
         }
       }
     }
-  end,
-  -- monorepoで、ルートと配下でrubyバージョンが異なる場合に問題があったので、Masonを利用しない設定に変更
-  -- ただし、LSPを有効にするためには、Masonでインストールする必要がある(でも実際は使われない)
-  -- 参照: https://github.com/williamboman/mason.nvim/issues/1777
-  --
-  ["ruby_lsp"] = function()
-    require('lspconfig').ruby_lsp.setup({
-      mason = false, -- mason を無効化して、rbenv を利用
-      cmd = { vim.fn.expand("~/.rbenv/shims/ruby-lsp") },
-      root_dir = require("lspconfig.util").root_pattern("Gemfile", ".git"),
-      settings = {
-        rubyLsp = {
-          diagnostics = {
-            enabled = true,
-            rubocopPath = vim.fn.expand("~/.rbenv/shims/rubocop"),
+  })
+vim.lsp.config("pylsp", {
+    root_markers = {"settings.py", ".git"},
+    settings = {
+      pylsp = {
+        plugins = {
+          pyflakes = {
+            enabled = false
+          },
+          flake8 = {
+            enabled = false
+          },
+          pycodestyle = {
+            enabled = false
           },
         }
       }
-    })
-  end,
-  ["rubocop"] = function()
-    require('lspconfig').rubocop.setup({
-      mason = false, -- mason を無効化
-      cmd = { vim.fn.expand("~/.rbenv/shims/rubocop"), "--lsp" },
-      root_dir = require("lspconfig.util").root_pattern("Gemfile", ".git"),
-    })
-  end,
-  ["solargraph"] = function()
-    require('lspconfig').solargraph.setup({
-      mason = false, -- mason を無効化して、rbenv を利用
-      cmd = { vim.fn.expand("~/.rbenv/shims/solargraph"), "stdio" },
-      root_dir = require("lspconfig.util").root_pattern("Gemfile", ".git"),
-      settings = {
-        solargraph = {
-          diagnostics = true, -- LSP による診断を有効化
-          completion = true, -- 補完機能を有効化
-          formatting = true, -- フォーマット機能を有効化
-        }
-      }
-    })
-  end,
-})
+    }
+  })
+-- monorepoで、ルートと配下でrubyバージョンが異なる場合に問題があったので、Masonを利用しない設定に変更
+-- ただし、LSPを有効にするためには、Masonでインストールする必要がある(でも実際は使われない)
+-- 参照: https://github.com/williamboman/mason.nvim/issues/1777
+--
 
--- vim.api.nvim_create_autocmd("BufWritePre", {
---     buffer = buffer,
---     callback = function()
---         vim.lsp.buf.format { async = false }
---     end
--- })
+-- projectごとの、.vimrc.localで定義されていればそれを使う(dockerでlspを起動したい場合(ローカルだとbundle installができない)を想定)
+-- 未定義または空ならデフォルトにフォールバック
+local ruby_lsp_cmd = vim.g.ruby_lsp_cmd
+if ruby_lsp_cmd == nil or #ruby_lsp_cmd == 0 then
+  ruby_lsp_cmd = { vim.fn.expand("~/.rbenv/shims/ruby-lsp") }
+end
+
+vim.lsp.config("ruby_lsp", {
+    mason = false, -- mason を無効化して、rbenv を利用
+    cmd = ruby_lsp_cmd,
+    root_markers = {"Gemfile", ".git"},
+    settings = {
+      rubyLsp = {
+        diagnostics = {
+          enabled = true,
+          rubocopPath = vim.fn.expand("~/.rbenv/shims/rubocop"),
+        },
+      }
+    }
+  })
+vim.lsp.config("rubocop", {
+    mason = false, -- mason を無効化
+    cmd = { vim.fn.expand("~/.rbenv/shims/rubocop"), "--lsp" },
+    root_markers = {"Gemfile", ".git"}
+  })
+vim.lsp.config("solargraph", {
+    mason = false, -- mason を無効化して、rbenv を利用
+    cmd = { vim.fn.expand("~/.rbenv/shims/solargraph"), "stdio" },
+    root_markers = {"Gemfile", ".git"},
+    settings = {
+      solargraph = {
+        diagnostics = true, -- LSP による診断を有効化
+        completion = true, -- 補完機能を有効化
+        formatting = true, -- フォーマット機能を有効化
+      }
+    }
+  })
+
+-- mason-lspconfigでインストール済みサーバーを自動有効化
+local mason_lspconfig = require('mason-lspconfig')
+local servers = mason_lspconfig.get_installed_servers()
+for _, server in ipairs(servers) do
+  -- jdtlsは除外(nvim-jdtlsを使用するため)
+  if server ~= "jdtls" then
+    vim.lsp.enable(server)
+  end
+end
 
 -- 2. build-in LSP function
 -- keyboard shortcut
@@ -130,12 +108,12 @@ vim.keymap.set('n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
 vim.keymap.set('n', 'gn', '<cmd>lua vim.lsp.buf.rename()<CR>')
 vim.keymap.set('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
 vim.keymap.set('n', 'ge', '<cmd>lua vim.diagnostic.open_float()<CR>')
-vim.keymap.set('n', 'g]', '<cmd>lua vim.diagnostic.goto_next()<CR>')
-vim.keymap.set('n', 'g[', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+vim.keymap.set('n', 'g]', '<cmd>lua vim.diagnostic.jump({ count = 1, float = true })<CR>')
+vim.keymap.set('n', 'g[', '<cmd>lua vim.diagnostic.jump({ count = -1, float = true })<CR>')
 -- LSP handlers
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = true }
-)
+vim.diagnostic.config({
+  virtual_text = true,
+})
 
 -- 3. completion (hrsh7th/nvim-cmp)
 local cmp = require("cmp")
@@ -148,12 +126,13 @@ cmp.setup({
   },
   sources = {
     { name = "nvim_lsp" },
+    { name = "omni" },
     { name = "buffer" },
     { name = "path" },
   },
   mapping = cmp.mapping.preset.insert({
     ["<C-p>"] = cmp.mapping.select_prev_item(),
-    ["<S-Tab>"] = cmp.mapping.select_next_item(),
+    ["<S-Tab>"] = cmp.mapping.select_prev_item(),
     ["<C-n>"] = cmp.mapping.select_next_item(),
     ["<Tab>"] = cmp.mapping.select_next_item(),
     ['<C-l>'] = cmp.mapping.complete(),
@@ -190,71 +169,6 @@ cmp.setup.cmdline(":", {
     { name = "cmdline" },
   },
 })
-
--- 4. Formatter / Linter (none-ls)
-local mason_registry = require("mason-registry")
-local null_ls = require("null-ls")
-
-local pypkg_cwd = function(params)
-  local fname = params.bufname
-  local util = require("lspconfig.util")
-  local root_files = {
-    "pyproject.toml",
-    "package.json",
-    "Gemfile",
-    "pom.xml",
-  }
-  return util.root_pattern(unpack(root_files))(fname) or util.root_pattern ".git" (fname) or util.path.dirname(fname)
-end
-
-local null_sources = {}
-for _, package in ipairs(mason_registry.get_installed_packages()) do
-  local package_name = string.gsub(package.name, "-", "_")  -- null-lsのパッケージ名はアンダースコア
-  if pcall(require, string.format("null-ls.builtins.formatting.%s", package_name)) then
-    table.insert(null_sources, null_ls.builtins.formatting[package_name].with({
-      cwd = pypkg_cwd
-    }))
-  end
-  if pcall(require, string.format("null-ls.builtins.diagnostics.%s", package_name)) then
-    if package_name == "mypy" then
-      table.insert(null_sources, null_ls.builtins.diagnostics[package_name].with({
-        extra_args = {"--show-absolute-path"},
-        cwd = pypkg_cwd
-      }))
-    else
-      table.insert(null_sources, null_ls.builtins.diagnostics[package_name].with({
-        cwd = pypkg_cwd
-      }))
-    end
-  end
-end
-
-local lsp_formatting = function(bufnr)
-  vim.lsp.buf.format({
-    timeout_ms = 2000,
-    filter = function(client)
-        -- apply whatever logic you want (in this example, we'll only use null-ls)
-        return client.name == "null-ls"
-    end,
-    bufnr = bufnr,
-  })
-end
-local augroup = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
--- null_ls.setup({
---   sources = null_sources,
---   on_attach = function(client, bufnr)
---     if client.supports_method("textDocument/formatting") then
---       vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
---       vim.api.nvim_create_autocmd("BufWritePre", {
---         group = augroup,
---         buffer = bufnr,
---         callback = function()
---             lsp_formatting(bufnr)
---         end,
---       })
---     end
---   end,
--- })
 
 -- diagnostics
 require("trouble").setup {

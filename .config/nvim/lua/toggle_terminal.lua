@@ -26,9 +26,9 @@ function M.toggle_terminal()
     -- 名前をつける
     vim.api.nvim_buf_set_name(terminal_bufnr, TERMINAL_BUF_NAME)
 
-    -- ← ここで layout を左右にぶち抜く！
+    -- ← ここで split 配置を右に追い出す
     vim.cmd("wincmd L")
-    vim.api.nvim_win_set_width(terminal_winid, math.floor(vim.o.columns * 0.3))
+    vim.api.nvim_win_set_width(terminal_winid, math.floor(vim.o.columns * 0.4))
 
     -- 挿入モードへ
     vim.cmd("startinsert")
@@ -40,7 +40,7 @@ function M.toggle_terminal()
   vim.cmd("wincmd L")  -- split 配置を右に追い出す
   terminal_winid = vim.api.nvim_get_current_win()
   vim.api.nvim_win_set_buf(terminal_winid, terminal_bufnr)
-  vim.api.nvim_win_set_width(terminal_winid, math.floor(vim.o.columns * 0.3))
+  vim.api.nvim_win_set_width(terminal_winid, math.floor(vim.o.columns * 0.4))
   vim.cmd("startinsert")
 end
 

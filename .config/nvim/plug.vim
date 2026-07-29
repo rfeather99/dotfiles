@@ -38,23 +38,23 @@ call plug#begin(s:plug_dir)
   Plug 'tpope/vim-commentary'                 " コメントの切り替えをgccでできるようになる
   Plug 'tpope/vim-surround'                   " 選択文字をSで囲んだり、囲み文字切り替えできるようになる
   Plug 'thinca/vim-quickrun'                  " ファイルの実行結果を表示する
+  Plug 'vim-scripts/AnsiEsc.vim'              " Ansi Color Escape Sequenceを反映する
 
   Plug 'mechatroner/rainbow_csv',     { 'for': 'csv' }
   Plug 'mattn/emmet-vim',             { 'for': ['html', 'css', 'scss', 'vue', 'eruby'] }
 
   Plug 'lambdalisue/fern.vim'
-  "Plug 'lambdalisue/fern-git-status.vim'
   Plug 'lambdalisue/nerdfont.vim'       " ファイラーのアイコン表示
   Plug 'lambdalisue/fern-renderer-nerdfont.vim'
   Plug 'lambdalisue/glyph-palette.vim'  " アイコンカラー設定
 
   " highlight
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'main', 'do': ':TSUpdate' }
 
   " telescope
   Plug 'nvim-tree/nvim-web-devicons'
   Plug 'nvim-lua/plenary.nvim'
-  Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
+  Plug 'nvim-telescope/telescope.nvim', { 'tag': '*' }
   Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
   Plug 'stevearc/aerial.nvim'
@@ -88,6 +88,7 @@ call plug#begin(s:plug_dir)
   Plug 'hrsh7th/cmp-path'
   Plug 'hrsh7th/cmp-buffer'
   Plug 'hrsh7th/cmp-cmdline'
+  Plug 'hrsh7th/cmp-omni'
 
   Plug 'github/copilot.vim'
 
@@ -106,8 +107,8 @@ let s:load_rc   = {file -> execute(s:plug_rc . file . '.vim')}
 runtime plug/plug.vim                 " プラグインの読み込み
 call s:load_rc('fugitive')            " fugitiveの設定読み込み
 call s:load_rc('fern')                " ファイラーの設定読み込み
-call s:load_rc('treesitter')          " treesitterの設定読み込み
 call s:load_rc('markdown')            " markdownの設定読み込み
+runtime plug/treesitter.lua
 runtime plug/telescope.lua
 runtime plug/lsp.lua
 runtime plug/dap.lua

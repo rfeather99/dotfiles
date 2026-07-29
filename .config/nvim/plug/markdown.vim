@@ -99,7 +99,7 @@ let g:mkdp_filetypes = ['markdown']
 
 " デフォルトテーマ (dark または light) を設定します。
 " デフォルトではシステムの設定に基づいてテーマが選択されます。
-let g:mkdp_theme = 'dark'
+let g:mkdp_theme = 'light'
 
 " プレビューウィンドウを再利用します。
 " デフォルト: 0

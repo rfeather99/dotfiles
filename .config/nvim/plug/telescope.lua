@@ -1,6 +1,17 @@
 local actions = require('telescope.actions')
 require('telescope').setup({
-  defaults = require('telescope.themes').get_ivy(),
+  defaults = require('telescope.themes').get_ivy({
+    mappings = {
+      i = {
+        ["<C-q>"] = false,
+        ["<M-q>"] = actions.send_to_qflist + actions.open_qflist,
+      },
+      n = {
+        ["<C-q>"] = false,
+        ["<M-q>"] = actions.send_to_qflist + actions.open_qflist,
+      },
+    },
+  }),
   pickers = {
     oldfiles = {
       only_cwd = true,

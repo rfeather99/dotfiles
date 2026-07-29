@@ -16,7 +16,7 @@ if !empty(globpath(&rtp, 'autoload/easymotion'))
   let g:EasyMotion_smartcase = 1
 
   nmap s <Plug>(easymotion-overwin-f2)
-  xmap s <Plug>(easymotion-overwin-f2)
+  xmap s <Plug>(easymotion-f2)
   omap z <Plug>(easymotion-overwin-f2)
 
   nmap g/ <Plug>(easymotion-sn)

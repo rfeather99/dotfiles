@@ -78,7 +78,7 @@ c | noh | ハイライトを消す
 c | diffthis | バッファー同士のdiffをとる
 c | diffoff | diff解除
 c | s/\v([a-z]\@=)([A-Z])/\1_\l\2/g | camelケースをsnakeケースに置換
-c | s/\v(^|_)(.)/\u\2/g | snakeケースをpascalケースに置換
+c | s/\%V\v(^|_)(.)/\u\2/g | snakeケースをpascalケースに置換
 
 ### カスタム
 

@@ -1,4 +1,9 @@
-fpath+=($HOME/.docker/completions $fpath)
+# プロファイリング: ZSHRC_PROFILE=1 zsh で起動すると計測結果を表示
+if [[ -n "$ZSHRC_PROFILE" ]]; then
+  zmodload zsh/zprof
+fi
+
+fpath=($HOME/.docker/completions $fpath)
 autoload -Uz compinit
 compinit -u
 
@@ -31,22 +36,51 @@ setopt inc_append_history
 # インクリメンタルからの検索
 bindkey "^R" history-incremental-search-backward
 
+# 描画停止(CTRL-S)からどのキーでも復帰できるようにする
+stty ixany
+
 alias vim='nvim'
 alias ls='ls -aG'
 alias tmux='tmux -u'
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+alias difit="npx difit@latest"
+copilot() {
+  fnm exec --using default -- copilot "$@"
+}
+opencode() {
+  fnm exec --using default -- opencode "$@"
+}
 
-agent="$HOME/.ssh/agent"
-if [ -S "$SSH_AUTH_SOCK" ]; then
-    case $SSH_AUTH_SOCK in
-    /tmp/*/agent.[0-9]*)
-        ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
-    esac
-elif [ -S $agent ]; then
-    export SSH_AUTH_SOCK=$agent
-else
-    echo "no ssh-agent"
-fi
+# ローカルの場合は、1passwordのssh agentを使う
+setup_ssh_auth_sock() {
+  local fixed_sock="$HOME/.ssh/agent.sock"
+  local op_sock="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
+  mkdir -p "$HOME/.ssh"
+
+  # tmux外 + SSHログイン:
+  if [[ -z "$TMUX" ]]; then
+    # sshd が作った agent forwarding socket を固定パスに寄せる
+    if [[ -n "$SSH_CONNECTION" && -n "$SSH_AUTH_SOCK" && -S "$SSH_AUTH_SOCK" ]]; then
+      ln -snf "$SSH_AUTH_SOCK" "$fixed_sock"
+
+      export SSH_AUTH_SOCK="$fixed_sock"
+      tmux set-environment -g SSH_AUTH_SOCK "$fixed_sock" 2>/dev/null
+      return
+    # ローカルの場合は1passwordがあれば1password
+    elif [[ -S "$op_sock" ]]; then
+      ln -snf "$op_sock" "$fixed_sock"
+
+      export SSH_AUTH_SOCK="$fixed_sock"
+      tmux set-environment -g SSH_AUTH_SOCK "$fixed_sock" 2>/dev/null
+      return
+    fi
+  fi
+
+  echo "no ssh-agent"
+}
+
+setup_ssh_auth_sock
 
 # promptinitを使う場合はこちらを読み込む
 # 利用可能なpromptの設定を見る
@@ -89,6 +123,16 @@ function docker-exec-active-container() {
 }
 alias doe=docker-exec-active-container
 
+function docker-stop-active-container() {
+  local container=$(docker ps --format '{{.Names}}' | fzf +m --query "$1" --multi --exit-0 --prompt='Containers > ' | tr '\n' ' ')
+  if [[ -n $container ]]; then
+    print -z "docker stop $container"
+  else
+    echo 'No container selected'
+  fi
+}
+alias dos=docker-stop-active-container
+
 function docker-volume-rm() {
   local volumes=$(docker volume ls -q | fzf +m --query "$1" --multi --exit-0 --prompt='Volumes > ' | tr '\n' ' ')
   if [[ -n $volumes ]]; then
@@ -119,7 +163,7 @@ function docker-debug-active-container() {
 }
 alias dod=docker-debug-active-container
 
-function docker-compose-restart-service() {
+function docker-restart-container() {
   # 起動中のコンテナリストを取得し、fzfで選択
   local container=$(docker ps -a --format '{{.Names}}' | fzf +m --query "$1" --select-1 --exit-0 --prompt='Containers > ')
   if [[ -n $container ]]; then
@@ -128,17 +172,131 @@ function docker-compose-restart-service() {
     echo 'No container selected'
   fi
 }
-alias dor=docker-compose-restart-service
+alias dor=docker-restart-container
 
 function docker-compose-down-services() {
-  local containers=$(docker ps -a --format '{{.Names}}' | fzf +m --query "$1" --multi --exit-0 --prompt='Containers > ' | tr '\n' ' ')
+  local containers=$(docker compose ps --services | fzf +m --query "$1" --multi --exit-0 --prompt='Services > ' | tr '\n' ' ')
   if [[ -n $containers ]]; then
     print -z "docker compose down $containers"
   else
     echo 'No container selected'
   fi
 }
-alias dods=docker-compose-down-services
+alias dcd=docker-compose-down-services
+
+## docker port proxy tools
+
+function _docker_pick_container() {
+  docker ps --format '{{.Names}}' \
+    | fzf +m --query "$1" --select-1 --exit-0 --prompt='Containers > '
+}
+
+function _docker_first_network() {
+  docker inspect --format '{{range $k, $v := .NetworkSettings.Networks}}{{println $k}}{{end}}' "$1" \
+    | head -n1
+}
+
+function _docker_parse_port_spec() {
+  local spec="$1"
+
+  if [[ -z "$spec" ]]; then
+    return 1
+  fi
+
+  if [[ "$spec" == *:* ]]; then
+    REPLY_HOST_PORT="${spec%%:*}"
+    REPLY_CONTAINER_PORT="${spec##*:}"
+  else
+    REPLY_HOST_PORT="$spec"
+    REPLY_CONTAINER_PORT="$spec"
+  fi
+
+  [[ "$REPLY_HOST_PORT" =~ ^[0-9]+$ && "$REPLY_CONTAINER_PORT" =~ ^[0-9]+$ ]]
+}
+
+function _docker_proxy_name() {
+  echo "port-proxy-$1-$2-$3"
+}
+
+function _docker_build_proxy_cmd() {
+  local container="$1"
+  local host_port="$2"
+  local container_port="$3"
+  local network="$4"
+  local proxy_name="$(_docker_proxy_name "$container" "$host_port" "$container_port")"
+
+  echo "docker run --rm -d --name ${proxy_name} --network ${network} -p ${host_port}:${host_port} alpine/socat TCP-LISTEN:${host_port},fork,reuseaddr TCP:${container}:${container_port}"
+}
+
+function _docker_choose_container_and_ports() {
+  local arg1="$1"
+  local arg2="$2"
+  local query=""
+  local port_spec=""
+  local container network
+
+  if _docker_parse_port_spec "$arg1"; then
+    port_spec="$arg1"
+  else
+    query="$arg1"
+    port_spec="$arg2"
+  fi
+
+  container=$(_docker_pick_container "$query")
+  [[ -n "$container" ]] || { echo 'No container selected'; return 1; }
+
+  if [[ -z "$port_spec" ]]; then
+    read "port_spec?Port (3000 or 3010:3000) > "
+  fi
+
+  _docker_parse_port_spec "$port_spec" || { echo "Invalid port spec: $port_spec"; return 1; }
+
+  network=$(_docker_first_network "$container")
+  [[ -n "$network" ]] || { echo "No network found for container: $container"; return 1; }
+
+  REPLY_CONTAINER="$container"
+  REPLY_NETWORK="$network"
+  return 0
+}
+
+function docker-port-proxy-active-container() {
+  _docker_choose_container_and_ports "$1" "$2" || return 1
+
+  print -z "$(_docker_build_proxy_cmd "$REPLY_CONTAINER" "$REPLY_HOST_PORT" "$REPLY_CONTAINER_PORT" "$REPLY_NETWORK")"
+}
+alias dop=docker-port-proxy-active-container
+
+function docker-port-proxy-recreate() {
+  _docker_choose_container_and_ports "$1" "$2" || return 1
+
+  local proxy_name="$(_docker_proxy_name "$REPLY_CONTAINER" "$REPLY_HOST_PORT" "$REPLY_CONTAINER_PORT")"
+  print -z "docker rm -f ${proxy_name} >/dev/null 2>&1; $(_docker_build_proxy_cmd "$REPLY_CONTAINER" "$REPLY_HOST_PORT" "$REPLY_CONTAINER_PORT" "$REPLY_NETWORK")"
+}
+alias dopx=docker-port-proxy-recreate
+
+function docker-port-proxy-list() {
+  docker ps -a \
+    --filter "name=^port-proxy-" \
+    --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'
+}
+alias dopl=docker-port-proxy-list
+
+function docker-port-proxy-kill() {
+  local selected
+
+  selected=$(
+    docker ps -a \
+      --filter "name=^port-proxy-" \
+      --format '{{.Names}}\t{{.Ports}}\t{{.Status}}' \
+      | fzf -m --query "$1" --prompt='Port proxies > ' \
+      | awk '{print $1}'
+  )
+
+  [[ -n "$selected" ]] || { echo 'No proxy selected'; return 1; }
+
+  print -z "docker stop ${(j: :)${(f)selected}}"
+}
+alias dopk=docker-port-proxy-kill
 
 # redis-cli
 # 指定されたキー、ポート、データベースから値を取得する関数
@@ -261,3 +419,15 @@ done
 . "$HOME/.local/bin/env"
 eval "$(uv generate-shell-completion zsh)"
 
+
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# プロファイリング結果を表示
+if [[ -n "$ZSHRC_PROFILE" ]]; then
+  zprof
+fi
